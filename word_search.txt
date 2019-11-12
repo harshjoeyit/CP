@@ -1,0 +1,29 @@
+Classes are the central concept in C++.
+Chapter 7 began our detailed coverage of how classes are defined. 
+That chapter covered topics fundamental to any use of classes: class scope, data hiding, and constructors. 
+It also introduced various important class features: member functions, the implicit this pointer, friends, and const, static, and mutable members.
+In this part, we’ll extend our coverage of classes by looking at copy control, overloaded operators, inheritance, and templates. 
+As we’ve seen, in C++ classes define constructors to control what happens when objects of the class type are initialized. 
+Classes also control what happens when objects are copied, assigned, moved, and destroyed. 
+In this respect, C++ differs from other languages, many of which do not give class designers the ability to control these operations. 
+Chapter 13 covers these topics. This chapter also covers two important concepts introduced by the new standard: rvalue references and move operations. 
+Chapter 14 looks at operator overloading, which allows operands of class types to be used with the built-in operators. 
+Operator overloading is one of the ways whereby C++ lets us create new types that are as intuitive to use as are the built-in types. 
+Among the operators that a class can overload is the funtion call operator. We can “call” objects of such classes just as if they were functions. 
+We’ll also look at new library facilities that make it easy to use different types of callable objects in a uniform way. 
+This chapter concludes by looking at another special kind of class member function —conversion operators. 
+These operators define implicit conversions from objects of class type. 
+The compiler applies these conversions in the same contexts—and for the same reasons—as it does with conversions among the built-in types. 
+The last two chapters in this part cover how C++ supports object-oriented and generic programming. 
+Chapter 15 covers inheritance and dynamic binding. 
+Along with data abstraction, inheritance and dynamic binding are fundamental to object-oriented programming. 
+Inheritance makes it easier for us to define related types and dynamic binding lets us write type-indepenent code that can ignore the differences among types that are related by inheritance. 
+Chapter 16 covers function and class templates. 
+Templates let us write generic classes and functions that are type-independent. 
+A number of new template-related features were introduced by the new standard: variadic templates, template type aliases, and new ways to control instantiation. 
+Writing our own object-oriented or generic types requires a fairly good understanding of C++. 
+Fortunately, we can use object-oriented and generic types without understanding the details of how to build them. 
+For example, the standard library uses the facilities we’ll study in Chapters 15 and 16 extensively, and we’ve used the library types and algorithms without needing to know how they are implemented. 
+Readers, therefore, should understand that Part III covers fairly advanced topics. 
+Writing templates or object-oriented classes requires a good understanding of the basics of C++ and a good grasp of how to define more basic classes.
+ 
