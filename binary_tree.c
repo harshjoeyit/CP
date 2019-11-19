@@ -6,22 +6,24 @@ struct node
     struct binaryTreeNode *trNodeAdd;
     struct node *next;
 };
+
 struct Queue
 {
     struct node *front , *rear;
 };
+
 struct Stack
 {
     struct binaryTreeNode *trNodeAdd;
     struct Stack *next;
 };
+
 struct binaryTreeNode
 {
     int data;
     struct binaryTreeNode *left;
     struct binaryTreeNode *right;
 };
-
 
 
 
