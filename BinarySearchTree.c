@@ -14,6 +14,7 @@ struct node
     struct node *next;
 };
 
+
 typedef struct binarySearchTreeNode BSTNode;
 typedef struct node Node;
 
@@ -90,7 +91,7 @@ BSTNode* deleteNode(BSTNode *root, int data)
 }
 
 
-// BST to DLL
+// BST to DLL - inorder traversal
 BSTNode *BSTToDLL(BSTNode *root, BSTNode *head)
 {
     if(root == NULL)
