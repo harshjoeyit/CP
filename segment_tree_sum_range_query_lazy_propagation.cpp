@@ -28,9 +28,12 @@ void buildTree(int *tree, int *a, int index, int s, int e)
 
 int rangeSumLazyQuery(int *tree, int *lazy, int index, int s, int e, int l, int r)
 {
+    if( s > e  || l > e|| r < s)
+        return 0;                   // out of range
+
     if(lazy[index] != 0)
     {
-        tree[index] += lazy[index];
+        tree[index] += (e - s + 1) * lazy[index];
         if(s != e)
         {
             lazy[2*index] += lazy[index];
@@ -38,10 +41,6 @@ int rangeSumLazyQuery(int *tree, int *lazy, int index, int s, int e, int l, int 
         }    
         lazy[index] = 0;
     }
-
-    // no overflap
-    if(l > e || r < s)
-        return 0;
     
     // total overlap
     if(l <= s && e <= r)
@@ -63,7 +62,7 @@ void updateRangeLazy(int *tree, int *lazy, int index, int s, int e, int l, int r
     // If not update tree at index mark its children for laxy propogation 
     if(lazy[index] != 0)
     {
-        tree[index] += lazy[index];
+        tree[index] += (e - s + 1) * lazy[index];               // e - s + 1 is just the number of children of the node with lazy update - the children that are not updated yet 
         if(s != e)      // not a leaf node - propagate the update in lazy tree 
         {
             lazy[2*index] += lazy[index];
@@ -73,16 +72,16 @@ void updateRangeLazy(int *tree, int *lazy, int index, int s, int e, int l, int r
     }
     
     // no overlap condition
-    if(l > e || r < s)
+    if(s > e || l > e || r < s)
         return;
     
     // total overlap
     if(l <= s && e <= r)
     {
-        tree[index] += inc;
+        tree[index] += (e - s + 1) * inc;
         if(s != e)
         {
-            lazy[2*index] += inc;
+            lazy[2*index] +=  inc;
             lazy[2*index + 1] += inc;
         }
         return;
@@ -105,38 +104,45 @@ void disp(int *tree, int n)
 }
 
 
+void menu()
+{
+    cout << "1. display" << endl;
+    cout << "2. update range " << endl;
+    cout << "3. query " << endl;
+    cout << "4. exit" << endl;
+}
+
+
 int main()
 {
-    int a[] = {1,3,2,-2,4,5};
-    int n = sizeof(a)/sizeof(int);
+    int a[] = {1,3,2,-2,4,5,-1,6};
+    int n = sizeof(a)/sizeof(int), l, r, choice, inc;
 
     //Build the array tree 
     int *tree = new int[4*n + 1];
     int *lazy = new int[4*n + 1];
 
     buildTree(tree, a, 1, 0, n-1);
-    disp(tree, n);
 
-    // rangeMinQuery
-    // range should be that from the original array
-    // index is the starting index in the tree = 1 
-    cout << "sum in range (1-4) => " << rangeSumLazyQuery(tree, lazy, 1, 0, n-1, 1, 4) << endl;
 
-    //range update (l-r)
-    // eg. (1-2) increment of 4
-    for(int i = 0; i <= 2; i++)
-        a[i] += 4;
-    // range should be that from the original array
-    updateRangeLazy(tree, lazy, 1, 0, n-1, 0, 2, 4);
-    disp(tree, n);
-    disp(lazy, n);
-
-    cout << "sum in range (1-4) => " << rangeSumLazyQuery(tree, lazy, 1, 0, n-1, 1, 4) << endl;
-    
-    updateRangeLazy(tree, lazy, 1, 0, n-1, 0, 3, 5);
-    disp(tree, n);
-    disp(lazy, n);
-
-    cout << "sum in range (2-3) => " << rangeSumLazyQuery(tree, lazy, 1, 0, n-1, 2, 3) << endl;
+    menu();
+    while(cin >> choice)
+    {
+        switch(choice)
+        {
+            case 1: disp(tree, n);
+                    disp(lazy, n);
+            break;
+            case 2: cin >> l >> r >> inc;
+                    updateRangeLazy(tree, lazy, 1, 0, n-1, l, r, inc);
+            break;
+            case 3: cin >> l >> r;
+                    inc = rangeSumLazyQuery(tree, lazy, 1, 0, n-1, l, r);
+                    cout << inc << endl;
+            break;
+            case 4: exit(1);
+            break;
+        }
+    }
     
 }

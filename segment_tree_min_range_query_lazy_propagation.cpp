@@ -108,29 +108,45 @@ void disp(int *tree, int n)
 }
 
 
+void menu()
+{
+    cout << "1. display" << endl;
+    cout << "2. update range " << endl;
+    cout << "3. query " << endl;
+    cout << "4. exit" << endl;
+}
+
+
 int main()
 {
-    int a[] = {1,3,2,-2,4,5};
-    int n = sizeof(a)/sizeof(int);
+    int a[] = {1,3,2,-2,4,5,-1,6};
+    int n = sizeof(a)/sizeof(int), l, r, choice, inc;
 
     //Build the array tree 
     int *tree = new int[4*n + 1];
     int *lazy = new int[4*n + 1];
 
     buildTree(tree, a, 1, 0, n-1);
-    disp(tree, n);
 
-    cout << "min in range 1-2 = " << rangeMinLazyQuery(tree, lazy, 1, 0, n-1, 1, 2) << endl; 
-    // increment of 2 in (0-4)
-    updateRangeLazy(tree, lazy, 1, 0, n-1, 0, 4, 2);
-    disp(tree, n);
-    disp(lazy, n);
 
-    cout << "min in range 0-3 = " << rangeMinLazyQuery(tree, lazy, 1, 0, n-1, 0, 3) << endl; 
-
-    updateRangeLazy(tree, lazy, 1, 0, n-1, 3, 3, 5);
-    disp(tree, n);
-    disp(lazy, n);
-
-    cout << "min in range 2-4 = " << rangeMinLazyQuery(tree, lazy, 1, 0, n-1, 2, 4) << endl;
+    menu();
+    while(cin >> choice)
+    {
+        switch(choice)
+        {
+            case 1: disp(tree, n);
+                    disp(lazy, n);
+            break;
+            case 2: cin >> l >> r >> inc;
+                    updateRangeLazy(tree, lazy, 1, 0, n-1, l, r, inc);
+            break;
+            case 3: cin >> l >> r;
+                    inc = rangeMinLazyQuery(tree, lazy, 1, 0, n-1, l, r);
+                    cout << inc << endl;
+            break;
+            case 4: exit(1);
+            break;
+        }
+    }
+    
 }
