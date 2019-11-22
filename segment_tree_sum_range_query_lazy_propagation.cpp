@@ -95,6 +95,33 @@ void updateRangeLazy(int *tree, int *lazy, int index, int s, int e, int l, int r
 
 }
 
+void final_array(int *tree, int *lazy, int *a, int index, int s, int e)
+{   
+    if(s > e)
+        return;
+
+    // propagating the lazy update
+    if(lazy[index] != 0)
+    {
+        tree[index] += (e - s + 1) * lazy[index];               
+        if(s != e)       
+        {
+            lazy[2*index] += lazy[index];
+            lazy[2*index + 1] += lazy[index];
+        }
+        lazy[index] = 0;
+    }
+
+    if(s == e)
+    {
+        a[s] = tree[index];
+        return;
+    }
+
+    int mid = (s + e)/2;
+    final_array(tree, lazy, a, 2 * index, s, mid);
+    final_array(tree, lazy, a, 2 * index + 1, mid + 1, e);
+} 
 
 void disp(int *tree, int n)
 {
@@ -109,14 +136,16 @@ void menu()
     cout << "1. display" << endl;
     cout << "2. update range " << endl;
     cout << "3. query " << endl;
-    cout << "4. exit" << endl;
+    cout << "4. final array " << endl;
+    cout << "5. exit" << endl;
 }
 
 
 int main()
 {
-    int a[] = {1,3,2,-2,4,5,-1,6};
-    int n = sizeof(a)/sizeof(int), l, r, choice, inc;
+    int n = 6;
+    int a[n] = {};
+    int l, r, choice, inc;
 
     //Build the array tree 
     int *tree = new int[4*n + 1];
@@ -140,7 +169,12 @@ int main()
                     inc = rangeSumLazyQuery(tree, lazy, 1, 0, n-1, l, r);
                     cout << inc << endl;
             break;
-            case 4: exit(1);
+            case 4: final_array(tree, lazy, a, 1, 0, n-1); 
+                    for(int i = 0 ; i < n; i++)
+                        cout << a[i] << " ";
+                    cout << endl;
+
+            case 5: exit(1);
             break;
         }
     }
