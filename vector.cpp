@@ -31,6 +31,11 @@ int main()
     auto iter=v2.begin();
     auto iter2=v2.end();
 
+    //.. imp...........................................
+    int n = 10, m = 5;
+    vector<vector<int>> grid;
+    grid.assign(n, vector<int>(m, 0));
+
     while(iter<iter2)
     {
         cout<<*iter<<" ";
