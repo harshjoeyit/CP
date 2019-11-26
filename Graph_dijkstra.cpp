@@ -1,6 +1,6 @@
 /*
 Bellman Ford's Algorithm:
-
+O(E.V) = complete graph - O(V^3)
 Bellman Ford's algorithm is used to find the shortest paths from the 
 source vertex to all other vertices in a weighted graph. 
 It depends on the following concept: Shortest path 
@@ -38,21 +38,21 @@ void dijkstra()
         pair <int , int> p = *s.begin();            // pop the vertex with the minimum distance
         s.erase(s.begin());
 
-        int x = p.second; 
+        int u = p.second; 
 
-        if(vis[x]) 
+        if(vis[u]) 
         continue;                                   // check if the popped vertex is visited before
             
-        vis[x] = true;
+        vis[u] = true;
 
-        for(int i = 0; i < v[x].size(); i++)
+        for(int i = 0; i < v[u].size(); i++)
         {
-            int w = v[x][i].first;                  // each neighbour vertex
-            int neighb = v[x][i].second;
+            int w = v[u][i].first;                  // each neighbour vertex
+            int neighb = v[u][i].second;
 
-            if(dist[x] + w < dist[neighb])
+            if(dist[u] + w < dist[neighb])
             {                                       // check if the next vertex distance could be minimized
-                dist[neighb] = dist[x] + w;
+                dist[neighb] = dist[u] + w;
                 s.insert({dist[neighb],  neighb});            // insert the next vertex with the updated distance
             }
         }
