@@ -58,9 +58,9 @@ void BellmanFord(int src, int n, int m)
     dis[src] = 0;
 
     // relax n-1 times
-    for(int i = 1; i <= n-1; i++)
+    for(int i = 1; i <= n-1; i++)               // nodes - 1 times
     {
-        for(int j = 0; j < m; j++)
+        for(int j = 0; j < m; j++)              // for m edges
         {
             int u = Edge[j].second.first;
             int v = Edge[j].second.second;

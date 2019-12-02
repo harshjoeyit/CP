@@ -1,5 +1,4 @@
 //..prims algorithm
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,6 +7,7 @@ typedef pair<long long, int> PII;
 bool marked[MAX];
 vector <PII> adj[MAX];
 
+
 long long prim(int x)
 {
     priority_queue<PII, vector<PII>, greater<PII> > Q;                  //min heap
@@ -15,6 +15,7 @@ long long prim(int x)
     long long minimumCost = 0;
     PII p;
     Q.push(make_pair(0, x));
+
     while(!Q.empty())
     {
         // Select the edge with minimum weight
@@ -38,8 +39,11 @@ long long prim(int x)
     return minimumCost;
 }
 
+
+
 int main()
 {
+    
     int nodes, edges, x, y;
     long long weight, minimumCost;
     cin >> nodes >> edges;
@@ -53,4 +57,5 @@ int main()
     minimumCost = prim(1);
     cout << minimumCost << endl;
     return 0;
+
 }
