@@ -333,7 +333,7 @@ int height_of_tree( struct binaryTreeNode *root )
 }
 
 
-
+// * important
 struct binaryTreeNode * deepest_node( struct binaryTreeNode *root )
 {
     struct binaryTreeNode *temp;
@@ -471,7 +471,7 @@ struct binaryTreeNode * LCA( struct binaryTreeNode *root , struct binaryTreeNode
     if(left && right )                  // means that both recursions obtained some value that is one of them is found on left sub tree and the other on the right , so return root
         return root;
     else
-        return ( left ? left : right );  // if only one of the recursions return not a NULL ptr , other returns NULL ptr
+        return ( left ? left : right );  // if only one of  the recursions return not a NULL ptr , other returns NULL ptr
 }
 
 

@@ -121,7 +121,7 @@ void insert_into_binary_tree( struct binaryTreeNode **root , int data )
     if(!new_node)
         printf("memory error");
     
-    if(*root == NULL )
+    if(*root == NULL)
     {
         printf("root created \n");
         *root = new_node;
@@ -303,9 +303,10 @@ struct binaryTreeNode* constructTree(char *preorder, char *inorder, int n, int s
 
     char c = preorder[index++];
     int i = index_in_inorder(inorder, n, c);
+    newnode->data = c;
     newnode->left = constructTree(preorder, inorder, n, s, i-1);
     newnode->right = constructTree(preorder, inorder, n, i+1, e);
-    newnode->data = c;
+    
     
     return newnode;
 }
@@ -336,8 +337,8 @@ int main()
     // int sum = 1;
     // printf("possible : %d\n", givenSumPath(root, sum));
 
-    char preorder[] = {'A', 'B', 'D', 'E', 'F', 'C', 'G', 'H', 'J', 'L', 'K'};
-    char inorder[] =  {'D', 'B', 'F', 'E', 'A', 'G', 'C', 'L', 'J', 'H', 'K'};
+    char preorder[] = {'A', 'B', 'D', 'E', 'C', 'F'}; //{'A', 'B', 'D', 'E', 'F', 'C', 'G', 'H', 'J', 'L', 'K'};
+    char inorder[] =  {'D', 'B', 'E', 'A', 'C', 'F'}; //{'D', 'B', 'F', 'E', 'A', 'G', 'C', 'L', 'J', 'H', 'K'};
     int n = sizeof(preorder)/sizeof(char);
     root = constructTree(preorder, inorder, n, 0, n-1);
 

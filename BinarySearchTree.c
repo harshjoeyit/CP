@@ -141,7 +141,7 @@ BSTNode *DLLToBST(BSTNode *head)
     temp = midNode(head);
     
     p = head;
-    while(p->right != temp)
+    while(p->right != temp)                 // try using p = temp->left , instead of traversing 
         p = p->right;
     p->right = NULL;
     
@@ -150,6 +150,7 @@ BSTNode *DLLToBST(BSTNode *head)
 
     temp->left = DLLToBST(head);
     temp->right = DLLToBST(q);
+
     return temp;
 }
 
@@ -201,7 +202,7 @@ Node* insert_node(Node *head, int data)
 }
 
 
-
+// inorder traversal
 BSTNode* LLToBST(Node *&head, int l, int h)         //**& needed for head as head is chenged in the recursion and we are not returnning head anywhere so 
 {                                                   // alternative for **head 
                                                     // just like int *&head = basically head, which is what we call the function with 
@@ -212,11 +213,14 @@ BSTNode* LLToBST(Node *&head, int l, int h)         //**& needed for head as hea
     // bottom to top approach     
     // first the child nodes are created then the parent node is created completely 
     BSTNode *leftchild = LLToBST(head, l, mid-1);       // left
+   
     BSTNode *parent = (BSTNode *)malloc(sizeof(BSTNode));   
     parent->data = head->data;
     parent->left = leftchild;
     head = head->next;                                  // head is moved forward
+
     parent->right = LLToBST(head, mid+1, h);            // right
+    
     return parent;                                      // return parent
 }
 

@@ -1,85 +1,109 @@
-#include <bits/stdc++.h>
-#define left lolkek
- 
+#include<bits/stdc++.h>
 using namespace std;
- 
-int n, m;
-vector<int> dx = {-1, 1, 0, 0};
-vector<int> dy = {0, 0, -1, 1};
-vector<char> dir = {'L', 'R', 'U', 'D'};
-vector<vector<int>> grid;
-vector<vector<int>> left;
-vector<vector<int>> up;
-int si = 0;
-int sj = 0;
-int ti = 0;
-int tj = 0;
- 
-string path;
- 
-void dfs(int i, int j, int d, int t) {
-    path += dir[d];
-    if (t > 1 || i < 1 || i > n || j < 1 || j > m || grid[i][j] == 1) {
-        path.pop_back();
+
+
+void buildTree(int *tree, int *a, int index, int s, int e, bool op)
+{
+    if(s > e)
+        return;
+    // Base case - leaf node 
+    if(s == e)
+    {
+        tree[index] = a[s];
         return;
     }
-    if (j == tj) {
-        int occ = up[max(ti, i)][j] - up[min(ti, i) - 1][j];
-        if (occ == 0) {
-            cout << "YES";
-            exit(0);
-        }
-    } else if (i == ti) {
-        int occ = left[i][max(tj, j)] - left[i][min(tj, j) - 1];
-        if (occ == 0) {
-            cout << "YES";
-            exit(0);
-        }
-    }
-    for (int d1 = 0; d1 < 4; d1++) {
-        if (d1 == d || d1 == (d ^ 1)) continue;
-        dfs(i + dy[d1], j + dx[d1], d1, t + 1);
-    }
-    dfs(i + dy[d], j + dx[d], d, t);
-    path.pop_back();
+
+    int mid = (s + e)/2;
+    // left subtree
+    buildTree(tree, a, 2*index, s, mid, !op);
+    // right subtree 
+    buildTree(tree, a, 2*index + 1, mid + 1, e, !op);
+
+    int left = tree[2*index];
+    int right = tree[2*index + 1];
+
+    if(op == 0)
+        tree[index] = left | right;  
+    else
+        tree[index] = left ^ right;
+                   
 }
- 
-int main()
+
+// O(log(n))
+void updateNode(int *tree, int index, int s , int e, int upi, int value, bool op)
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
-    cin >> n >> m;
-    grid.assign(n + 1, vector<int>(m + 1, 0));
-    string inp;
-    for (int i = 0; i < n; i++) {
-        cin >> inp;
-        for (int j = 0; j < m; j++) {
-            if (inp[j] == '*') {
-                grid[i + 1][j + 1] = 1;
-            }
-            if (inp[j] == 'S') {
-                si = i + 1;
-                sj = j + 1;
-            } else if (inp[j] == 'T') {
-                ti = i + 1;
-                tj = j + 1;
-            }
-        }
+    // no overlap
+    if(upi < s || upi > e)
+        return;
+    // reached leaf
+    if(s == e)
+    {
+        tree[index] = value;
+        return;
     }
 
-    left.assign(n + 1, vector<int>(m + 1, 0));
-    up.assign(n + 1, vector<int>(m + 1, 0));
+    // upi lying in range of s-e
+    int mid = (s + e)/2;
+    updateNode(tree, 2*index, s, mid, upi, value, !op);
+    updateNode(tree, 2*index + 1, mid + 1, e, upi, value, !op); 
     
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            left[i][j] = left[i][j - 1] + grid[i][j];
-            up[i][j] = up[i - 1][j] + grid[i][j];
-        }
-    }
-    for (int d = 0; d < 4; d++) {
-        dfs(si + dy[d], sj + dx[d], d, 0);
-    }
-    cout << "NO";
+    if(op == 0)
+        tree[index] = tree[2*index] | tree[2*index + 1]; 
+    else
+        tree[index] = tree[2*index] ^ tree[2*index + 1]; 
+
 }
- 
+
+
+void disp(int *tree, int n)
+{
+    for(int i = 0; i < 4*n+1; i++)
+        cout << tree[i] << " ";
+    cout << endl;
+}
+
+
+int main()
+{
+    int a[] = {1, 6, 3, 5};
+    int n = sizeof(a)/sizeof(int);
+
+    //Build the array tree 
+    int *tree = new int[4*n + 1];
+
+    int h = 0;
+    int l = 1, r = 2;
+    while(1)
+    {
+        if(l <= n && n < r)
+            break;
+        l = l*2;
+        r = r*2;
+        ++h;
+    }
+
+    bool op = 0;
+    if(h % 2 == 1)
+        op = true;
+
+    buildTree(tree, a, 1, 0, n-1, op);
+    disp(tree, n);
+
+
+    cout << "sum in range (1-4) => " << rangeSumQuery(tree, 1, 0, n-1, 1, 4) << endl;
+
+    // updateNode
+    // update index 3 in original array to value 6
+    a[3] = 6;
+    updateNode(tree, 1, 0, n-1, 3, 6);
+    disp(tree, n);    
+
+
+    //range update (l-r)
+    // eg. (1-2) increment of 4
+    for(int i = 0; i <= 2; i++)
+        a[i] += 4;
+    // range should be that from the original array
+    updateRange(tree, 1, 0, n-1, 0, 2, 4);
+    disp(tree, n);
+}
