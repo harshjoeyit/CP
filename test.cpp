@@ -1,109 +1,71 @@
+// Given an array arr[] of n integers, construct a Product Array prod[] (of same size) such that prod[i] is equal to the product of all the elements of arr[] except arr[i]. Solve it without division operator and in O(n).
+// Example :
+// arr[] = {10, 3, 5, 6, 2}
+// prod[] = {180, 600, 360, 300, 900}
+
 #include<bits/stdc++.h>
 using namespace std;
 
-
-void buildTree(int *tree, int *a, int index, int s, int e, bool op)
-{
-    if(s > e)
-        return;
-    // Base case - leaf node 
-    if(s == e)
-    {
-        tree[index] = a[s];
-        return;
-    }
-
-    int mid = (s + e)/2;
-    // left subtree
-    buildTree(tree, a, 2*index, s, mid, !op);
-    // right subtree 
-    buildTree(tree, a, 2*index + 1, mid + 1, e, !op);
-
-    int left = tree[2*index];
-    int right = tree[2*index + 1];
-
-    if(op == 0)
-        tree[index] = left | right;  
-    else
-        tree[index] = left ^ right;
-                   
-}
-
-// O(log(n))
-void updateNode(int *tree, int index, int s , int e, int upi, int value, bool op)
-{
-    // no overlap
-    if(upi < s || upi > e)
-        return;
-    // reached leaf
-    if(s == e)
-    {
-        tree[index] = value;
-        return;
-    }
-
-    // upi lying in range of s-e
-    int mid = (s + e)/2;
-    updateNode(tree, 2*index, s, mid, upi, value, !op);
-    updateNode(tree, 2*index + 1, mid + 1, e, upi, value, !op); 
-    
-    if(op == 0)
-        tree[index] = tree[2*index] | tree[2*index + 1]; 
-    else
-        tree[index] = tree[2*index] ^ tree[2*index + 1]; 
-
-}
-
-
-void disp(int *tree, int n)
-{
-    for(int i = 0; i < 4*n+1; i++)
-        cout << tree[i] << " ";
-    cout << endl;
-}
-
-
 int main()
 {
-    int a[] = {1, 6, 3, 5};
-    int n = sizeof(a)/sizeof(int);
+    
+    int n, x, k = 1;
+    cin >> n;
+    vector<int> v1(n), L(n), R(n);
 
-    //Build the array tree 
-    int *tree = new int[4*n + 1];
+    // method 1 - O(n) - space copmlexity
 
-    int h = 0;
-    int l = 1, r = 2;
-    while(1)
+    for(int i = 0; i< n; i++)
     {
-        if(l <= n && n < r)
-            break;
-        l = l*2;
-        r = r*2;
-        ++h;
+        cin >> v1[i];
+        L[i] = k * v1[i];
+        k = L[i];
+    }
+    
+    k = 1;
+    for(int i = n-1; i >= 0; i--)
+    {
+        R[i] = v1[i] * k;
+        k = R[i];
     }
 
-    bool op = 0;
-    if(h % 2 == 1)
-        op = true;
-
-    buildTree(tree, a, 1, 0, n-1, op);
-    disp(tree, n);
+    for(int i = 0; i < n; i++)
+        cout << L[i] << " ";
+    cout << endl;
 
 
-    cout << "sum in range (1-4) => " << rangeSumQuery(tree, 1, 0, n-1, 1, 4) << endl;
+    for(int i = 0; i < n; i++)
+        cout << R[i] << " ";
+    cout << endl << "ans: ";
 
-    // updateNode
-    // update index 3 in original array to value 6
-    a[3] = 6;
-    updateNode(tree, 1, 0, n-1, 3, 6);
-    disp(tree, n);    
+    for(int i = 0; i < n; i++)
+    {
+        if(i == 0)
+            cout << R[1] << " ";
+        else if(i == n-1)
+            cout << L[n-2] << " ";
+        else
+            cout << L[i-1] * R[i+1] << " ";
+    }
+    cout << endl;
 
 
-    //range update (l-r)
-    // eg. (1-2) increment of 4
-    for(int i = 0; i <= 2; i++)
-        a[i] += 4;
-    // range should be that from the original array
-    updateRange(tree, 1, 0, n-1, 0, 2, 4);
-    disp(tree, n);
+    // O(1) space complexity
+     // wroks because 
+    // log(1.2.3.4) = log(1) + log(2) + log(3) + log(4)
+    // log(1.2.3.4) - log(3) = log(1) + log(2) + log(4) = log(1.2.4)
+    // pow(10, log(1.2.4)) = 1.2.4
+
+    int prod = R[0];
+
+    for(int i = 0; i < n; i++)
+    {
+        double ans = log10(prod) - log10(v1[i]);
+        // ans is in decimal and somewhat not accurate 
+        ans = ceil(pow(10, ans));
+        // ceil value to prevent floor int conversion
+        cout << ans << " ";
+    }
+    cout << endl;
+
 }
