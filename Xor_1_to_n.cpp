@@ -14,11 +14,11 @@ int computeXOR(int n)
         return 1; 
     if (n % 4 == 2) 
         return n + 1; 
-    else
+    else                // rem = 3
         return 0; 
 } 
 
 int main()
 {
-    cout << computeXOR(13) << endl;
+    cout << computeXOR(4) << endl;
 }
