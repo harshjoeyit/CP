@@ -26,10 +26,7 @@ int main()
 	cin >> n >> m;
 
 	vector<pii> G[n+1];
-	//vector<bool> vis(n+1);
 	vi dis(n+1);
-
-	//vis.assign(n+1, false);
 	dis.assign(n+1, INT_MAX);
 
 	for(int i = 0; i < m; i++)
@@ -41,7 +38,6 @@ int main()
 
 	deque<int> dq;
 	dq.push_back(1);
-	//vis[1] = 1;
 	dis[1] = 0;
 
 	while(! dq.empty())
