@@ -40,6 +40,8 @@ f length two! Thus Bellman-Ford will always detect a negative cycle if
 there is any negative weight edge*/
 
 
+
+
 const int INF = 10000007;
 const int N = 100; 
 vector<pair<int, pii>> Edge;
