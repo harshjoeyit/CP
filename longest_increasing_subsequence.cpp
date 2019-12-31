@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// variations 
+// bridges 
+// maximum sum subsequence 
+// maximmum chain length - elements are pairs (a, b), (c, d) chain is formed when b < c , given a < b and d > c alwauys 
+
+
 int main()
 {
     

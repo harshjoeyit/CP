@@ -33,9 +33,9 @@ int main()
         } 
     }
 
-    for(int i = 0; i <= items; i++)
+    for(int i = 1; i <= items; i++)
     {
-        for(int j = 0; j <= capacity; j++)
+        for(int j = 1; j <= capacity; j++)
             cout << dp[i][j] << " ";
         cout << endl;
     }
