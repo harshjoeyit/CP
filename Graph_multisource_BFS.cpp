@@ -36,10 +36,10 @@ int main()
         vis[i] = false;
         dis[i] = -1;
 
-        if(i - a[i] >= 1)
+        if(i - a[i] >= 1)                       // a number given as a vertex has at most 2 edges - one to number i - a[i] 
             G[i - a[i]].pb(i);
 
-        if(i + a[i] <= n)
+        if(i + a[i] <= n)                       // and another to i+ a[i] provided they are in the range 
             G[i + a[i]].pb(i);
     }
 
@@ -48,7 +48,7 @@ int main()
     {
         for(int v : G[u])
         {
-            if((a[u] + a[v]) % 2)           // finding those vertces that can be visited in single step
+            if((a[u] + a[v]) % 2)               // finding those vertces that can be visited in single step, and if even number is connected directly to an odd number 
             {
                 s.insert(v);
             }
@@ -56,7 +56,7 @@ int main()
     }
 
     queue<int> q;                   // all other vertices will be visited from the 4
-                                    //vertices that are in the set 
+                                    // vertices that are in the set 
     for(int i: s)                   // and distances add on at each step 
     {
         q.push(i);
