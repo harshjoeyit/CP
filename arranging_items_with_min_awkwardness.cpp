@@ -47,9 +47,12 @@ int main()
             str += "gb";
         for(ll i=0;i<temp2;i++)
             str += "g";
+
+
         ll ans = 0ll;
         ll Nb = 0ll;
         ll Ng = 0ll;
+        
         for(ll i=0ll;i<size;i++)
         {
             if(str[i]=='g')
