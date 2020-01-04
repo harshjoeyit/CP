@@ -17,6 +17,7 @@ void print(vector<T> v)
         cout << x << " ";
     cout << endl;
 }
+
 template <typename T1, typename T2>
 void print(vector<pair<T1, T2>> v)
 {
@@ -24,12 +25,14 @@ void print(vector<pair<T1, T2>> v)
         cout << "("<< x.first << "," << x.second <<"), ";
     cout << endl;
 }
+
 template <typename T1, typename T2>
 void print(map<T1, T2> m)
 {
     for(auto it = m.begin(); it != m.end(); it++)
         cout << it->first << " - " << it->second << endl; 
 }
+
 template <typename T>
 void print(set<T> s)
 {
@@ -37,18 +40,13 @@ void print(set<T> s)
         cout << x << " ";
     cout << endl; 
 }
-int min(int i, int j)
-{
-    return ((i < j) ? i : j);
-}
 
-int max(int i, int j)
-{
-    return ((i > j) ? i : j);
-}
 
 //###########################################################################################################################################################
 
+// problem
+// The way Alice and Bob decide who eats each slice is as follows. First, the order in which the pies are to be handed out is decided. There is a special token called the "decider" token, initially held by Bob. Until all the pie is handed out, whoever has the decider token will give the next slice of pie to one of the participants, and the decider token to the other participant. They continue until no slices of pie are left.
+// All of the slices are of excellent quality, so each participant obviously wants to maximize the total amount of pie they get to eat. Assuming both players make their decisions optimally, how much pie will each participant receive
 
 signed main()
 {
@@ -56,11 +54,18 @@ signed main()
     cin.tie(0);
     cout.tie(0);
 
-    int T;
-    cin >> T;
-
-    while(T--)
+    int n, b = 0, a = 0;
+    cin >> n;
+    vector<int> v(n);
+    for(int i = 0; i < n; i++)
+        cin >> v[i];
+    
+    for(int i = n-1; i >= 0; i--)
     {
-        // codeo
+        if(b > a)
+            a += v[i];
+        else
+            b += v[i];
     }
+    cout << min(b,a) << " " << max(b, a) << endl;
 }
