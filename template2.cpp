@@ -1,16 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-typedef long long int ll;
+#define int long long int
 
-
-int main()
+template <typename T>
+void print(vector<T> v)
 {
-    int T;
-    cin >> T;
+    for(auto x: v)
+        cout << x << " ";
+    cout << endl;
+}
 
-    while(T--)
-    {
-        // code
-    }
+signed main()
+{
 }

@@ -67,12 +67,9 @@ bool find_cycle(int u)
         u = s.top();
         s.pop();
         //cout << u << " ";
-
-        for(int i = 0; i < G[u].size(); i++)
+        for(auto v: G[u])
         {
-            int v = G[u][i];
             //  cout << "v: " << v << " -prev = "<< previous[v] << endl; 
-
             if(visited[v] == 1 && v != previous[u])         // if a visited node is found then it shuld not be the parent or previous node that came earlier in dfs
                 return true;
 
