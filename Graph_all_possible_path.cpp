@@ -24,9 +24,9 @@ void count_path(int s, int d, vector<int> &path, int k)
 
     else
     {
-        for(int i = 0; i < G[s].size(); i++)
-            if(!vis[G[s][i]])
-                count_path(G[s][i], d, path, k+1);
+        for(auto &v: G[s])
+            if(!vis[v])
+                count_path(v, d, path, k+1);
     }
     path.pop_back();
     vis[s] = false;

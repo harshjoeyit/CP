@@ -16,6 +16,13 @@ using namespace std;
 #define pii                   pair<int,int>
 
 
+
+
+//............................................................................has some errors in dfs ... not proper.. ................
+
+
+
+
 char Check(string a[1001], int i, int j, int r, int c)
 {
     if(i >= 0 && i < r && j >= 0 && j < c)
