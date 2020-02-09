@@ -76,7 +76,7 @@ int main()
     visited[1] = 1;
     nxt[1] = 1;
 
-    int prev = 0, k = 2, last = 0;          // last for the preference among children
+    int prev = 0, k = 2, last = 0;          // last specifies the last level of traversal among children,   k specifies visit order, nodes are visited in nn decreasing order of k  
     bool flag = 0, node_p;
 
     for(int i = 1; i <= nodes; i++)
@@ -91,8 +91,9 @@ int main()
             break;
         }
 
+        // this condition basically checks if the we are at same level or it has decresed, then the level is saved in "last"
         if(!((nxt[u] - last == 0) || (nxt[u] - last == 1)))             // condition for the preference, either the node at same level can occur next or the child of the last node
-        {
+        {                                                               // level in the traversal can remain same of decrease
             flag = 1;
             break;
         }
@@ -102,18 +103,17 @@ int main()
 
         node_p = 0;                         // we increment k only if some children are found that are unvisited 
 
-        for(int j = 0; j < G[u].size(); j++)
+        for(auto &v: G[u])
         {
-            int v = G[u][j];
             if( !visited[v])
             {
-                nxt[v] = k;
+                nxt[v] = k;                 // this means that next visit will be to one of these childs of u, so k specifies the visit order 
                 visited[v] = 1;
                 node_p = 1;
             }
         }
         if(node_p == 1)                 // if at least one child is found 
-            ++k;
+            ++k;                       
     }
 
     if(flag)
