@@ -1,9 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-typedef long long int ll;
+#define int long long int
 
-ll modExp(ll x, ll n, ll P)
+int modExp(int x, int n, int P)
 {
     if(n==0)
         return 1;
@@ -13,22 +13,21 @@ ll modExp(ll x, ll n, ll P)
         return (x*modExp( (x*x) % P, (n-1)/2, P)) % P;
 }
 
-ll nCr_modP(ll n, ll r, ll P)
+int nCr_modP(int n, int r, int P)
 {
     if(r == 0)
         return 1;
 
-    ll temp = ((n % P) * modExp(r, P-2, P)) % P;                       // inverse factorial
+    int temp = ((n % P) * modExp(r, P-2, P)) % P;                       // inverse factorial
     return ((temp % P) * nCr_modP(n-1, r-1, P) % P) % P; 
 }
 
-
-int main()
+signed main()
 {
     int n;
     int r;
     cin >> n >> r;
 
-    ll ncr = nCr_modP(n, r, 1000000007);
+    int ncr = nCr_modP(n, r, 1000000007);
     cout << ncr << endl;
 }
