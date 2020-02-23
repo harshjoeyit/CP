@@ -1,2 +1,3 @@
-# C-Codes
-All Important C++ Codes
+Contains practice problems on 
+- competitive coding 
+- OOP (C++)
