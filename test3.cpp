@@ -1,55 +1,92 @@
-#include<bits/stdc++.h>
-using namespace std;
+// Sparse Matrix DP approach to find LCA of two nodes 
 
-#define int long long int
+#include <bits/stdc++.h> 
+using namespace std; 
+#define MAXN 100000 
+#define level 18 
+  
+vector <int> tree[MAXN]; 
+int depth[MAXN]; 
+int parent[MAXN][level]; 
 
-vector<int> G[100005];
-vector<int> val(100005);
-
-
-int dfs(int u)
+void dfs(int u, int p)
 {
-    cout << u << endl;
-    int s = 0;
-    for(auto &v: G[u])
-        s += val[v] * val[v] + dfs(v);
-    return s;
+    depth[u] = depth[p] + 1;
+    parent[u][0] = p;           // first parent 2^0th parent
+    for(int v: tree[u])
+    {
+        if(v != p)
+            dfs(v, u);
+    }
 }
 
-signed main()
+
+// populating 2^ith parent for each node in O(nlogn)
+void precomputeSparse(int n)
 {
-    int n, x, y;
-    cin >> n;
-
-    for(int i = 1; i <= n; i++)
-        cin >> val[i];
-    
-    for(int i = 0; i < n; i++)
-        cout << val[i] << " ";
-    cout << endl;    
-
-    for(int i = 1; i <= n-1; i++)
+    for(int i = 1; i < level; i++)
     {
-        cin >> x >> y;
-        G[x].push_back(y);
+        for(int node = 1; node <= n; node++)
+        {
+            if(parent[node][i-1] != -1)       
+                parent[node][i] = parent[parent[node][i-1]][i-1];
+        }
+    }
+}
+
+
+int LCA(int u, int v)
+{
+    if(depth[v] < depth[u])
+        swap(u, v);
+
+    int diff = depth[v] - depth[u];
+
+    // depth[v] > depth[u]
+    // for every set bit condition is true;
+    for(int i = 0; i < level; i++)
+        if((diff >> i) & 1)             
+            v = parent[v][i];   
+    // v changes to its parent at i distance above the current level, 
+    // finally it is at level of u
+
+    if(u == v)
+        return u;
+
+    // checking the first LCA among all common parents 
+    for(int i = level-1; i >= 0; i--)
+    {
+        if (parent[u][i] != parent[v][i]) 
+        { 
+            u = parent[u][i];   
+            v = parent[v][i]; 
+        } 
     }
 
-    int q, t, u, v;
-    cin >> q;
+    // u, v are one node far from LCA 
+    return parent[u][0];
+}
+
+int main()
+{
+    int n, q;
+    cin >> n >> q;
+    for(int i = 0; i < n-1; i++)
+    {
+        int x, y;
+        cin >> x >> y;
+        tree[x].push_back(y);
+        tree[y].push_back(x);
+    }
+    memset(parent,-1,sizeof(parent)); 
+    dfs(1, 0);
+
+    precomputeSparse(n);
 
     while(q--)
     {
-        cin >> t;
-        
-        if(t == 1)
-        {
-            cin >> u >> v;
-            val[u] = v;
-        }
-        else
-        {
-            cin >> u;
-            cout << val[u] * val[u] + dfs(u) << endl;
-        }
+        int x, y;
+        cin >> x >> y;
+        cout << "LCA: "<< LCA(x, y) << endl;
     }
 }
