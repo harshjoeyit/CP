@@ -1,40 +1,36 @@
-//..prims algorithm
 #include<bits/stdc++.h>
 using namespace std;
 
 const int MAX = 1e4 + 5;
 typedef pair<long long, int> PII;
 bool marked[MAX];
-vector <PII> adj[MAX];
+vector <PII> G[MAX];
 
 
-long long prim(int x)
+long long prim(int u)
 {
     priority_queue<PII, vector<PII>, greater<PII> > Q;                  //min heap
     int y;
     long long minimumCost = 0;
     PII p;
-    Q.push(make_pair(0, x));
+    Q.push(make_pair(0, u));
 
     while(!Q.empty())
     {
-        // Select the edge with minimum weight
         p = Q.top();
         Q.pop();
-        x = p.second;
-        // Checking for cycle
-        if(marked[x] == true)
+        u = p.second;
+
+        if(marked[u] == true)
             continue;
 
         minimumCost += p.first;
-        marked[x] = true;
-        
-        for(int i = 0;i < adj[x].size();++i)
-        {
-            y = adj[x][i].second;
-            if(marked[y] == false)
-                Q.push(adj[x][i]);
-        }
+        marked[u] = true;
+
+        for(auto p: G[u])
+            if(marked[p.second] == false)
+                Q.push(p);
+    
     }
     return minimumCost;
 }
@@ -50,11 +46,11 @@ int main()
     for(int i = 0;i < edges;++i)
     {
         cin >> x >> y >> weight;
-        adj[x].push_back(make_pair(weight, y));
-        adj[y].push_back(make_pair(weight, x));
+        G[x].push_back(make_pair(weight, y));
+        G[y].push_back(make_pair(weight, x));
     }
-    // Selecting 1 as the starting node
-    minimumCost = prim(1);
+    
+    minimumCost = prim(1);                              // Selecting 1 as the starting node
     cout << minimumCost << endl;
     return 0;
 
