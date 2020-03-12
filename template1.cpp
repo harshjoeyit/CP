@@ -37,6 +37,14 @@ void print(set<T> s)
         cout << x << " ";
     cout << endl; 
 }
+
+// directly printing out the pairs as - 
+// cout << p << endl;
+template<class A, class B> 
+ostream& operator << (ostream& out, const pair<A, B> &p) {
+    return out << "(" << p.first << ", " << p.second << ")";
+}
+
 int min(int i, int j)
 {
     return ((i < j) ? i : j);
