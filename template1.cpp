@@ -45,6 +45,17 @@ ostream& operator << (ostream& out, const pair<A, B> &p) {
     return out << "(" << p.first << ", " << p.second << ")";
 }
 
+// print out any vector using vector of pairs(of any type), use the above class to print vector of pair 
+template<class A> 
+ostream& operator <<(ostream& out, const vector<A> &v) {
+    out << "[";
+    for(int i = 0; i < v.size(); i++) {
+        if(i) out << ", ";
+        out << v[i];
+    }
+    return out << "]";
+}
+
 int min(int i, int j)
 {
     return ((i < j) ? i : j);
@@ -63,12 +74,14 @@ signed main()
     ios_base::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
+    // for precision
+    cout << fixed << setprecision(15);
 
     int T;
     cin >> T;
 
     while(T--)
     {
-        // codeo
+        // code
     }
 }
