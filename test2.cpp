@@ -1,46 +1,92 @@
-#include<bits/stdc++.h>
-using namespace std;
+#include <bits/stdc++.h> 
+using namespace std; 
 
-#define int long long int 
+#define int long long int
 
-const int N = 10000;
-vector<int> G[N];
-int vis[N];
-int Euler[2*N];
+// void Insert(int i, int j, int k, vector<vector<int>> v, vector<unordered_set<int>> vset)
+// {
+// 	for(int i = 0; i < k; i++)
+// 		vset[ind].insert(v[i][0]);
+// }
 
-void eulerTree(int u, int &indx) 
+signed main() 
 { 
-    vis[u] = 1; 
-    Euler[indx++] = u; 
-    for(auto it : G[u]) { 
-        if (!vis[it]) { 
-            eulerTree(it, indx); 
-            Euler[indx++] = u; 
-        } 
-    } 
-}	
-
-void printEulerTour(int root, int n) 
-{ 
-    int index = 0;   
-    eulerTree(root, index); 
-    for(int i = 0; i < (2*n-1); i++) 
-        cout << Euler[i] << " "; 
-} 
-  
-
-signed main()
-{
-	int n;
-	cin >> n;
-
-	for(int i = 0; i < n-1; i++)
+	int t;
+	cin >> t;
+	while(t--)
 	{
-		int x, y;
-		cin >> x >> y;
-		G[x].push_back(y);
-		G[y].push_back(x);
-	}
+		int n, k;
+		cin >> n >> k;
+		vector<vector<int>> v; 
 
-    printEulerTour(1, n); 
-}
+		v.assign(k, vector<int>(n));
+
+		for(auto &x: v)
+			for(auto &y: x)
+				cin >> y;
+		
+		vector<unordered_set<int>> vset(n);
+		int ind = 0; 
+
+		for(int i = 0; i < k; i++)
+			vset[0].insert(v[i][0]);
+
+		for(int j = 1; j < n; j++)
+		{
+			bool e = false;
+			for(int i = 0; i < k; i++)
+			{
+				if(vset[ind].count(v[i][j]) == 1)
+					e = true;
+			}
+			if(e)
+			{
+				for(int i = 0; i < k; i++)
+					vset[ind].insert(v[i][j]);
+			}
+			else
+			{
+				ind++;
+				for(int i = 0; i < k; i++)
+					vset[ind].insert(v[i][j]);
+			}
+		}
+		
+		// for(int i = 0; i <= ind; i++)
+		// {
+		// 	cout << "[";
+		// 	for(auto x: vset[i])
+		// 		cout << x << " ";
+		// 	cout << "], ";
+		// }
+		// cout << endl;
+
+		vector<int> ans(n+1);
+
+		if(vset.size() > 1)
+		{
+			for(int i = 0; i < ind; i++)
+			{
+				auto it1 = vset[i].begin();
+				auto it2 = vset[i+1].begin();
+				auto en1 = vset[i].end();
+				auto en2 = vset[i+1].end();	
+				auto it3 = it2;
+
+				for(; it1 != en1 && it2 != en2; it1++, it2++)
+				{
+					ans[*it1] = *it2;
+					it3 = it2;
+				}
+
+				for(; it1 != en1; it1++)
+					ans[*it1] = *it3;
+			}
+		}
+
+		cout << vset[0].size() << endl;
+		for(int i = 1; i <= n; i++)
+			cout << ans[i] << " ";
+		cout << endl;
+	}
+} 

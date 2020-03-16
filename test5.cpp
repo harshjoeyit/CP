@@ -1,154 +1,96 @@
-#include<bits/stdc++.h> 
-using namespace std; 
+#include<bits/stdc++.h>
+using namespace std;
 
-#define ll long long int
-#define fi first
-#define se second 
-  
-ll dp[MAX];
-ll value[MAX],wt[MAX],depth[MAX],fiocc[MAX];
-ll total;
-vector<ll>v[MAX];
-vector<ll>values;
-ll lookup[MAX][20];   
-  
-// Time Complexity:
-// O(q*sqrt(q)+n*sqrt(q))
+#define int long long int
+#define P 998244353
 
-void dfs2(ll i,ll p,ll d)
+
+int modExp(int x, int n)
 {
-    fiocc[i]=values.size();
-    depth[i]=d;
-    for(ll u:v[i])if(u!=p)
-    {
-        values.push_back(i);
-        dfs2(u,i,d+1);
-    }
-    values.push_back(i);
+    if(n==0)
+        return 1;
+    else if(n%2 == 0)
+        return modExp((x*x) % P, n/2);
+    else
+        return (x*modExp( (x*x) % P, (n-1)/2)) % P;
 }
 
-void pre()
+int nCr_modP(int n, int r)
 {
-    dfs2(1,-1,0);
-    ll n=values.size();
-    for(ll i=0;i<values.size();i++)
-        lookup[i][0] = values[i];
+    if(r == 0)
+        return 1;
 
-    for(ll i=1;i<20;i++)
-    {
-        for(ll j=0;j<n;j++)
-        {
-            if(lookup[j][i-1]==-1 || lookup[j+(1<<(i-1))][i-1]==-1)
-                continue;
-            if(depth[lookup[j][i-1]]<depth[lookup[j+(1<<(i-1))][i-1]]) 
-                lookup[j][i] = lookup[j][i-1];
-            else 
-                lookup[j][i] = lookup[j+(1<<(i-1))][i-1];
-        }
-    }
-}
-
-ll getlca(ll a,ll b)
-{
-    ll x=fiocc[a];
-    ll y=fiocc[b];
-
-    if(x>y)swap(x,y);
-    ll d=log2(y-x+1);
-
-    if(depth[lookup[x][d]] < depth[lookup[y-(1<<d)+1][d]])  
-        return lookup[x][d];
-
-    return lookup[y-(1<<d)+1][d];
-}
-
-ll getdis(ll a,ll b)
-{
-    ll x = getlca(a,b);
-    return depth[a]+depth[b]-2*depth[x];
-}
-
-ll dfs(ll i,ll p)
-{
-    ll ans=0,ans1=0;
-    for(ll u:v[i])
-    {
-        if(u==p)
-            continue;
-        ll x=dfs(u,i);
-        ans+=x;
-        ans1+=value[u];
-    }
-    ans+=ans1;
-    ans1+=wt[i];
-    value[i]=ans1;
-    return ans;
-}
-
-void dfs1(ll i,ll p)
-{
-    if(p!=-1){
-        ll x=dp[p];
-        x+=total-2*value[i];
-        dp[i]=x;
-    }
-    for(ll u:v[i])
-        if(u!=p)
-            dfs1(u,i);
-}
-
-void update()
-{
-    dp[1]=dfs(1,-1);
-    total=value[1];
-    dfs1(1,-1);
+    int temp = ((n % P) * modExp(r, P-2)) % P;                       // inverse factorial
+    return ((temp % P) * nCr_modP(n-1, r-1) % P) % P; 
 }
 
 
-int main()
+int calc(unordered_map<int, int> temp)
 {
-    ll a,b;
-    ll n,q;
-    cin>>n>>q;
-    for(ll i=1;i<=n;i++)
-        cin>>wt[i];
-    for(ll i=0;i<n-1;i++){
-        cin>>a>>b;
-        v[a].push_back(b);
-        v[b].push_back(a);
-    }
-    memset(lookup,-1,sizeof(lookup));
-    pre();
-    update();
-    ll c;
-    ll t=sqrt(q);
-    
-    for(ll i=0;i<q;i+=t)
-    {
-        map<ll,ll>query;
-        
-        for(ll j=i;j<min(q,i+t);j++)
-        {
-            cin>>a>>b;
-            if(a==1)
-            {
-                cin>>c;
-                query[b]=c;
-            }
-            else 
-            {
-                ll ans=dp[b];
-                for(pll u:query)
-                {
-                    ll x=getdis(b,u.fi);
-                    ans-=x*wt[u.fi];
-                    ans+=x*u.se;
-                }
-                cout<<ans<<'\n';
-            }
-        }
-        for(pll u:query)
-            wt[u.fi]=u.se;
-            update();
-    }
+	int Xor = 0, ans = 0, val, rem;
+	auto beg = temp.begin();
+	auto en = temp.end();
+
+	for(auto it = beg; it != en; it++)
+		Xor = Xor ^ it->second;
+	
+	if(Xor == 0)
+		return 0;
+	
+	for(auto it = beg; it != en; it++)
+	{
+		val = it->second;
+		if((Xor ^ val) < val)
+		{
+			rem = val - (Xor ^ val);
+			ans += nCr_modP(val, rem);
+		}
+	}
+	return ans;
+}
+
+signed main(){
+	int t;
+	cin >> t;
+	while(t--){
+		int n, q, x, l, r;
+		cin >> n;
+	
+		vector<unordered_map<int, int>> vmap(n+1);
+
+		for(int i = 1; i <= n; i++)
+		{
+			cin >> x;
+			vmap[i] = vmap[i-1];
+			++vmap[i][x];
+		}
+
+		// for(auto mp: vmap)
+		// {
+		// 	for(auto it = mp.begin(); it != mp.end(); it++)
+		// 		cout << "["<< it->first << "-" << it->second << "], ";
+		// 	cout << endl;
+		// }
+
+		cin >> q;
+		while(q--)
+		{
+			cin >> l >> r;
+			unordered_map<int, int> temp;
+			for(auto it = vmap[r].begin(); it != vmap[r].end(); it++)
+			{
+				int el = it->first;
+				int val = it->second;
+				if(vmap[l-1].count(el) == 0)
+					temp[el] = val;
+				else if((val - vmap[l-1][el]) > 0)
+					temp[el] = val - vmap[l-1][el];
+			}
+
+			// for(auto it = temp.begin(); it != temp.end(); it++)
+			// 	cout << "["<< it->first << "-" << it->second << "], ";
+			// cout << endl;
+			cout << calc(temp) << endl;
+		}
+	}
 }
