@@ -29,3 +29,6 @@ int main()
     cout << "Number of 1- bits in "<< x << " : " <<  __builtin_popcount(x)  << endl;
   
 }
+
+// removing the last set bit ans get the new number
+// i = i - (i & -i)
