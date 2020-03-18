@@ -1,54 +1,48 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define int long long int
+const int nMx = 100;
+int n, m;
+bool g[nMx][nMx];
+int match[nMx];
+bool seen[nMx];
 
-struct line_seg{
-    int p, q;
-    int r, s;
-};
+bool bpm(int u, bool seen[], int match[]) {
+    for(int v = 0; v < n; v++) {
+        if(g[u][v] && !seen[v]) {
+            seen[v] = true;
 
-signed main()
-{
-    int t;
-    cin >> t;
-    while(t--)
-    {
-        int n, q;
-        cin >> n >> q;
-
-        vector<int> v(n+1);
-        vector<line_seg> lines;
-
-        for(int i = 1; i <= n; i++)
-            cin >> v[i];
-
-        for(int i = 1; i < n; i++)
-            lines.push_back({i, v[i], i+1, v[i+1]});
-        
-        // for(auto l: lines)
-        // {
-        //     cout << "(" << l.p << ", "<< l.q << ") - (" << l.r << ", " << l.s << ")" << endl;
-        // }
-        while(q--)
-        {
-            int x1, x2, y, ans = 0;
-            scanf("%lld%lld%lld",&x1, &x2, &y);
-
-            for(auto l: lines)
-            {
-                if(l.p < x1 && l.r <= x1)
-                    continue;
-                if(l.p >= x2 && l.r > x2)
-                    continue;
-                if(l.q > y && l.s > y)
-                    continue;
-                if(l.q < y && l.s < y)
-                    continue;
-                
-                ++ans;
+            if(match[v] < 0 || bpm(v, seen, match)) {
+                match[v] = u;
+                return true;
             }
-            printf("%lld\n", ans);
         }
-    }   
+    }
+    return false;
+}
+
+int maxBPM() {
+    memset(match, -1, sizeof(match));
+
+    int res = 0;
+    for(int u = 0; u < m; u++) {
+        memset(seen, 0, sizeof(seen));
+
+        if(bpm(u, seen, match)) 
+            res++;
+    }
+    return res;
+}
+
+int main() {
+    cin >> m >> n;              // m applicants , n jobs
+    for(int i = 0; i < m; i++)
+        for(int j = 0; j < n; j++) 
+            cin >> g[i][j];
+    
+    cout << " max matching: " << maxBPM() << endl;
+    for(int i = 0; i < n; i++) 
+        if(match[i] >= 0)
+            cout << match[i] << " -> " << i << endl;
+    
 }

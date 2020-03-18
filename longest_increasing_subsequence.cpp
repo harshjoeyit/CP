@@ -32,9 +32,9 @@ int main()
             maxlen = dp[i];
     }   
 
-    for(auto &x: dp)
-        cout << x << " ";
-    cout << endl;
+    // for(auto &x: dp)
+    //     cout << x << " ";
+    // cout << endl;
 
-    cout << maxlen;
+    cout << maxlen << endl;
 }
