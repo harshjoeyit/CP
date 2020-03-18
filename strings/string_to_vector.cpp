@@ -3,7 +3,6 @@ using namespace std;
 
 vector<string> split_str(string s) {
     vector<string> v;
-
     string delimiter = " ";
     size_t pos = 0;
     string token;
@@ -17,6 +16,8 @@ vector<string> split_str(string s) {
 
 int main() {
     string s = "i am a lover boy "; 
+
+    // dont worry function is called only once
     for(auto x: split_str(s)) {
         cout << x << endl;
     }
