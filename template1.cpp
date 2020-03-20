@@ -69,19 +69,20 @@ int max(int i, int j)
 //###########################################################################################################################################################
 
 
+void solve() {
+
+}
+
 signed main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(0);
-    cout.tie(0);
     // for precision
     cout << fixed << setprecision(15);
 
     int T;
     cin >> T;
-
-    while(T--)
-    {
-        // code
+    while(T--) {
+        solve();
     }
 }

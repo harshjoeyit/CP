@@ -1,9 +1,23 @@
-// 1.
-// using it would make cin and cout faster 
-// although it wouldn't make a lot difference , but it may reduce the chances of time limit exceeded problem
-// if the problem remains then use printf and scanf instead 
-// use it ad the first line main function
-// ios_base::sync_with_stdio(false)
+#include<bits/stdc++.h>
+using namespace std;
 
-//2.
+int main() {
+    int a[] = {1, 2, 3, 3, 5, 7, 7, 8, 9};
+    int n = sizeof(a)/sizeof(a[0]);
 
+    // binary search in a sorted array
+
+    cout << binary_search(a, a+n, 5) << endl;
+    cout << binary_search(a, a+n, 3) << endl;
+    cout << binary_search(a, a+n, 4) << endl;
+
+    // binary of a number
+
+    cout << bitset<20>(n) << "\n";
+
+    // min of >=2 elements 
+
+    int x  = min({2, 3, 4, -1, 3, 7, 8, 9});
+    cout << x << endl;
+
+}
