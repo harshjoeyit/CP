@@ -18,15 +18,19 @@ void build(int a[], int v, int tl, int tr) {
 }
 
 int sum(int v, int tl, int tr, int l, int r) {
-    if (l > r) 
+    if(l > tr || r < tl)
         return 0;
-    if (l == tl && r == tr) {
+        
+    if(tl >= l && tr <= r)
         return t[v];
-    }
-    int tm = (tl + tr) / 2;
-    return sum(v*2, tl, tm, l, min(r, tm))
-            + sum(v*2+1, tm+1, tr, max(l, tm+1), r);
+
+    int tm = (tl + tr)/2;
+    int left= sum(2*v, tl, tm, l, r);
+    int right = sum(2*v+1, tm+1, tr, l, r);
+    return left+right;
 }
+
+
 
 void update(int v, int tl, int tr, int pos, int new_val) {
     if (tl == tr) {
@@ -41,21 +45,19 @@ void update(int v, int tl, int tr, int pos, int new_val) {
     }
 }
 
-void update_range(int index, int tl, int tr, int l, int r, int inc)
+void update_range(int v, int tl, int tr, int l, int r, int inc)
 {
     if(l > tr || r < tl)
         return;
-
     if(tl == tr)
     {
-        t[index] += inc;
+        t[v] += inc;
         return;
     }
-
     int tm = (tl + tr)/2;
-    update_range(2*index, tl, tm, l, r, inc);
-    update_range(2*index + 1, tm + 1, tr, l, r, inc); 
-    t[index] = t[2*index] + t[2*index + 1]; 
+    update_range(2*v, tl, tm, l, r, inc);
+    update_range(2*v+1, tm + 1, tr, l, r, inc); 
+    t[v] = t[2*v] + t[2*v+1]; 
 }
 
 signed main() {
