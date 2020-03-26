@@ -7,7 +7,7 @@ const int N = 10000;
 vector<int> G[N];
 int vis[N];
 int euler[2*N];
-vector<pair<int, int>> first_last(N);
+vector<pair<int, int>> occ(N);
 
 
 void eulerTree(int u, int &indx) 
@@ -36,20 +36,20 @@ void calc_subtree_nodes(int n)
 {
 
     for(int i = 1; i <= n; i++)
-        first_last[i].first = first_last[i].second = -1;
+        occ[i].first = occ[i].second = -1;
 
     for(int i = 0; i < 2*n-1; i++)
     {
         int v = euler[i];
-        if(first_last[v].first == -1)
-            first_last[v].first = first_last[v].second = i;
+        if(occ[v].first == -1)
+            occ[v].first = occ[v].second = i;
         else
-            first_last[v].second = i;
+            occ[v].second = i;
     }
 
     cout << endl;
     for(int i = 1; i <= n; i++)
-        cout << i << "- "<< (first_last[i].second - first_last[i].first)/2 << endl;
+        cout << i << "- "<< (occ[i].second - occ[i].first)/2 << endl;
 }
 
 
