@@ -13,9 +13,9 @@ void print_all_possible_sums(int a[], int n, int i, int sum, set<int> &s)
 
 int main()
 {
-    int a[] = {1, 4, 6, 10};
+    int a[] = {2, 5, 1};
     set<int> s;
-    print_all_possible_sums(a, 4, 0, 0, s);
+    print_all_possible_sums(a, sizeof(a)/sizeof(a[0]), 0, 0, s);
     for(auto x: s)
         cout << x << " ";
     cout << endl;
