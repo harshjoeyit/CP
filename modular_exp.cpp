@@ -2,14 +2,14 @@
 using namespace std;
 
 // complexity = O(log n)
-int modularExponentiation(int x, int n, int M)
+int modEx(int x, int n, int M)
 {
     if(n==0)
         return 1;
     else if(n%2 == 0)
-        return modularExponentiation((x*x)%M, n/2, M);
+        return modEx((x*x)%M, n/2, M);
     else
-        return (x*modularExponentiation( (x*x)%M, (n-1)/2, M)) % M;
+        return (x*modEx( (x*x)%M, (n-1)/2, M)) % M;
 }
 
 
@@ -58,7 +58,7 @@ ll mulmod(ll a, ll b, ll mod)
 int main()
 {
     cout<<power(5, 9)%13<<endl;
-    cout<<modularExponentiation(5, 9, 13)<<endl;
+    cout<<modEx(5, 9, 13)<<endl;
     cout<<mulmod(987,654,540)<<endl;
     cout<<(987*654)%540<<endl;
 }
