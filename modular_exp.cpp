@@ -1,21 +1,24 @@
 #include<iostream>
 using namespace std;
 
+const int M = 1e9+7;
+
 // complexity = O(log n)
-int modEx(int x, int n, int M)
-{
+int modEx(int x, int n) {
     if(n==0)
         return 1;
     else if(n%2 == 0)
-        return modEx((x*x)%M, n/2, M);
+        return modEx((x*x)%M, n/2);
     else
-        return (x*modEx( (x*x)%M, (n-1)/2, M)) % M;
+        return (x*modEx( (x*x)%M, (n-1)/2)) % M;
 }
 
+int invMod(int x) {
+    return modEx(x, M-2);
+}
 
 // complexity of the problem = O(log y)
-int power(int x, unsigned int y) 
-{ 
+int power(int x, unsigned int y) { 
     int res = 1;     // Initialize result 
    
     while (y > 0) 
