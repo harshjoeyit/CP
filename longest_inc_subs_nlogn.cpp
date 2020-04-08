@@ -49,7 +49,7 @@ int main() {
     }
     cout << LIS(a) << endl;
     cout << LNDS(a) << endl;
-    
+    cout << LIS2(a) << endl;
     //ex: 
     // 5
     // 1 1 2 1 3

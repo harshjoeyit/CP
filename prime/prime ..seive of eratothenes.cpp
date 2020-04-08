@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+const int mxN = 1e5+1;
+int prime[mxN];
 
 void isprime(int prime[],int n)  // array are passed default;y with reference
 {
@@ -21,6 +23,21 @@ void printprime(int prime[],int n)
         if(prime[i]==1)
             cout<<i<<" ,";
      }
+}
+
+
+// prime[i] - smallest prime factor of i;
+
+void sieve() {                              
+    for(int i=2; i*i <= mxN; i++) {
+        if(!prime[i]) {
+            for(int j=2*i; j<= mxN; j=j+i)
+                prime[j] = i;   
+        }
+    }
+    for(int i=1; i<=mxN; i++) 
+        if(!prime[i])
+            prime[i] = i;
 }
 
 int main()

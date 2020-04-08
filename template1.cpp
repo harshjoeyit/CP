@@ -10,6 +10,12 @@ using namespace std;
 #define vi vector<int>
 #define pii pair<int,int>
 
+void print(int a[], int l, int r) {
+    for(int i=l; i<=r; i++)
+        cout << a[i] << " ";
+    cout << "\n";
+}
+
 template <typename T>
 void print(vector<T> v)
 {
