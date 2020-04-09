@@ -81,7 +81,7 @@ signed main() {
     // b = b ^ (1 << j)
 
 
-    // value of leat significant bit from left 
+    // value of least significant bit from left 
     // v = (b & (~b))
 
 

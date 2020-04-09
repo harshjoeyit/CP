@@ -148,7 +148,7 @@ int main()
     // capturing a local variable and decrementing its value until it reaches zero 
     int cap = 10;
     auto ret_lambda = [&](){ while( cap != 0 ) cap--; return cap;};
-    // reference is necesssary since we are changing the value od the captured item
+    // reference is necesssary since we are changing the value of the captured item
 
     cout<<"cap: "<<ret_lambda()<<endl;
 
