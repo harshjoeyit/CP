@@ -39,6 +39,25 @@ vector<int> factorize(int n)
     return res;
 }
 
+vector<int> prime_factors(int n) {
+    vector<int> primef;
+
+    for(int i=2;i*i<=n;i++){
+        if(n%i==0){
+            while(n%i==0){
+                n=n/i;
+            }
+            primef.push_back(i);
+        }
+    }
+
+    if(n>1){
+        primef.push_back(n);
+    }
+    
+    return primef;
+}
+
 
 int divisors(int n) 
 {

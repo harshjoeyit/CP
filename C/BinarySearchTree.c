@@ -51,7 +51,7 @@ BSTNode* deleteNode(BSTNode *root, int data)
         printf("not present\n");
         return root;
     }
-    
+
     else if(data > root->data)
         root->right = deleteNode(root->right, data);
     else if(data < root->data) 
@@ -324,6 +324,9 @@ void menu()
     printf("7. LL to BST\n");
     printf("8. Next Greater or equal to\n");
     printf("9. Prune BST\n");
+    
+    // NOTE: check is the tree is BST - do a inorder traversal - if sorted then BST
+    //          or write a recursive code checking left & right child and inorder succ && predecessor
 }
 
 
