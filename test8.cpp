@@ -1,17 +1,9 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 
 #define int long long 
 
-
-// find max element in the window of size k in an array, 
-// window shifts by 1 index every time 
-
-
-
 void solve() {
-    
 }
 
 int main() {

@@ -1,3 +1,9 @@
+/*
+ques -
+Given two strings str1 and str2, find the length of the smallest string which has both, str1 and str2 as its sub-sequences.
+ans = s1.len + s2.len - lcs(s1, s2);
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -39,15 +45,18 @@ int lcs(string &s1, string &s2)
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
         }
     }
-    for(int i = 1; i < n; i++)
-    {
-        for(int j = 1; j < m; j++)
-        {
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-    print_lcs(s1, s2, dp, n, m);
+    // print
+
+    // for(int i = 1; i < n; i++)
+    // {
+    //     for(int j = 1; j < m; j++)
+    //     {
+    //         cout << dp[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+    // print_lcs(s1, s2, dp, n, m);
+    
     return dp[n-1][m-1];
 }
 
