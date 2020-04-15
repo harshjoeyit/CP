@@ -1,6 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+
+int kadane(int a[], int n) {
+    int mxsum = 0, curr = 0;
+    for(int i=0; i<n; i++) {
+        if(curr+a[i] > 0) {
+            curr = curr + a[i];
+            mxsum = max(curr, mxsum);
+        } else {
+            curr = 0;
+        }
+    }
+    return mxsum;
+}
+
+// for neg elements too
+void maxsum_subarray() {
+    int n;
+    cin >> n;
+    int a[n];
+    
+    int maxneg = -(1e17);
+    bool allneg = 1;
+    
+    for(int i=0; i<n; i++) {
+        cin >> a[i];
+        if(a[i] >= 0)
+            allneg = 0;
+        
+        maxneg = max(maxneg, a[i]);
+    }
+    
+    if(allneg) {
+        cout << maxneg << endl;
+    } else {
+        cout << kadane(a, n) << endl;  
+    }
+}
+
+
+
 // an array consits of both positive and negetive numbers find the subarray with the maximum sum - max_sum_subarray_Kadane]s Algo 
 
 // min su, subarray kadanes approach 

@@ -3,14 +3,17 @@ using namespace std;
 
 #define int long long int
 
-template <typename T>
-void print(vector<T> v)
-{
-    for(auto x: v)
-        cout << x << " ";
-    cout << endl;
+void solve() {
+
 }
 
 signed main()
 {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int t;
+    cin >> t;
+    while(t--)
+        solve();
 }

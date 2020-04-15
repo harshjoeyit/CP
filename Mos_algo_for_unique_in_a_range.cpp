@@ -8,7 +8,7 @@ This is other but efficient appproch
 Complexity - O(n * sqrt(n))
 */
 
-// answer queries for number of unique elements in range [l,r]
+// problem st: answer queries for number of unique elements in range [l,r]
 
 #include<bits/stdc++.h> 
 using namespace std; 

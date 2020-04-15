@@ -73,56 +73,46 @@ void insert_node(struct node **head , int info , int pos)                   // a
 }
 
 
+#define Node struct node 
 
-// issue if k > nodes - resolve
-// approach - break a set of k nodes at a time and then link this set next set of k nodes , if  set of k is not formed , then link to rest list unchanged
-struct node* reverse_in_groups_of_k( struct node **head , int k )
-{
-
-    struct node *c ,*p, *n, *tt , *new_head;           //c = current, p = previous, tt = tail of the set formed of k nodes
-    c = *head;                                          // start from head 
-    n = c->next;
-    new_head = NULL;
-    int i;
-
-    while( c != NULL )                                 // untill c reaches NULL
-    {
-        p = NULL;                                       // to make set of k , we need p pointer to be NULL in each iteration
-        tt = c;                                         // c becomes tt in each iteration
-    
-        label:
-        i = 1;
-        while( (i<=k) && c )                            // removing and reversing k nodes 
-        {
-            c->next = p;
-            p = c; 
-            c = n;
-            if(n)
-                n = n->next;
-            ++i;
-        }
-
-        if( (i-1) != k)                                 // if there are less than k nodes ,  
-        {
-            c = p;                                      // REREVERSING THE REVERSED ELEMENTS IN THE previous while loop ,which terminates when c becomes NULL 
-            p = NULL;
-            n = c->next;
-            k = i-1;                                    // no wwe want the label loop to run for i-1 times so k = i-1 as remaining nodes = i-1                  // we start 
-            goto label;                                 // go to loop agian 
-        }                                               // now if condition is checked again then i-1 = k
-
-        if(new_head == NULL)
-            new_head = p;                               // making new_head exception for 1st run
-        if( tt != *head )                               // exception for 1st run
-            (*head)->next = p;
-        *head = tt;                                     // changing head to tail of next set of k nodes
-    }
-    *head = new_head;
-    return *head;
-
+struct node *reverse_in_groups_of_k (struct node *head, int k)
+{ 
+    stack<Node*> mystack; 
+    Node* current = head; 
+    Node* prev = NULL; 
+  
+    while (current != NULL) { 
+  
+        // Terminate the loop whichever comes first 
+        // either current == NULL or count >= k 
+        int count = 0; 
+        while (current != NULL && count < k) { 
+            mystack.push(current); 
+            current = current->next; 
+            count++; 
+        } 
+  
+        // Now pop the elements of stack one by one 
+        while (mystack.size() > 0) { 
+  
+            // If final list has not been started yet. 
+            if (prev == NULL) { 
+                prev = mystack.top(); 
+                head = prev;                                        // final head
+                mystack.pop(); 
+            } else { 
+                prev->next = mystack.top(); 
+                prev = prev->next; 
+                mystack.pop(); 
+            } 
+        } 
+    } 
+  
+    // Next of last element will point to NULL. 
+    prev->next = NULL; 
+  
+    return head; 
 }
-
-
 
 
 void display(struct node *head)
@@ -165,6 +155,6 @@ int main()
 
     cout<<"k: ";
     cin>>n;
-    head = reverse_in_groups_of_k( &head ,n);
+    head = reverse_in_groups_of_k(head ,n);
     display(head);
 }
