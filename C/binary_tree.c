@@ -536,6 +536,49 @@ void display_ZIGZAG( struct binaryTreeNode **root )
 
 }
 
+/*
+ZigZag traversal level order 
+
+void printSpiral(struct Node* root) 
+{ 
+    if (root == NULL) 
+        return; // NULL check 
+  
+    stack<struct Node*> s1; // For levels to be printed from right to left 
+    stack<struct Node*> s2; // For levels to be printed from left to right 
+  
+    // Push first level to first stack 's1' 
+    s1.push(root); 
+  
+    // Keep printing while any of the stacks has some Nodes 
+    while (!s1.empty() || !s2.empty()) { 
+
+        while (!s1.empty()) { 
+            struct Node* temp = s1.top(); 
+            s1.pop(); 
+            cout << temp->data << " "; 
+  
+          
+            if (temp->right) 
+                s2.push(temp->right); 
+            if (temp->left) 
+                s2.push(temp->left); 
+        } 
+  
+        
+        while (!s2.empty()) { 
+            struct Node* temp = s2.top(); 
+            s2.pop(); 
+            cout << temp->data << " "; 
+  
+            if (temp->left) 
+                s1.push(temp->left); 
+            if (temp->right) 
+                s1.push(temp->right); 
+        } 
+    } 
+}
+*/
 
 
 int if_sum_path_possible( struct binaryTreeNode *root , int sum )
