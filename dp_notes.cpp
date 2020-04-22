@@ -103,12 +103,29 @@ Another variant -
 Some blocks are blocked and cannot be travelled to 
 so for such blocks
 
-if(Mat[i][j] == -1)
-    dp[i][j] = 0;
+bool f = 0;
+for(int j=1; j<m; j++) {
+    if(Mat[0][j] == '#')                // no block after  a '#' can be reaached
+        f = 1;
+    if(f)   
+        dp[0][j] = 0;
+    else 
+        dp[0][j] = 1;
+}
+f = 0;
+for(int i=1; i<n; i++) {
+    if(Mat[i][0] == '#')                // no block after a '#' can be reached 
+        f = 1;
+    if(f)
+        dp[i][0] = 0;
+    else 
+        dp[i][0] = 1;
+}
+
 
 for(i: 1-n)
     for(j: 1-n)
-        if(Mat[i][j] == -1)
+        if(Mat[i][j] == '#')
             dp[i][j] = 0;               // number of ways to reach here is zero 
                                         // it coontributes 0 to next blocks 
 

@@ -20,4 +20,13 @@ int main()
         cout << "not" << endl;
     else
         cout << "power" << endl;
+
+
+    /*
+    int m = n-1;
+    if((m & n) == 0 && n != 0)       n = ...00010000....   m = ....000001111
+        cout << "YES\n";
+    else
+        cout << "NO\n";
+    */
 }

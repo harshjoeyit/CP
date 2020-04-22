@@ -12,8 +12,7 @@ void findTriplets(int arr[], int n)
   
     for (int i=0; i<n-1; i++) 
     { 
-        // Find all pairs with sum equals to 
-        // "-arr[i]" 
+        // Find all pairs with sum equals to "-arr[i]"
         unordered_set<int> s; 
         for (int j=i+1; j<n; j++) 
         { 
