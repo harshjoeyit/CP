@@ -5,7 +5,7 @@ using namespace std;
 const int mxN = 100;                 
 const int mxW = 1000000005;
 const int mxV = 1000;          
-int dp[mxN+5][mxN*mxV + 5];                      //dp[objects][value sum] - denotes min wt possible for a value sum of i objects
+int dp[mxN+5][mxN*mxV + 5];                      // dp[objects][value sum] - denotes min wt possible for a value sum of i objects
 int n, capc;
 
 void solve() {
