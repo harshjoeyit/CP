@@ -5,7 +5,7 @@ using namespace std;
 #define mxN 1000
 // To store the states of DP 
 int dp[mxN][mxN]; 
-int a[mxN], n, sum;    
+int a[mxN], n, sum;          
 
 int count_subsets_with_given_sum(int i, int s) {
     if(i == n) {

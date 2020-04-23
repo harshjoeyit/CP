@@ -2,7 +2,6 @@
 using namespace std;
 
 
-
 int main()
 {
     int n;
@@ -29,4 +28,18 @@ int main()
     else
         cout << "NO\n";
     */
+
+
+
+   /*
+        Compute the biggest power of 2 that is a divisor of x. Example: f(12) = 4
+
+        1 << __builtin_ctz(x)
+
+
+
+        Compute the smallest power of 2 that is not smaller than x. Example: f(12) = 16
+
+        1 << (32 - __builtin_clz (x - 1))
+   */
 }

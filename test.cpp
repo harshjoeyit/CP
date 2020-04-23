@@ -1,79 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define int long long
-
-struct mons {
-	int p, nxt, i;
-
-	bool operator < (const mons &m) const {
-        long double dp = (long double)p;
-		long double mdp = (long double)m.p;
-
-		return (dp/nxt < mdp/m.nxt);
-    }
-};
-
-const int mxN = 3e5+10;
-int n;
-pair<int, int> a[mxN];
-
-int count_bullets(set<mons> &s) {
-	int bul = 0, j, p, nxt;
-
-	while(!s.empty()) {
-		auto ob = *(s.begin());
-		s.erase(s.begin());
-		
-		bul += ob.p;
-		cout << "poped: ";
-		cout << ob.p << " " << ob.nxt << " " << ob.i <<  "\n";
-		j = ob.i + 1;
-		p = a[j].first;
-		nxt = a[j].second;
-
-		auto it = s.find({p, nxt, j});
-		if(it != s.end()) {
-
-			if(ob.nxt > p) {
-				s.erase(it);
-				a[j].first = 0;
-			} else {
-				s.erase(it);
-				a[j].first = p - ob.nxt;
-				s.insert({a[j].first, a[j].second, j});
-			}
-
-		} else {
-			cout << "not found\n";
-			break;
-		}
-
-		// cout << "set\n";
-		// for(auto ob: s)
-		// 	cout << ob.p << " " << ob.nxt << " " << ob.i <<  "\n";
-	}
-
-	return bul;
-}
+#define int long long int
+const int mxN = 2e5+10;
+int n, a[mxN], k;
 
 void solve() {
-	cin >> n;
-	for(int i=0; i<n; i++) {
-		cin >> a[i].first >> a[i].second;
-	}
-	a[n].first = a[0].first;
-	a[n].second = a[0].second;
+    cin >> n >> k;
+    for(int i=0; i<n; i++)
+        cin >> a[i];
+    
+    map<int, int> mp;
+    int maxlb = 0, minub = 2*k, s, lb, ub, x, y;
 
-	set<mons> s;
+    for(int i=0; i<n/2; i++) {
+        x = a[i];
+        y = a[n-i-1];
+        s = x+y;
+        ++mp[s];
 
-	for(int i=0; i<n; i++) {
-		s.insert({a[i].first, a[i].second, i});
-	}
-	
-	// for(auto ob: s)
-	// 	cout << ob.p << " " << ob.nxt << " " << ob.i <<  "\n";
-	cout << count_bullets(s) << "\n";
+        lb = min(x, y);
+        ub = max(x, y) + k;
+        maxlb = max(maxlb, lb);
+        minub = min(minub, ub);
+    }
+    // cout << maxlb << " " << minub << endl;
+    int cnt, ans = n/2;            
+    
+    for(auto p: mp) {
+        s = p.first;
+        cnt = p.second;
+        if(maxlb <= s && s <= minub) {     
+            ans = min(ans, n/2-cnt);
+        }
+    }   
+
+    cout << ans << "\n";
 }
 
 signed main() {
@@ -83,5 +45,5 @@ signed main() {
     int t;
     cin >> t;
     while(t--)
-    	solve();
+        solve();
 }
