@@ -11,10 +11,13 @@ vector<int> *dyn_vec()
 
 void input_dyn_vec( vector<int> *pvec )
 {
+    int n;
+    cin >> n;
     int inp;
     cout<<"input: ";
-    while( cin>>inp )
+    while(n-- )
     {
+        cin >> inp;
         // using the arrow operator 
         pvec->push_back( inp );
         cout<<"input: ";
@@ -32,7 +35,7 @@ void use_dyn_vec( vector<int> *pvec )
     for_each( pvec->begin() , pvec->end() , []( int i ){ cout<<i<<" "; });
     // deallocating the mempry when the task is complete
     delete pvec;
-    // pvec (local ) ivalidated , here
+    // pvec ivalidated here
 }
 
 

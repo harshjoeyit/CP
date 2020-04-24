@@ -88,23 +88,8 @@ struct node *merge_lists_with_sort_method2( struct node *head1 , struct node *he
         if( head1->data <= head2->data )
         {
             temp->next = head1;                                                  // later the node that is being attached to becomes temp
-            temp = temp->next;                                                  
-            head1 = head1->next;                                                  // the lesser head shifts to the next node 
-        }
-        else
-        {                                                                         // again heads are compared 
-            temp->next = head2;                                                    // the list where temp is pointing gets detached from there if a lesser head is found in another list
-            temp = temp->next;                                                      // detached lists is joined to the next head an process of detaching and linking to lesser head contoinues 
-            head2 = head2->next;                                                    // otherwise temp shifts , head shifts(if the compared head is greater ) 
-        }
-    }
-    if(head1 != NULL )                                                              // we are out of the loop  
-        temp->next = head1;                                                         // remaining nodes in any of the list are linked right away
-    if(head2 != NULL ) 
-        temp->next = head2;
-    temp = newNode->next;
-    free(newNode);
-    return temp;
+            te
+            
 }
 
 

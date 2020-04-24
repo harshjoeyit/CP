@@ -19,99 +19,18 @@ int main()
     vector<int> vec1;
     vector<int> v{5,3,6,8,7,1,2,12};
 
-    // another type of declaration
-    int in;
-    vector< decltype(in) > dec_i_vec{1,2,3,4,5,6,7};
-    for( auto &ref : dec_i_vec )
-        cout<<ref<<" ";
-
-// iterators ...........................
-    vector<int> v(10,2);
-    auto v2(v);
-    auto iter=v2.begin();
-    auto iter2=v2.end();
-
-    //.. imp...........................................
+    // 2d - array
     int n = 10, m = 5;
     vector<vector<int>> grid;
     grid.assign(n, vector<int>(m, 0));
 
-    while(iter<iter2)
-    {
-        cout<<*iter<<" ";
-        iter++;
-    }cout<<endl;
- // size changes for each push_back
-
-    vec1.push_back(2); // enters value at the end
-    vec1.push_back(7);
-    vec1.push_back(5);
-    vec1.push_back(9);
-    vec1.push_back(3);
-    vec1.push_back(12);
-    vec1.push_back(5);
-
- //   vec1.erase(vec1.begin(),vec1.end());
-    cout<<" vector: ";
-    for(unsigned int i=0; i<vec1.size(); i++)
-    {
-        cout<<vec1[i]<<" ";
-    }
-
-    vec1.insert(vec1.begin()+2,11);  //add the element before the index number specified
-
-        cout<<"\n vector: ";
-    for(unsigned int i=0; i<vec1.size(); i++)
-    {
-        cout<<vec1[i]<<" ";
-    }
-
-
-    vec1.erase(vec1.begin()+3);
-
-        cout<<"\n vector: ";
-    for(unsigned int i=0; i<vec1.size(); i++)
-    {
-        cout<<vec1[i]<<" ";
-    }
-
-    if(vec1.empty())  // vec1.empty() returns the boolean value if the vector is empty or not
-    {
-        cout<<"\n is empty";
-    }
-    else{
-        cout<<" \n not empty";
-    }
-
-
-    vec1.clear();
-
-        cout<<"\n vector: ";
-    for(unsigned int i=0; i<vec1.size(); i++)
-    {
-        cout<<vec1[i]<<" ";
-    }
-
-    if(vec1.empty())  // vec1.empty() returns the boolean value if the vector is empty or not
-    {
-        cout<<"\n is empty"<<endl;
-    }
-    else{
-        cout<<" \n not empty"<<endl;
-    }
-
-    cout<<" size of vector= "<<sizeof(vector <int>);
-
+    // array to vector
     int fg[] = {1,2,3,4,5,6,7,8};
     vector<int> vectr(fg+3,fg+6);
 
     //a.swap(b); swaps a with b (a and b are vectors )
-    // swap(a,b) // same job done
-
-    vector<int>::difference_type count;
-    count = abs(vec1.end() - vec1.begin());
-    cout<<endl<<count;  // counts the elements in the container 
-
+    // swap(a,b)  same job done
+    
     vector<int> vec={97,98,99,100,101,102,103,104,105};
 
     vector<char> cvec(vec.begin(),vec.end());  // intializing by changing the type if possible
@@ -120,40 +39,12 @@ int main()
 
     vector<int> vec2{10,20,30,40,50,60,70,80,90,100,101,102,103};
     initializer_list<int> il{2,4,6,8,10};
-    vec2.assign(il);  // all the eleemnts of the initialzer list are copied in the vector 
+    // all the eleemnts of the initialzer list are copied in the vector
+    vec2.assign(il);   
 
-    // random access
-    //similar to the operation vectorr[2]
-    cout<<"element at position 2: "<<vec1.at(2)<<endl;
+    // front, back
     cout<<"element in the front: "<<vec1.front();
     cout<<"element in the end : "<<vec1.back();
-
-    // to add or remove
-
-    // removes last element 
-    v.pop_back(); 
-  
-    // prints the vector 
-    cout << "\nThe vector elements are: "; 
-    for (int i = 0; i < v.size(); i++) 
-        cout << v[i] << " "; 
-  
-    // inserts 5 at the beginning 
-    v.insert(v.begin(), 5); 
-  
-    cout << "\nThe first element is: " << v[0]; 
-  
-    // removes the first element 
-    v.erase(v.begin()); 
-
-    // to replace elements in the vector 
-    // replaces 1 element of the vector with 5
-    v.emplace(v.begin(), 5); 
-    cout << "\nThe first element is: " << v[0]; 
-  
-    // Inserts 20 at the end in place of existing value 
-    v.emplace_back(30); 
-    // cannot use emplace front
 
     //inserting 
 
@@ -173,6 +64,7 @@ int main()
    cout<<endl<<*(it)<<endl;
 
    vec1.insert(vec1.end(),{1,2,3,4,5,6,7,8,9});
+
 
    // continuous input at the beginning
     vector<int> vecx;

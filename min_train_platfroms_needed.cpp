@@ -1,3 +1,12 @@
+
+/*
+version 1: trains arrive on stations min platfrom needed
+
+version 2: guest arrive in restraunt min table needed
+
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 

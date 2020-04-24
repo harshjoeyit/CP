@@ -1,10 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-typedef long long int ll;
-typedef long double ld;
-
-
 // Direct XOR of all numbers from 1 to n 
 int computeXOR(int n) 
 { 
@@ -21,14 +17,4 @@ int computeXOR(int n)
 int main()
 {
     cout << computeXOR(13) << endl;
-
-    int x = 8;
-
-    cout << "Number of leading zeroes in "<< x << " : " <<  __builtin_clz(x) << endl;
-    cout << "Number of trailing zeroes in "<< x << " : " <<  __builtin_ctz(x) << endl;
-    cout << "Number of 1- bits in "<< x << " : " <<  __builtin_popcount(x)  << endl;
-  
 }
-
-// removing the last set bit ans get the new number
-// i = i - (i & -i)
