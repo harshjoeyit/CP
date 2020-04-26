@@ -15,16 +15,7 @@ void graph_input() {
         g[y].push_back(x);
     }
 }
-void tree_input() {
-    cin >> n;
-    for(int i=0; i<n-1; i++) {
-        int x,y;
-        cin >> x >> y;
-        --x; --y;        // v = {0, 1, 2, 3, 4....}
-        g[x].push_back(y);
-        g[y].push_back(x);
-    }
-}
+c
 void graph_disp() {
     for(int u=0; u<n; u++) {
         cout << u << " : ";

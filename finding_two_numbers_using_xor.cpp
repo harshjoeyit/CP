@@ -3,6 +3,14 @@
 You are given an array A containing 2*N+2 positive numbers, out of which 2*N numbers exist in pairs 
 whereas the other two number occur exactly once and are distinct.
 You need to find the other two numbers and print them in ascending order.
+
+Realted problem : 
+Given an unsorted array of size N of positive integers. 
+One number 'A' from set {1, 2, …N} is missing 
+and one number 'B' occurs twice in array. Find these two numbers.
+
+make the final array = {a[0],.... a[n-1], 1, 2, 3, 4.... N};
+proceed similarly
 */
 
 
