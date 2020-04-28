@@ -5,6 +5,9 @@ const int mxN = 1e6+10;
 vector<pair<int, int>> divs[mxN + 7];               // divs - pairs of {prime factor, its power}
                                                     // eg. divs[12] --> {2, 2}, {3, 1}
 
+/*
+prime factors and their powers 
+*/
 void sieve(int n) {
 	for(int i = 2; i <= n; i++) {
 	    if(divs[i].size()) 
@@ -24,25 +27,14 @@ void sieve(int n) {
 	}
 }
 
-vector<int> factorize(int n) 
-{
-    vector<int> res;
-    for (int i = 2; i * i <= n; ++i) {
-        while (n % i == 0) {                // loop fo checking the repeated factors 
-            res.push_back(i);
-            n /= i;                         
-        }
-    }
-    if (n != 1) {
-      res.push_back(n);
-    }
-    return res;
-}
 
-vector<int> prime_factors(int n) {
+/*
+Prime Factors
+*/
+vector<int> factorize(int n) {
     vector<int> primef;
 
-    for(int i=2;i*i<=n;i++){
+    for(int i=2; i*i<=n; i++){
         if(n%i==0){
             while(n%i==0){
                 n=n/i;
@@ -50,26 +42,25 @@ vector<int> prime_factors(int n) {
             primef.push_back(i);
         }
     }
-
     if(n>1){
         primef.push_back(n);
     }
-    
     return primef;
 }
 
 
-int divisors(int n) 
-{
+/*
+All divisors 
+*/
+int divisors(int n)  {
     map<int, int> freq;
-    
-    for (int i = 2; i * i <= n; ++i) 
-        while (n % i == 0) 
-        {                // loop fo checking the repeated factors 
+    for (int i=2; i*i<=n; ++i) { 
+        while (n % i == 0) {                
             ++freq[i];
             n /= i;                         
         }
-    if (n != 1) 
+    }
+    if(n != 1) 
         ++freq[n];
 
     int d = 1;

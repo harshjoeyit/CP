@@ -1,38 +1,24 @@
 #include<iostream>
 using namespace std;
 
-// for checking prime number
-
-bool isprime(int n)
-{
-    if(n==0 || n==1)
-        return false;
-    else
-    if(n==2 ||n==3)
-        return true;
-
-    else
-    if(n>3)
-    {
-        for(int i=2; i<=n/2; i++)
-        {
-            if(n%i==0)
-                return false;
-            else
-                return true;
+// O(sqrt(n))
+bool isPrime(int N) {
+    int count = 0;
+    for(int i=2; i*i <=N;++i) {
+        if( N % i == 0) {
+            ++count;
         }
     }
-
+    return ((count==0) ? 1: 0);
 }
 
-// second function
 
 bool check(int I, long long A[10])
 {
         int x=0;
         for(long long J=0; J<=I; J++)
         {
-            if(isprime(A[J])==0)
+            if(isPrime(A[J])==0)
             {
                 cout<<A[J]<<endl;
                // return false;
@@ -66,7 +52,7 @@ main()
         for(long long j=0; j<=i; j++)
             s+=a[j];
 
-        if(isprime(N))
+        if(isPrime(N))
         {
 
         cout<<"worked: ";

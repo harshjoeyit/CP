@@ -1,114 +1,64 @@
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
 #define int long long int
-const int mxN = 2e5+10;
-vector<int> g[mxN];
-int a, b, c, n, m, vis[mxN], p[mxN], dis[mxN];
-
-void bfs(int u, int w, int par[]) {
-    memset(vis, 0, sizeof(vis));
-    queue<int> q;
-    q.push(u);
-    vis[u] = 1;
-    par[u] = -1;
-
-    while(!q.empty()) {
-        int u = q.front();  q.pop();
-        if(u == w) 
-            break;
-        for(auto v: g[u]) {
-            if(!vis[v]) {
-                vis[v] = 1;
-                par[v] = u;
-                q.push(v);
-            }
-        }
-    }
-}
-
-int calc_dis(int u, int w) {
-    memset(dis, 0, sizeof(dis));
-    memset(vis, 0, sizeof(vis));
-    queue<int> q;
-    q.push(u);
-    vis[u] = 1;
-    dis[u] = 0;
-
-    while(!q.empty()) {
-        int u = q.front();  q.pop();
-        if(u == w) 
-            break;
-        for(auto v: g[u]) {
-            if(!vis[v]) {
-                vis[v] = 1;
-                dis[v] = dis[u]+1;
-                q.push(v);
-            }
-        }
-    }
-    return dis[w];
-}
 
 void solve() {
-    cin >> n >> m >> a >> b >> c;
-    --a; --b; --c;
-    int x, y;
+    int n, k;
+    cin >> n >> k;
 
-    for(int i=0; i<m; i++)
-        cin >> p[i];
-    sort(p, p+m);
-
-    for(int i=0; i<n; i++)
-        g[i].clear();
-
-    for(int i=0; i<m; i++) {
-        cin >> x >> y;
-        --x; --y;
-        g[x].push_back(y);
-        g[y].push_back(x);
-    }
-    
-    int par1[n];            // for a - b 
-    int par2[n];            // for b - c
-    
-    bfs(a, c, par1);
-    bfs(b, c, par2);
-
-    int v = c;
-    while(par1[v] == par2[v]) {
-        v = par1[v];
+    map<int, int, greater<int>()> mp;
+    int sz;
+    for(int i=1; i<=n; i++) {
+        cin >> sz;
+        ++mp[sz];
     }
 
-    // v is the intersection 
-    // cout << "v: " << v <<endl; 
+    int mxcnt[n+1];
+    for(int i=1; i<=n; i++) 
+        cin >> mxcnt[i];
+    
+    vector<int> ans[n+1];
+    int t = 0;
+    int total_cnt = 0;
 
-    int av = calc_dis(a, v);
-    int bv = calc_dis(b, v);
-    int cv = calc_dis(c, v);
+    while(total_cnt < n) {
+        int ins_cnt = 0;
 
-    // cout << av << " " << bv << " " << cv << endl;
-    int ans = 0;
+        for(auto it = mp.begin(); it!= mp.end(); it++) {
 
-    for(int i=0; i<bv; i++)
-        ans += p[i];
-    ans = 2*ans;
+            int val = it->first;
+            int freq = it->second;
+            int eff_cnt = mxcnt[val] - ins_cnt;
+            bool ins = 0;
 
-    for(int i=bv; i<av+bv+cv; i++)
-        ans += p[i];
+            while(eff_cnt > 0 && freq > 0) {
+                ans[t].push_back(val);
+                freq--;     
+                mp[val]--;
+                eff_cnt--;
+                ++total_cnt;
+                ins = 1;
+            }   
+            ins_cnt += ins;
+        }
+        ++t;
+    }
 
-    cout << ans << endl;
+    for(int i=0; i<t; i++) {
+        cout << ans[i].size() << " ";
+        for(auto x: ans[i])
+            cout << x << " ";
+        cout << endl;
+    }
 }
 
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    
+
     int t;
     cin >> t;
-    while(t--) {
+    while(t--)
         solve();
-    }
 }
