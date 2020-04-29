@@ -1,6 +1,6 @@
 int dp[255][52];
 
-long calc(int n, int last, vector<long> c) {              
+int calc(int n, int last, vector<int> c) {              
     if(n == 0) {
         return 1;
     }
@@ -19,7 +19,7 @@ long calc(int n, int last, vector<long> c) {
     return dp[n][last] = ans;
 }
 
-long getWays(int n, vector<long> c) {           // n - money, c - coin denomination (coin of each denomination are infinte)
+int getWays(int n, vector<int> c) {           // n - money, c - coin denomination (coin of each denomination are infinte)
     memset(dp, -1, sizeof(dp));
     return calc(n, 0, c);
 }

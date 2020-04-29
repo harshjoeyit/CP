@@ -1,21 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-#define int long long 
-
-int modEx(int x = 3, int p = 1) {
-   int ans = 1;
-   while(p > 0) {
-      if(p&1)
-         ans *= x;
-      p = p >> 1;
-      x = x*x;
-   }
-   return ans;
-}
+#define int long long int
 
 void solve() {
-    cout << modEx();
+
 }
 
 signed main() {

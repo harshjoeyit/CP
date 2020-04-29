@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+void print(vector<int> pi) {
+    for(auto x: pi)
+        cout << x << " ";
+    cout << endl;
+}
+
 // online algorithm 
 vector<int> prefix_function(string s) {
     int n = (int)s.length();
@@ -26,11 +32,7 @@ void pattern_match(string s, string pat) {
     cout << endl;
 }
 
-void print(vector<int> pi) {
-    for(auto x: pi)
-        cout << x << " ";
-    cout << endl;
-}
+
 // Counting the number of occurrences of each prefix of s in s
 void count_each_prefix(string s) {
     vector<int> pi = prefix_function(s);
@@ -57,4 +59,9 @@ int main() {
     // output ans[i] till length of i <= t; 
     cin >> pat;
     pattern_match(s, pat);
+
+
+    /*
+    Longest possible prefix which is also a suffix - pi[n-1]
+    */
 }
