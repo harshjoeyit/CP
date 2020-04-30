@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Application - maxsum rectangle in a matrix 
+
 // Al the algorithm also test for negetive numbers too, no need to worry
 
 // Kadane's

@@ -16,6 +16,7 @@ void findTriplets(int arr[], int n)
         unordered_set<int> s; 
         for (int j=i+1; j<n; j++) 
         { 
+            
             int x = -(arr[i] + arr[j]); 
             if (s.find(x) != s.end()) 
             { 
