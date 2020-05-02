@@ -1,12 +1,72 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int> visited(1000);
+vector<int> vis(1000);
 vector<int> G[1000];
-vector<int> previous(1000);
+vector<int> prev(1000);
 vector<int> Arr(1000);
 vector<pair<int, int>> Edges;
 
+/*
+Copy and paste part
+
+int vis[1005];
+int prev[1005];
+
+bool check(vector<int> g[], int u) {
+    stack<int> s;
+    s.push(u);
+    vis[u] = 1;
+
+    while(!s.empty()) {
+        u = s.top();
+        s.pop();
+        
+        for(auto v: g[u]) {
+            
+            if(vis[v] == 1 && v != prev[u]) {
+                return true;
+            }
+
+            if(vis[v] != 1) {
+                s.push(v);
+                vis[v] = 1;
+                prev[v] = u;
+            }
+        }
+
+    }
+    return false;
+}
+
+bool isCyclic(vector<int> g[], int n) {
+    memset(vis, 0, sizeof(vis));
+    for(int i=0; i<n; i++) {
+        prev[i] = i;
+    }
+
+    // for self loops 
+
+    for(int i=0; i<n; i++) {                
+        for(auto v: g[i]) {
+            if(v == i) {
+                return 1;
+            }
+        }
+    }
+
+    for(int i = 0; i < n; i++) {
+        if(! vis[i]) {
+            if(check(g, i)) {
+                return 1;
+            }
+        }
+    }
+    
+    return 0;
+}
+
+*/
 
 int root(int a)
 {
@@ -60,7 +120,7 @@ bool find_cycle(int u)
 {   
     stack<int> s;
     s.push(u);
-    visited[u] = 1;
+    vis[u] = 1;
 
     while(! s.empty())
     {
@@ -69,15 +129,15 @@ bool find_cycle(int u)
         //cout << u << " ";
         for(auto v: G[u])
         {
-            //  cout << "v: " << v << " -prev = "<< previous[v] << endl; 
-            if(visited[v] == 1 && v != previous[u])         // if a visited node is found then it shuld not be the parent or previous node that came earlier in dfs
+            //  cout << "v: " << v << " -prev = "<< prev[v] << endl; 
+            if(vis[v] == 1 && v != prev[u])         // if a vis node is found then it shuld not be the parent or prev node that came earlier in dfs
                 return true;
 
-            if(visited[v] != 1)
+            if(vis[v] != 1)
             {
                 s.push(v);
-                visited[v] = 1;
-                previous[v] = u;
+                vis[v] = 1;
+                prev[v] = u;
             }
         }
 
@@ -104,16 +164,16 @@ int main()
 
     for(int i = 1; i <= nodes; i++)
     {
-        previous[i] = i;
+        prev[i] = i;    
         Arr[i] = i;
     }
 
     int i;
     bool flag = 0;
-    visited.assign(1000, 0);
+    vis.assign(1000, 0);
     for(i = 1; i <= nodes; i++)
     {
-        if(! visited[i])
+        if(! vis[i])
         {
             if(find_cycle(i))
             {
