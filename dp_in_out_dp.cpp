@@ -79,3 +79,60 @@ signed main() {
     cin.tie(0);
     solve();
 }
+
+
+/*
+When edges have weights - find the maximum sum path for every node 
+
+
+
+void dfs1(int u, int p) {
+    in[u] = 0;   
+    for(auto q: g[u]) {
+        auto v = q.first;
+        auto w = q.second;
+        
+        if(v != p) {
+            dfs1(v, u);
+            in[u] = max(in[u], in[v] + w);
+        }
+    }
+}
+
+void dfs2(int u, int p) {
+    int mx1(-1), mx2(-1);
+
+    for(auto q: g[u]) {
+        auto v = q.first;
+        auto w = q.second;
+
+        if(v != p) {
+            if(in[v] + w >= mx1) {
+                mx2 = mx1;
+                mx1 = in[v] + w;
+
+            } else if(in[v] + w > mx2) {
+                mx2 = in[v] + w;
+            }
+        }
+    }
+
+    for(auto q: g[u]) {
+        auto v = q.first;
+        auto w = q.second;
+        
+        if(v != p) {
+            int use = mx1; 
+            if(in[v] + w == mx1) {
+                use = mx2;
+            }
+
+            out[v] = w + max(out[u], use);
+            dfs2(v, u);
+        }
+    }
+}
+
+
+
+*/
