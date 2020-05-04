@@ -1,3 +1,11 @@
+
+/*
+using DP to find longest palindromic substring 
+
+answers range query of [L, R] - if palindrome or not in O(1) 
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
