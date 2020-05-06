@@ -1,6 +1,13 @@
 
 /*
 permutations of a given string
+
+Realted problems - 
+Find the smallest number which has the same set of digits as n and larger than n
+
+https://practice.geeksforgeeks.org/problems/next-greater-number-set-digits/0
+
+son - print next permutation if exist else -1
 */
 
 #include <bits/stdc++.h> 
