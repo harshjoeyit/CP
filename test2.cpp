@@ -1,25 +1,45 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define int long long int
-
-void solve() {
-    map<int, int> mp;
-    mp[3] = 4;
-    mp[1] = 3;
-    mp[5]  = 10;
-    mp[2] = 12;
-
-    for(auto it = mp.rbegin(); it != mp.rend(); it++) 
-        cout << it->first << " " << it->second << endl;
-    
+int _stack :: getMin()
+{
+    if(s.empty()) {
+        return -1;
+    } else {
+        return minEle;
+    }
 }
 
-signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+/*returns poped element from stack*/
+int _stack ::pop()
+{
+   if(s.empty()) {
+       return -1;
+   }
+   if(s.top() >= 0) {
+       int temp = s.top();
+       s.pop();
+       return temp;
+   } else {
+       int temp = minEle;
+       minEle = minEle - s.top();
+       s.pop();
+       return temp;
+   }
+   
+}
 
-    int t;
-    cin >> t;
-    while(t--)
-        solve();
+/*push element x into the stack*/
+void _stack::push(int x)
+{
+    if(s.empty()) {
+        minEle = x;
+        s.push(x);
+        return;
+    }
+    
+    if(x >= minEle) {
+        s.push(x);
+    } else {
+        int temp = x - minEle;
+        s.push(temp);
+        minEle = x;
+    }
 }

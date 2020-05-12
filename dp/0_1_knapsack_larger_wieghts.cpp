@@ -5,7 +5,7 @@ using namespace std;
 const int mxN = 100;                 
 const int mxW = 1000000005;
 const int mxV = 1000;          
-int dp[mxN+5][mxN*mxV + 5];                      // dp[objects][value sum] - denotes min wt possible for a value sum of i objects
+int dp[mxN+5][mxN*mxV + 5];                 // dp[i][j] - minmum weights for including i objects for making up value = j  
 int n, capc;
 
 void solve() {
@@ -17,7 +17,7 @@ void solve() {
 
     for(int i=0; i<n; i++) {
         cin >> wt[i] >> val[i];
-        total_val += val[i];                // total_val is max possible value - this is when all the objects are included in the knapsack
+        total_val += val[i];                // total_val is max possible value of the knapsack when capacity is enough to hold all elements 
     }
 
     dp[0][0] = 0;
@@ -26,11 +26,13 @@ void solve() {
 
     for(int i=0; i<n; i++) {
         for(int j=0; j<= total_val; j++) {                  // for each i (i.e number of objects up untill now) and j (value sum up untill now ) -  
-                                                            // we store MIN posssible wt - to maximize value sum    
+                                    
             if(j >= val[i]) {   
-                dp[i+1][j] = min(dp[i][j], dp[i][j-val[i]] + wt[i]);                // we have two options - skip or include this value
-                                                                                    // choose min wt among two
-            } else {                                        // j < val[i]
+                // ith item can be included now if required - so we have two choices
+                // skip or include this value
+                dp[i+1][j] = min(dp[i][j], dp[i][j-val[i]] + wt[i]);             
+            } else { 
+                // we cannot include the ith object up untill now since its value > curr val j                                    
                 dp[i+1][j] = dp[i][j];                  
             }
 
