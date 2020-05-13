@@ -2,9 +2,8 @@
 using namespace std;
 
 /*
-copies of m books needs to be made 
-there are k workers 
-pages of each book is given 
+copies of m books needs to be made by k workers 
+Number of pages of each book is given given a book cannot be shared among workers 
 distribute the work in the workers so the maximum pages on one worker is minimum
 also continuous set of books is alottted to a worker 
 if more than one solution is possible the the ans is the one where the first worker has the mininmum work
