@@ -88,10 +88,10 @@ void bottomView(Node *root) {
 		mp[hd] = cur->data;
 		
         if(cur->left!=NULL) {
-			q.push(make_pair(cur->left,val-1));
+			q.push(make_pair(cur->left,hd-1));
 		}
 		if(cur->right !=NULL) {
-			q.push(make_pair(cur->right,val+1));
+			q.push(make_pair(cur->right,hd+1));
 		}
 	}
 	

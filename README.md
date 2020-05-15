@@ -1,3 +1,8 @@
-Contains practice problems on 
-- competitive coding 
-- OOP (C++)
+This repo contains - 
+
+# Algorithmic Problems
+# Competitive Coding 
+# Object Oriented Programming 
+# in C++
+
+ 
