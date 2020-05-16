@@ -1,15 +1,10 @@
 
-
 /*
 T = O(N.W/64)
 
-problems - 
-
-knapsack - n weights , find if sum of W can be made
+original problems - given a knapsack(W) and n weights , find if sum of knapsack can be filled completely
 or
-
-subset sum -n array values , find if any subset sum = W 
-
+find a subset with sum = W 
 */
 
 
@@ -47,7 +42,14 @@ int main() {
     for(int i=0; i<n; i++) {
         int x;
         cin >> x;
-        can |= (can << x);       // set the xth bit	- faster than can = can | (can << x)
+	// after this operation all every ith bit is set 
+	// such that sum i is possible using the value up untill now  
+        can |= (can << x);       
+	// Examlpe
+	// x = 2     can = ..00000000101 			         	- possible sums {2}
+	// x = 3     can = ..0000000101 | ..000000101000 = ..00000101101 	- possible sums {2, 3, 5}
+	// x = 4     can = ..00000101101 | ..01011010000 = ..1011111101  	- possible sums {2, 3, 5, 4, 4, 7, 9} 
+	// Note: writing this way it is faster than can = can | (can << x)
     }
     puts(can[w] ? "YES" : "NO");
 }
