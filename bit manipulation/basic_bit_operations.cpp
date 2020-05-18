@@ -42,9 +42,16 @@ int main() {
     b = (1 << n) - 1;
 
 
+    //  count of 1s in the binary of n
+     __builtin_popcountll(n); 
+	
+	//  parity
+    __builtin_parityll(n); 
 
-
-    
+	n = 16; 
+      
+    // leading zeroes 
+    __builtin_clz(n)
     /*
     ------------------------------------------------------------------------------------------------------- 
 

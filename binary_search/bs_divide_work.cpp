@@ -18,37 +18,32 @@ ans
 1 / 1 / 1 / 1 1
 */
 
-int main()
-{
+int main() {
     int n;
     cin >> n;
 
-    while(n--)
-    {
+    while(n--) {
         int m, k, x, Max = INT_MIN, sum = 0;
         cin >> m >> k;
         vector<int> book_pages(m+2);
 
-        for(int i = 1; i <= m; i++)
-        {
+        for(int i = 1; i <= m; i++) {
             cin >> x;
             book_pages[i] = x;
             Max = max(x, Max);
             sum += x;
         }
 
+        // Note: l, h
         int l = Max, h = sum, part, currsum, mid;
 
-        while(l < h)
-        {
+        while(l < h) {
             part = 1;
             currsum = 0;
             mid = l + (h-l)/2;
 
-            for(int i = m; i >= 1; i--)
-            {
-                if(book_pages[i] + currsum > mid)
-                {
+            for(int i = m; i >= 1; i--) {
+                if(book_pages[i] + currsum > mid) {
                     ++part;
                     currsum = book_pages[i];
                 }
@@ -66,8 +61,7 @@ int main()
         int placed = 1;
         currsum = 0;
 
-        for(int i = m; i >= 1; i--)
-        {
+        for(int i = m; i >= 1; i--) {
             if( (currsum + book_pages[i] <= l) && ((i-1) > (k-1-placed)))
                 currsum += book_pages[i];
             else

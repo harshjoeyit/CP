@@ -1,9 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-void Merge( int *left, int *left2,  int l_size , int *right, int *right2, int r_size , int *A , int *B )
-{
+void Merge( int *left, int *left2,  int l_size , int *right, int *right2, int r_size , int *A , int *B ) {
     int i , l , r;
     i = l = r = 0;
 

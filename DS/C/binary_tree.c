@@ -287,6 +287,25 @@ int find_max( struct binaryTreeNode *root )
 }
 
 
+// diameter of the tree
+int heightOfTree(struct binaryTreeNode *root, int*maxDia ) {
+    if (!root) return 0;
+    int hLeft = heightOfTree(root->left, *maxDia );
+    int hRight = heightOfTree(root->right, *maxDia );
+    int currDia = hLeft + hRight;
+    *maxDia =max(*maxDia , currDia);
+    
+    return 1 + max(hLeft, hRight);
+}
+
+int maxDiaOfBinaryTree(struct binaryTreeNode* root) {
+    if (!root) return 0;
+    int *maxDia =0;
+    heightOfTree(root, *maxDia );
+    return *maxDia ;
+}
+
+
 
 //............search element........................
 struct binaryTreeNode* searchInTree(  struct binaryTreeNode *root , int data )
