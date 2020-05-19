@@ -1,67 +1,65 @@
 #include<iostream>
 using namespace std;
+#define int long long int
+const int mod = 1e9+7;
 
-const int M = 1e9+7;
-
-// complexity = O(log n)
+// ...............................................................
 int modEx(int x, int n) {
     if(n==0)
         return 1;
     else if(n%2 == 0)
-        return modEx((x*x)%M, n/2);
+        return modEx((x*x) % mod, n/2);
     else
-        return (x*modEx( (x*x)%M, (n-1)/2)) % M;
+        return (x*modEx( (x*x) % mod, (n-1)/2)) % mod;
 }
 
+// ................................................................
 int invMod(int x) {
-    return modEx(x, M-2);
+    return modEx(x, mod-2);
 }
-
-// complexity of the problem = O(log y)
+// ................................................................
 int power(int x, unsigned int y) { 
-    int res = 1;     // Initialize result 
-   
-    while (y > 0) 
-    { 
-        // If y is odd, multiply x with result 
-        if (y & 1) 
-            res = res*x; 
-   
-        // n must be even now 
-        y = y>>1; // y = y/2 
-        x = x*x;  // Change x to x^2 
+    int res = 1;    
+    while (y > 0) { 
+        if (y & 1) {
+            res = res*x;
+        } 
+        y = y >> 1;  
+        x = x * x;  
     } 
     return res; 
 }
 
-typedef long long ll;
+// .........................................................
+inline int mul(int a,int b){
+    a=(a+mod)%mod;
+    b=(b+mod)%mod;
+    int c=a*b;
+    c=(c+mod)%mod;
+    return c;
+}
+inline int add(int a,int b){
+    a=(a+mod)%mod;
+    b=(b+mod)%mod;
+    int ans=(a+b);
+    ans=(ans+mod)%mod;
+    return ans;
+}
+int power2(int a,int b,int c=0){
+    int ans=1;
+    while(b){
+        if(b&1){
+            ans=mul(ans,a);
+        }
+        a=mul(a,a);
+        b=b/2;
+    }
+    return ans;
+}
 
-ll mulmod(ll a, ll b, ll mod) 
-{ typedef long long ll;
-
-    ll res = 0; // Initialize result 
-    a = a % mod; 
-    while (b > 0) 
-    { 
-        // If b is odd, add 'a' to result 
-        if (b % 2 == 1) 
-            res = (res + a) % mod; 
-  
-        // Multiply 'a' with 2 
-        a = (a * 2) % mod; 
-  
-        // Divide b by 2 
-        b /= 2; 
-    } 
-  
-    // Return result 
-    return res % mod; 
-} 
-
-int main()
-{
-    cout<<power(5, 9)%13<<endl;
-    cout<<modEx(5, 9, 13)<<endl;
-    cout<<mulmod(987,654,540)<<endl;
-    cout<<(987*654)%540<<endl;
+// ..................................................................
+signed main() {
+    cout << power(5, 9)%13 << endl;
+    cout << modEx(5, 9) << endl;
+    cout << power2(5, 9) << endl;
 }

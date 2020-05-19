@@ -6,7 +6,7 @@ const int mxN = 1e5 + 5;
 const int mod = 1e9+7;
 
 int modexpo(int x, int n, int m = mod) {
-    int ret = 1%m;
+    int ret = 1;
     while(n){
         if(n&1) ret = ret * x % m;
         x = x * x % m;

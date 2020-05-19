@@ -1,3 +1,7 @@
+/*
+matrix exponentiation
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long int
@@ -57,20 +61,44 @@ public:
         }
 };
 
+
 signed main() {
         ios_base::sync_with_stdio(0);
         cin.tie(0);
         
-        Matrix initial(1, 2);
-        initial.mat[0][0] = 1;     initial.mat[0][1] = 1;
+        /*
+                [1 1] * | 0 1 |^k = [f[k] f[k+1]]
+                        | 1 1 |
 
-        Matrix recur(2, 2);
-        recur.mat[0][0] = 0;       recur.mat[0][1] = 1;
-        recur.mat[1][0] = 1;       recur.mat[1][1] = 1;
+        */
 
-        // nth fibonacci number 
-        int n;
-        cin >> n;
-        auto ans = Matrix::multiply(initial, recur.power(n));
-        cout << ans.mat[0][0];
-}
+        // Matrix init(1, 2);
+        // init.mat[0][0] = 1;       init.mat[0][1] = 1;
+
+        // Matrix recur(2, 2);
+        // recur.mat[0][0] = 0;       recur.mat[0][1] = 1;
+        // recur.mat[1][0] = 1;       recur.mat[1][1] = 1;
+
+        // // nth fibonacci number 
+        // int n;
+        // cin >> n;
+        // auto ans = Matrix::multiply(init, recur.power(n));
+        // cout << ans.mat[0][0];
+
+
+        // .........................................sum of first i fibonacci numbers 
+
+        // Matrix init(1, 3);
+        // init.mat[0][0] = 2;             init.mat[0][1] = 1;          init.mat[0][2] = 1;
+
+        // Matrix recur(3, 3);
+        // recur.mat[0][0] = 1;            recur.mat[0][1] = 0;         recur.mat[0][2] = 0;
+        // recur.mat[1][0] = 1;            recur.mat[1][1] = 0;         recur.mat[1][2] = 1;
+        // recur.mat[2][0] = 1;            recur.mat[2][1] = 1;         recur.mat[2][2] = 1;
+
+
+        // int n;
+        // cin >> n;
+        // auto ans = Matrix::multiply(init, recur.power(n-1));
+        // cout << ans.mat[0][0] << "\n";
+}       
