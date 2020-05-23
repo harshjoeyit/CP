@@ -18,6 +18,7 @@ int find_set(int v) {
 	if(v == parent[v]) {
 		return v;
 	}
+	// could use path compression
 	return find_set(parent[v]);
 }
 

@@ -5,6 +5,7 @@ https://www.hackerearth.com/practice/data-structures/disjoint-data-strutures/bas
 
 #include<bits/stdc++.h>
 using namespace std;
+#define int long long int 
 
 const int mxN = 2e6+10;
 int parent[mxN];
