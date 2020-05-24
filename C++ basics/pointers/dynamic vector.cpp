@@ -5,7 +5,7 @@ vector<int> *dyn_vec()
 {
     // creating an empty vector 
     vector<int> *pvec = new vector<int>();
-    // function ends , invalidates p
+    // function retruns a pointer to vec , pvec is invalidated after return 
     return pvec;
 }
 
@@ -33,7 +33,8 @@ void use_dyn_vec( vector<int> *pvec )
     // printing
     cout<<"vector: ";
     for_each( pvec->begin() , pvec->end() , []( int i ){ cout<<i<<" "; });
-    // deallocating the mempry when the task is complete
+    
+    // deallocating the memory when the task is complete
     delete pvec;
     // pvec ivalidated here
 }
@@ -47,9 +48,9 @@ int main()
     auto *pvec = dyn_vec();
     input_dyn_vec( pvec );
     use_dyn_vec( pvec );
-    // no since the memory is deallocated 
+    // vector was dealloacted, pvec doent point to a vector now 
     // pvec , here is a dangling pointer so 
     pvec = NULL;
     // pvec may be used for another task in code later 
-    //NOTE: that assigning pointer to NULL must be done after deallocating  
+    //NOTE: that assigning pointer to NULL must be done after deallocating for avoiding memory leakage 
 }

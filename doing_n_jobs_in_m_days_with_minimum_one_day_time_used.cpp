@@ -36,6 +36,8 @@ int main()
             {
                 sum = 0;
                 days--;
+                // start from this object again as loop (i++) goes to next object\
+                // but this task could not be completed 
                 i--;
             }
         }

@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-
 int kadane(int a[], int n) {
     int mxsum = 0, curr = 0;
     for(int i=0; i<n; i++) {
