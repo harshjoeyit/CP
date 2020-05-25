@@ -1,51 +1,100 @@
-
-/*
-https://leetcode.com/problems/continuous-subarray-sum/
-
-Given a list of non-negative numbers and a target integer k, write a function to check if the array has a 
-continuous subarray of size at least 2 that sums up to a multiple of k, that is, sums up to n*k where n is also an integer.
-*/
-
 #include<bits/stdc++.h>
 using namespace std;
+#define int long long int
 
-class Solution {
-public:
-    bool checkSubarraySum(vector<int>& nums, int k) {
-      //   size >= 2 and all elements must be 0 for k = 0
-	  if(k == 0) {
-            for(int i=0; i<nums.size()-1; i++) {
-                if(nums[i] == 0 && nums[i+1] == 0) {
-                    return 1;
-                }
-            }
+string a[11];
+int n, m;
+string ans;
+
+int compare(string &a, string &b) {
+    int cnt = 0;
+    for(int i=0; i<m; i++) {
+        if(a[i] == b[i]) {
+            ans[i] = a[i];
+        } else {
+            ++cnt;
+        }
+    }
+    return cnt;
+}
+
+bool match(string str) {
+    int cnt;
+    for(int i=0; i<n; i++) {
+        cnt = compare(str, a[i]);
+        if(cnt > 1) {
             return false;
         }
-        
-        int n = nums.size();
-        vector<int> prefix(n+1, 0);
-        unordered_map<int, int> mp;
-        
-        mp[0] = 0;
-        for(int i=1; i<=n; i++) {
-		//   adding num % k, since the rest it is only contribution in sum
-            prefix[i] += prefix[i-1] + nums[i-1] % k;	
-		
-		//  Note: Logic
-		// if the remainder of two prefix sums is same 
-		// then it means that the numbers in range sum up to be divisible by k
+    }
+    return true;
+}
 
-		// if we have foud the same rem before - chaeck the array length
-            if(mp.count(prefix[i] % k) == 1) {
-                if(i - mp[prefix[i] % k] >= 2) {
-                    return 1;
+void solve() {
+    cin >> n >> m;
+    for(int i=0; i<n; i++) {
+        cin >> a[i];
+    }
+
+    if(n == 1) {
+        cout << a[0] << "\n";
+        return;
+    }
+
+    string temp(m, '*');
+    ans = temp;
+    
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            if(i != j) {
+                int cnt = compare(a[i], a[j]);
+                if(cnt > 2) {
+                    cout << "-1\n";
+                    return;
                 }
-		// insert the key rem with index as value
-            } else {
-                mp[prefix[i] % k] = i;   
             }
         }
-        
-        return 0;
     }
-};
+
+    vector<string> possible;
+    vector<int> pos;
+    for(int i=0; i<m; i++) {
+        if(ans[i] == '*') {
+            pos.push_back(i);
+        }
+    }
+
+    if(pos.size() == 0) {
+        cout << ans << "\n";
+        return;
+    }
+
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<n; j++) {
+            temp = ans;
+            temp[pos[0]] = a[i][pos[0]];
+            temp[pos[1]] = a[j][pos[1]];
+            possible.push_back(temp);
+        }
+    }
+
+    for(auto str: possible) {
+        auto res = match(str);
+        if(res) {
+            cout << str << "\n";
+            return;
+        }
+    }
+
+    cout << "-1";
+}
+
+signed main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int t;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+}

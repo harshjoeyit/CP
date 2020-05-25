@@ -2,6 +2,8 @@
 break string in k parts where earch path length is between [a, b];
 make a tree of recursive solution, 
 we find overlapping subproblems with current steps(t) ans string length processed(en+i)
+
+could have also be done by reversing the string then we wont need a stack
 */
 
 #include<bits/stdc++.h>
@@ -28,6 +30,8 @@ bool solve(int st, int en, int t) {
             if(dp[en+i][t+1] == 0)
                 continue;
             else if(dp[en+i][t+1] = solve(en+1, en+i, t+1)) {
+                // when solve() = 1 i.e dp[en+i][t+1] = 1
+                // its possible so push {st, en} it in the stack 
                 stck.push({st, en});
                 return true;
             }
