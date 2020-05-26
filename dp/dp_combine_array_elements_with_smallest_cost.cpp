@@ -7,9 +7,13 @@ int dp[mxN][mxN];
 const int INF = 1e18;
 
 // find minimum cost to combine all elements given when x, y are combined cost = x+y
+
 // the array elements can be considered as leaves of a binary tree
 // we combine them to form nodes
 // also every node represents an interval - cost for that interval should be minimized 
+
+// the final cost could be conisdered as the sum of the values present at the nodes(except leaves) 
+// when a tree is built to the root from the array 
 
 // dp[i][j] - min cost to combine interval [i, j]
 // our ans = dp[1][n]
@@ -38,14 +42,14 @@ void solve() {
                 dp[L][R] = INF;
                 int sum = pref[R]-pref[L-1];
 
-                // breaking intervals of L, R segments of left child and right child - to discpver all possibilites 
+                // breaking intervals of L..i, i+1...R segments of left child and right child - to discpver all possibilites 
                 for(int i=L; i<=R-1; i++) {
                     dp[L][R] = min(dp[L][R], dp[L][i] + dp[i+1][R] + sum);
                 }
             }
         }
     }
-
+    // O(n^3)
     cout << dp[1][n] << endl;
 }
 
