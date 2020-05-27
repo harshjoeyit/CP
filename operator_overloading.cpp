@@ -73,6 +73,14 @@ public:
     }
 };
 
+class comparisonMap {
+public: 
+      //  custom comparison for key
+      bool operator() (const string &a, const string &b) const {
+            return a.length() < b.length();
+      }
+};
+
 
 int main() 
 { 
@@ -117,6 +125,22 @@ int main()
             pq.pop();
     }
 
+
+    // custom key comparison for maps 
+    map<string, int, comparisonMap> mp;
+      // key is the string length not the string 
+      mp["hello"] = 5;
+      mp["hell"] = 4;
+      mp["pel"] = 3;
+      mp["rveqwe"] = 11;
+      mp["a"] = 12;
+      mp["bv"] = 14;
+      mp["ds"] = 2;
+      mp["dell"] = 23;
+
+      for(auto p: mp) {
+            cout << p.first << " " << p.second << endl;
+      }
 }
 
 

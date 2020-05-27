@@ -1,5 +1,9 @@
-// C++ implementation of search and insert 
-// operations on Trie 
+/*
+    Trie
+Trie uses less memory as compared to hash table 
+We cam do a prefix based search in a trie 
+*/
+
 #include <bits/stdc++.h> 
 using namespace std; 
 
@@ -8,7 +12,7 @@ const int ALPHABET_SIZE = 26;
 
 struct trie_node
 {
-    struct trie_node *children[ALPHABET_SIZE];
+    struct trie_node *children[ALPHABET_SIZE];          // if only lowercase or uppercase - otherwise use a map     
     bool end_of_word;
 };
 

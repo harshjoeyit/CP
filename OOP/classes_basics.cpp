@@ -1,49 +1,40 @@
 #include<bits/stdc++.h> 
 using namespace std;
 
-struct taxes
-{
+struct taxes {
     int GST;
     int cross_border;
 };
 
-struct sales_data
-{
+struct sales_data {
     int a , b;
-    // member function 1:
-    int sum() const
-    {
+    // if const is used after paameterlist then it cannot change the values in the object
+    int sum() const {
         return (a+b);
     }
+    
     int diff();
-    // member function 2:
-    void change_data() // const
-    {                   // if const is used after paameterlist then it cannot change the values in the object
+    
+    void change_data() { // const - if const is used here then the increment is not possible 
         a++;
         b++;
     }
-    // memeber function 3:
-    // function definition outside the class
-    // member function 4:
-    sales_data * combine( struct taxes &T )
-    {
+
+    sales_data* combine( struct taxes &T ) {
         a = a + T.cross_border + T.GST;
         b = b + T.cross_border + T.GST;
-        return this;                       // returning this - pointer to class 
-    }   // if we return *this , then return type is sales_data &
-        // because if we dereference this -> *this , then th return type is reference to class object , 
-        // because this is pointer to class obj 
+        // returning this - pointer to object of the class
+        return this;               
+    }          
+    // if we return *this , then return type = sales_data&
+    // derefrence *this gives reference to the object 
 };
 
-int sales_data::diff()
-{
+int sales_data::diff() {
     return (a>b)? (a-b): (b-a) ;
 }
 
-
-
-int main()
-{
+int main() {
     struct sales_data sd;
     struct taxes T;
 

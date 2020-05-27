@@ -2,6 +2,7 @@
 using namespace std;
 
 // Application - maxsum rectangle in a matrix 
+//             - an array of 0 and 1s find the subarray with max(count(0) - count(1)) - approach convert 0 -> 1 and 1 -> -1 find maxsum subarray 
 
 // Al the algorithm also test for negetive numbers too, no need to worry
 
