@@ -68,3 +68,38 @@ signed main() {
     cout << fasterWays(0, S) << "\n";
     
 }
+
+/*
+Minimum coins to amount to total
+
+const int mxN = 1005;
+const int mxS = 1005;
+int total;
+int n;
+int coin[mxN];
+int dp[mxN][mxS];
+
+int go(int i, int sum) {
+      if(sum == total) {
+            return 0;
+      }
+      if(i >= n) {
+            return INT_MAX;
+      }
+      if(dp[i][sum] != -1) {
+            return dp[i][sum];
+      }
+      int ans = min(go(i+1, sum), 1 + go(i+1, sum + coin[i]));
+      return dp[i][sum] = ans;
+}
+
+void solve() {
+      cin >> n >> total;
+      for(int i=0; i<n; i++) {
+            cin >> coin[i];
+      }     
+      memset(dp, -1, sizeof(dp));
+      cout << go(0, 0);
+}
+
+*/

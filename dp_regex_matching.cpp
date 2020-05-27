@@ -14,7 +14,7 @@ bool regex_matching(string s, string regex) {
       dp[0][0] = 1;
       // for the regex like a*, a*b*, a*b*c*, since the string "" also satify the regex 
       for(int i=1; i<=regex.length(); i++) {
-            if(s[i-1] == '*') {
+            if(regex[i-1] == '*') {
                   dp[0][i] = dp[i-2];
             }
       }
@@ -34,7 +34,13 @@ bool regex_matching(string s, string regex) {
                   }
             } 
       }
-      return dp[s.length()][regex.length()];
+
+//      for(int i=0; i<=s.length(); i++) {
+//            for(int j=0; j<=regex.length(); j++) {
+//                  cout << dp[i][j] << " ";
+//            }cout << "\n";
+//      }  
+            return dp[s.length()][regex.length()];
 }
 
 void solve() {
