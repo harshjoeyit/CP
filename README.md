@@ -1,8 +1,8 @@
 This repo contains - 
 
 # Algorithmic Problems
-# Competitive Coding 
-# Object Oriented Programming 
-# in C++
+# Competitive Coding problems 
+# exmaples on Object Oriented Programming 
+# all in C++
 
  
