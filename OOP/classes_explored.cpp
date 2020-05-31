@@ -1,94 +1,89 @@
 #include<iostream>
 using namespace std;
 
-class node
-{
-    friend class Queue;     // explicitly writing class with the name is necessary 
-
-    private:
-        int data;
-        node *next;
-        void print(){
-        cout<<data<<endl;}
-    
-    public:
-    void initlz( int d , node *n )
-    {
-        data = d;
-        next = n;
-    }
-
+class Node {
+      friend class Queue;     
+private:
+      int data;
+      Node *Next;
+      void print() {
+            cout << data << endl;
+      }
+public:
+      Node(int d = 0, Node *n = NULL) : data(d), Next(n) {
+      }
+      void init(int d , Node *n ) {
+            data = d;
+            Next = n;
+      }
+      void display() {
+            cout << data << endl;
+      }
 };
 
-
-class Queue
-{
-    private:
-        node *Front;
-        node *Rear;
-    
-    public:
-        void Initlz( node *f , node *r )
-        {
+class Queue {
+private: 
+      Node *Front;
+      Node *Rear;
+public: 
+      Queue(Node *f = NULL, Node *r = NULL) : Front(f),  Rear(r) {
+      }
+      void init(Node *f, Node *r) {
             Front = f;
-            Front->data += 1;       // access possible to private member node , because Queue is friend of node 
+            // can access private data 
+            Front->data += 1;
             Rear = r;
             Rear->data += 2;
-        }
-        void FrontPrint(){
-            Front->print();             // print is a private member accessible via friendship
-        }
-        void RearPrint(){
-            Rear->print();             // print is a private member accessible via friendship
-        }
-        node* search( int data )
-        {
-            node *temp = Front;
-            while( temp != Rear )
-            {
-                if( temp->data == data )        // data is inaccessable , private member , until Queue is friend of node otherwise we cannot access a private member from anywhere 
-                    return temp;
-                    temp = temp->next;
+      }
+      void printQueue() {
+            Node *temp = Front;
+            while(temp != NULL) {
+                  // can access private print 
+                  temp->print();
+                  temp = temp->Next;
             }
-            return NULL;   
-        }
-
+      }
 };
 
+// ......................................................
 
-
-int a = 120;
-class arbit
-{
-    public:
-        arbit()
-        {
+int a = 120, d = 56;
+class arbit {
+      int a, b, c;
+public: 
+      arbit() {
             a = 5;
             b = 1;
             c = 3;
-        }
-        void show( int c )
-        {
-            int b = 10;     // look up for variables 1. in the function , 2. in the class
-            cout<<a<<" "<<b<<" "<<c<<endl;        // prints 5 10 c(value passed )
+      }
+      void show(int c) {
+            int b = 10;
+            // Lookup for a variable starts like 
+            // 1. in the function
+            // 2. in the class 
+            // 3. then global 
+            cout << a << " " << b << " " << c << " " << d << endl;
+            
             int a = 50;
-            cout<<arbit::a<<" "<<this->b<<" "<<this->c;
-            //for global object
-            cout<<::a<<endl;
-        }
-    private:
-        int a;
-        int b;
-        int c;
+            cout << a << " " << b << " " << c << endl;
+
+            // class vars 
+            cout << arbit::a << " " << arbit::b << " " << arbit::c << endl;
+            arbit::a = 97;
+            cout << this->a << " " << this->b << " " << this->c << endl;
+            
+            // global object
+            cout << ::a << endl;
+      }
 };
+
 
 
 // typenames
 typedef string Type;
 /*string*/ 
 Type initVal(); 
-class Exercise 
-{ 
+class Exercise { 
     public:    
     typedef double Type;    
     //double     double
@@ -99,36 +94,19 @@ class Exercise
         int val; 
 }; 
 
-//since the return type here is not a part of class so it is of type string
-// all the types were deecided inside the class while declaring the prototype( double )
-//string              double from the class
-// Type Exercise::setVal(Type parm)           // inconsistency in return type class says- double - here it is string 
-// {  //int   double   double                        
-//     val = parm + initVal();    
-//     return val;     //int 
-// }
 
-int main()
-{
-    node *node1 = new node;
-    node *node2 = new node;
-    node *node3 = new node;
-
-    node1->initlz(10, node2);
-    node2->initlz(20, node3);
-    node3->initlz(30 , NULL);
-
-    Queue *Q = new Queue;
-    Q->Initlz( node1, node3 );
-    Q->FrontPrint();                 // printing the first element
-    Q->RearPrint();                  // printing the rear element 
-
-    auto find = Q->search(30);          // returns the pointer to the node
-
+int main() {
+    Node *Node1 = new Node();
+    Node *Node2 = new Node();
+    Node *Node3 = new Node();    
+    Node1->init(10, Node2);
+    Node2->init(20, Node3);
+    Node3->init(30, NULL);
+    Queue *Q = new Queue();
+    Q->init(Node1, Node3);
+    Q->printQueue();
 
     arbit A;
-    A.show( 30 );
-    
-
+    A.show(65);
 }
 

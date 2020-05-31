@@ -1,20 +1,16 @@
 #include<bits/stdc++.h> 
 using namespace std;
 
-
-class sales_data
-{
-    private:
-        string book_no ;
-        unsigned int units_sold = 0;
-        double revenue = 0.0;
-         
-    public:
-        sales_data() = default;     //1
-        sales_data( const string &s ) : book_no(s) {/*empty function body */ }    //2
-        sales_data( const string &s , unsigned int n , double price ) : book_no(s) , units_sold(n) , revenue(price*n) {/*empty function body */}
-        // member function
-        void print();
+class sales_data {
+    string book_no ;
+    unsigned int units_sold = 0;
+    double revenue = 0.0;
+public:
+    sales_data() = default;     //1
+    sales_data( const string &s ) : book_no(s) {/*empty function body */ }    //2
+    sales_data( const string &s , unsigned int n , double price ) : book_no(s) , units_sold(n) , revenue(price*n) {/*empty function body */}
+    // member function
+    void print();
     //friends
     friend void read( istream& , sales_data& );
     

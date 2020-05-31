@@ -125,6 +125,16 @@ Window_mgr::ScreenIndex Window_mgr::addScreen( const Screen &s )
 
 
 
+// literal class - just used as a user defined data type 
+class demo {       
+public: 
+    int ival;
+    string s;
+    float f;
+    char ch;
+};
+
+
 
 
 
@@ -160,4 +170,11 @@ int main()
     cout<<"c: "<<c<<endl;
     Screen::pos sz = scr.size();
     cout<<"size: "<<sz<<endl;
+
+
+    demo obj;
+    obj = { 0 ,"anna" };
+    // no implicit type-casting takes place here
+    // obj = {0, 'a'} - gives error char - to - string conversion
+    cout<<obj.ival<<obj.s<<obj.ch<<obj.f<<endl;
 }

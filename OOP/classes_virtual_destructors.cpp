@@ -56,7 +56,12 @@ int main()
     Base1 *b1 = new Derived1();
     delete b1;
 
-    cout<<endl;
+    cout << endl;
+
+    Derived1 *d1 = new Derived1();
+    delete d1;
+
+    cout << endl;
     
     Base2 *b2 = new Derived2();
     delete b2;

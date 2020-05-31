@@ -26,14 +26,16 @@ void find_closet(int a[], int p, int b[], int q, int c[], int r) {
     cout << "closest: " << a[ans_i] << " " << b[ans_j] << " " << c[ans_k] << endl;
 }
 
+// brute force 
 void find_closet_bf(int a[], int p, int b[], int q, int c[], int r) {
     int ans_i=0, ans_j=0, ans_k=0, diff = INT_MAX;
 
     for(int i=0; i<p; i++) {
         for(int j=0; j<q; j++) {
             for(int k=0; k<r; k++) {
-                if(max({abs(a[i]-b[j]), abs(b[j]-c[k]), abs(c[k]-a[i])}) < diff) {
-                    diff = max({abs(a[i]-b[j]), abs(b[j]-c[k]), abs(c[k]-a[i])});
+                int curr_maxdiff = max({abs(a[i]-b[j]), abs(b[j]-c[k]), abs(c[k]-a[i])});
+                if(curr_maxdiff < diff) {
+                    diff = curr_maxdiff;
                     ans_i = i;
                     ans_j = j;
                     ans_k = k;
