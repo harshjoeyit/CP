@@ -1,4 +1,0 @@
-iron_man 3 robert_downey_jr.
-captain_america 2 chris_evans
-hulk 2 mark_ruffalo
-thor 3 chris_hemsworth

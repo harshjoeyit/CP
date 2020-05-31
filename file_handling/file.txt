@@ -1,5 +1,0 @@
-panther has age of 25
-hulk has age of 35
-marvel has age of 10
-pink has age of 25
-fantastic4 has age of 26
