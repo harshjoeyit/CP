@@ -1,21 +1,13 @@
-#include<iostream>
+#i#include<bits/stdc++.h>
 using namespace std;
+#define int long long int
 
-class demo {
-      string s;
-      int a, b;
-public: 
-      // demo() = default;
-      demo(int pa, int pb, string ps) : a(pa), b(pb), s(ps) {
-      }
-      demo(): demo(0, 0, "demo") {
-      }
-      void print() {
-            cout << s << " " << a << " " << b <<  endl;
-      }
-};
+void solve() {
+      
+}
 
-int main() {
-      demo obj = demo();
-      obj.print();
+signed main() {
+      ios_base::sync_with_stdio(0);
+      cin.tie(0);
+      solve();
 }

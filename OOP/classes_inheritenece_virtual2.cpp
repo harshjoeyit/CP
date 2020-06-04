@@ -64,8 +64,6 @@ int main()
     callfoo2(G);         // no override ,version mentioned 
 
     
-    
-    
     parent p;
     parent *pptr = &p;
     parent &pr = p;
@@ -84,12 +82,15 @@ int main()
     cr.foo();
 
     
-    
     // all possible, vice versa not possible 
     grandchild g;
     p = c;      
     c = g;      
     p = g;
 
-    
+    // overidding is possible when pointer is used 
+    child c;
+    parent *ptr = &c;
+    // overrride 
+    callfoo(ptr);       
 }
