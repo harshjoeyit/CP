@@ -1,3 +1,11 @@
+
+/*
+Chosen nodes (k) are colored black, the rest are white 
+miximize the total white nodes from path root to each 
+chosen (black) vertex
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -12,6 +20,7 @@ int dfs(int u, int d=0, int p=-1) {
         if(v != p) 
             siz[u] += dfs(v, d+1, u);
 
+    // Important
     det[u] = siz[u] - depth[u];
     return siz[u]+1;
 }
