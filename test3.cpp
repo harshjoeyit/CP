@@ -1,34 +1,52 @@
-#include <iostream>
+
+//  sachin
+
+#include <bits/stdc++.h>
 using namespace std;
-
-int main() {
-   int a[10][10], transpose[10][10], row, column, i, j;
-
-   cout << "Enter rows and columns of matrix: ";
-   cin >> row >> column;
-
-   cout << "\nEnter elements of matrix: " << endl;
-
-   // Storing matrix elements
-   for (int i = 0; i < row; ++i) {
-      for (int j = 0; j < column; ++j) {
-         cout << "Enter element a" << i + 1 << j + 1 << ": ";
-         cin >> a[i][j];
-      }
-   }
-
-   // Computing transpose of the matrix
-   for (int i = 0; i < row; ++i)
-      for (int j = 0; j < column; ++j) {
-         transpose[j][i] = a[i][j];
-      }
-
-   for (int i = 0; i < column; ++i)
-      for (int j = 0; j < row; ++j) {
-         cout << " " << transpose[i][j];
-         if (j == row - 1)
-            cout << endl;
-      }
-
-   return 0;
+#define int long long
+ 
+void solve() {
+	int n;
+	cin >> n;
+	int a[n]; 
+	for(int i = 0 ; i < n ; i++)
+		cin >> a[i];
+ 
+	int ans[n] ;
+	stack <int> s;
+	for(int i = n - 1 ; i >= 0 ; i--) {
+		if(!s.empty())
+		{
+			if(a[i] < a[s.top()])
+			{
+				ans[i] = a[i] ^ ans[s.top()] ;
+			}
+			else
+			{
+				ans[i] = a[i];
+				while(!s.empty())
+					s.pop();
+			}
+		}
+		else
+			ans[i] = a[i];
+		s.push(i);
+	}
+ 
+	int max_ans = 0;
+ 
+	for(int i = 0 ; i < n ; i++)
+	{
+		if(max_ans < ans[i])
+			max_ans = ans[i];
+	}
+ 
+	cout << max_ans <<endl;
+ 
+ 
+}
+signed main() {
+ 
+	solve();
+ 
 }

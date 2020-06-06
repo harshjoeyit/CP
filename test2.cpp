@@ -1,40 +1,45 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long int
-
-const int mxN = 1005;
-int price[mxN];               // price[i] = price for rod of length i 
-int dp[mxN];
-int length;
-
-int go(int curr_len) {
-      if(curr_len == length) {
-            return 0;
-      }
-      if(curr_len > length) {
-            return -1e17;
-      }
-      if(dp[curr_len] != -1) {
-            return dp[curr_len];
-      }
-      int ans = 0;
-      for(int i=1; i<=length; i++) {
-            ans = max(ans, price[i] + go(curr_len+i));
-      }
-      return dp[curr_len] = ans;
+int main()
+{
+ios_base::sync_with_stdio(false);//Fast I/O for Competitive Programming
+cin.tie(NULL);
+int n;
+cin>>n;
+int A[n],B[n];
+ 
+ 
+for(int i=0;i<n;i++)
+cin>>A[i];
+ 
+stack <int> s1;
+ 
+ 
+for(int i=n-1;i>=0;i--)//VIM
+{
+ 
+	while(!s1.empty()&&A[s1.top()]<A[i])
+	s1.pop();
+ 
+	if(!s1.empty())
+	{
+		B[i]=A[i]^B[s1.top()];
+	}
+	else
+	{
+		B[i]=A[i];
+	}
+	s1.push(i);
 }
-
-void solve() {
-      cin >> length;
-      for(int i=1; i<=length; i++) {
-            cin >> price[i];
-      }
-      memset(dp, -1, sizeof(dp));
-      cout << go(0) << endl;          
+ 
+int max=0;
+for(int i=0;i<n;i++)
+{
+      cout << B[i] << " ";
+if(max<B[i])
+max=B[i];
 }
-
-signed main() {
-      ios_base::sync_with_stdio(0);
-      cin.tie(0);
-      solve();
+cout << endl;
+cout<<max;
+return 0;
 }
