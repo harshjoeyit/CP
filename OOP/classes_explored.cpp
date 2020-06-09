@@ -78,6 +78,24 @@ public:
 };
 
 
+class Demo {
+    int val;
+public: 
+    Demo(int _val = 0): val(_val) {
+        cout << "const. called for " << val << "\n";
+    }
+    ~Demo() {
+        cout << "dest. called for " << val << "\n";
+    }
+};
+
+void func() {
+    Demo d0(5);
+    Demo d1(1115);
+    Demo d2(115);
+    Demo d3(15);
+}
+
 
 // typenames
 typedef string Type;
@@ -108,5 +126,7 @@ int main() {
 
     arbit A;
     A.show(65);
+
+    func();
 }
 

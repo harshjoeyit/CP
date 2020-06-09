@@ -1,131 +1,109 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class bill
-{
-    public:
-
+class bill {
+public:
     int food;
     float shopping;
 
-    // constructor 
     bill( int f = 0 , float s = 0.0 ): food(f) , shopping(s) { }
 
-    // operations 
-    bill operator+( const bill& rhs )       // adds the correspoding fields in the class objects 
-    {
+    bill operator+( const bill& rhs ) {       
         bill b;
         b.food = food + rhs.food;
         b.shopping = shopping + rhs.shopping;
         return b;
     }
-
-    bill operator++()                       // pre increment  
-    {
+    // pre increament 
+    bill operator++() {
         food = food + 1;
         shopping = shopping + 0.1;
         return *this;
     }
-
-    bill operator++(int)                    // post increment , additional parameter to distinguish the pre increment functionand this function 
-    {
+    // post increment - we pass a trivial arg so that pre and post increment are different functions
+    bill operator++(int) {
         bill b = *this;
         ++*this;                             
         return b;
     }
-
-    int operator[](int i)                       // subscript operator 
-    {
-        if(i == 1)
+    int operator[](int i) {
+        if(i == 1) {
             return food;
-        else
-            return shopping;
+        } 
+        return shopping;
     }
-
-    ostream &operator<<( ostream &os )          // <<
-    {
-        os<<endl<<"food: "<<food<<"\nshopping: "<<shopping<<endl;
+    // note the return type
+    ostream &operator<<( ostream &os ) {        
+        os << endl <<"food: "<<food<<"\nshopping: "<< shopping << endl;
         return os;
     }
-
-    istream &operator>>( istream &in )           // >> 
-    {
+    // return type
+    istream &operator >> ( istream &in ) {
         int f;
         float s;
-
         cout<<"\nenter food , shopping: \n";
-        in>>f>>s;
-
-        if(in)                                    //if input opeartion in previous line is successful
-        {
+        in >> f >> s;
+        if(in) {
             food = f;
             shopping = s;
         }
-
         return in;
     }
-
-
-    void getbill()
-    {
+    void getbill() {
         cout<<"food: "<<food<<"\nshopping: "<<shopping<<endl;
     }
-
-    
 };
 
-// no member function operation 
-// if ssame operation functions are defined then the meber function takes the precedence 
-bill operator-( const bill& lhs , const bill& rhs )       // adds the correspoding fields in the class objects 
-{
+// some operations may be defined outside the class 
+// if same operation functions are defined then the 
+// meber function takes the precedence 
+bill operator - (const bill& lhs , const bill& rhs) {
     cout<<"non member - function called: "<<endl;
     bill b;
     b.food = lhs.food - rhs.food;
     b.shopping = lhs.shopping - rhs.shopping;
     return b;
 }
-
-
-bool operator==( const bill& lhs , const bill& rhs )      // checks if the objects fields are wxactly the same or not 
-{
+bool operator==( const bill& lhs , const bill& rhs ) {
         return ( (lhs.food == rhs.food) && (lhs.shopping == rhs.shopping) );
 }
-
-bool operator!=( const bill& lhs , const bill& rhs )
-{
-    return !( lhs == rhs );         // calls the == operator function
+bool operator!=( const bill& lhs , const bill& rhs ) {
+    return !( lhs == rhs );  
 }
 
 
-
-int main()
-{
+int main() {
     bill B1(10,2.3);
     bill B2(20,3.2);
 
     B1.getbill();
     B2.getbill();
-    B1 = B1 + B2;           // member function called 
+    // .........
+    B1 = B1 + B2;           
     
     B1.getbill();
 
+    // ......................
     cout<<"food: "<<B1[1]<<endl;
     cout<<"shopp: "<<B1[2]<<endl;
 
+    // ......
     ++B1;
 
     B1.getbill();
 
     bill B3(1,3.2) , B4(1,3.2) ;
+    // ...............
     bool b = B3 != B4;
     cout<<( (b==1) ? "unequal" : "equal" );
 
- 
-    B1>>cin;            // way to use the >> ''          ''             ''
+    // .........
+    B1 >> cin;            // way to use the >> ''          ''             ''
 
-    B1<<cout;           // way to call the << operator member function 
+    // ........
+    B1 << cout;           // way to call the << operator member function 
 
-
+    // ......................
     bill Bill_diff = B3 + B4;
     Bill_diff.getbill();
 

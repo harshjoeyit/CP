@@ -41,4 +41,39 @@ if (a = 1) {}
 if (printf("Hello, world!\n")) {}
 
 If we want to call a function that returns void, we cannot use that trick, as void functions are not expressions. But it can be remedied using the not so famous comma operator, with any value in the right hand side of the operator.
+
+
+
+>>>> constexpr
+
+used while defining a function
+increases compile time but reduces the run time 
+ans is calculated at the compile time only  
+
+
+
+>>>> constexpr vs inline functions
+
+Both are for performance improvements, inline functions request 
+compiler to expand at compile time and save time of 
+function call overheads. In inline functions, expressions 
+are always evaluated at run time. constexpr is different, 
+here expressions are evaluated at compile time.
+
+
+
+>>>> constexpr vs const
+
+They serve different purposes. constexpr is mainly for optimization 
+while const is for practically const objects like value of Pi.
+Both of them can be applied to member methods. Member methods are 
+made const to make sure that there are no accidental changes by 
+the method. On the other hand, the idea of using constexpr is to 
+compute expressions at compile time so that time can be saved when code is run.
+const can only be used with non-static member function whereas 
+constexpr can be used with member and non-member functions, even 
+with constructors but with condition that argument and return type 
+must be of literal types
+
+
 .............................................................................
