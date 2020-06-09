@@ -1,24 +1,32 @@
 
 // Using euler tour and segment tree(RSQ) for subtree sum of a tree
+// Goal is to convert tree into a array using euler tour
+// and the perform queries based on entry and exit time
 
 #include<bits/stdc++.h>
 using namespace std;
 
 #define int long long int
 const int mxN = 1e5+10;    
-int n, q;                                           // n = number of vertices 
-vector<int> g[mxN];                                 // size of a[] = 2*n - every vertex twice
-int vis[mxN], a[4*mxN], b[mxN], ent[mxN*10], ex[mxN*10], ind = 0;
-                                                    // b[i] - value of node i
+int n, q;                                            
+vector<int> g[mxN];                                 
+int vis[mxN];
+int a[4*mxN];       // i is time a[i] is node 
+int b[mxN];         // node value 
+int ent[mxN*10];    // entry time
+int ex[mxN*10];     // exit time
+int ind = 0;
+
 struct segtree {
     int *tree = new int[4*mxN];
     int *lazy = new int[4*mxN];
 
-    void build(int *a, int i=1, int s = 0, int e =2*n-1) {
+    void build(int *a, int i=1, int s = 0, int e = 2*n-1) {
         if(s > e)
             return;
         if(s == e) {
-            tree[i] = (a[s]*a[s]);                  //   sqaure sum query
+            // here we are quering sum of squares of node values
+            tree[i] = (a[s]*a[s]);                    
             return;
         }
         int mid = (s + e)/2;
@@ -26,10 +34,13 @@ struct segtree {
         build(a, 2*i+1, mid+1, e);
         tree[i] = tree[2*i] + tree[2*i+1];
     }
-    void update( int l, int r, int new_val, int i = 1, int s = 0, int e =2*n-1) {
+    
+    void update(int l, int r, int new_val, int i = 1, int s = 0, int e =2*n-1) {
+        // update tree nodes using lazy tree nodes
         if(lazy[i] != 0) {
             tree[i] += lazy[i];
-            if(s != e) {                            // not a leaf node - propagate the update in lazy tree 
+            if(s != e) {                            
+                // not a leaf node - propagate the update in lazy tree 
                 lazy[2*i] += lazy[i];
                 lazy[2*i + 1] += lazy[i];
             }
@@ -37,8 +48,10 @@ struct segtree {
         }
         if(l > e || r < s)
             return;
+        // segment fits inside current range [l, r]
         if(l <= s && e <= r) {
-            tree[i] = new_val * new_val;            // square sum query
+            // square sum query
+            tree[i] = new_val * new_val;            
             if(s != e) {
                 lazy[2*i] += new_val;
                 lazy[2*i + 1] += new_val;
@@ -50,6 +63,7 @@ struct segtree {
         update(l, r, new_val, 2*i + 1, mid + 1, e);
         tree[i] = tree[2*i] + tree[2*i + 1];
     }
+    
     int query(int l, int r, int i=1, int s=0 , int e=2*n-1) {
         if(lazy[i] != 0) {
             tree[i] += lazy[i];
@@ -71,8 +85,8 @@ struct segtree {
 
         return (leftans + rightans);
     }
-    void disp(int n)
-    {
+    
+    void disp(int n) {
         for(int i = 0; i < 4*n+1; i++)
             cout << tree[i] << " ";
         cout << endl;
@@ -95,31 +109,39 @@ void input() {
         g[y].push_back(x);    
     }
 }
+
 void dfs(int u) {
     vis[u] = 1;
-    a[ind++] = u;                   // subtree start(in)
+    // subtree start(in)
+    a[ind++] = u;                   
     for(auto v: g[u]) {
         if(!vis[v]){
             dfs(v);
         }
     }
-    a[ind++] = u;                   // subtree end(out)
+    // subtree end(out)
+    a[ind++] = u;                   
 }
+
 void inout() {
     memset(ent, -1, sizeof(ent));
     for(int i = 0; i < 2*n; i++) {
         if(ent[a[i]] == -1)
+            // first occurance
             ent[a[i]] = i;
         else 
+            // second occurance
             ex[a[i]] = i; 
     }
 }
+
 void disp() {
     for(int i = 0; i < 2*n; i++) {
         cout << a[i] << " ";
     }   
     cout << endl;
 }
+
 void Query() {
     segtree st;
     st.build(a);
@@ -129,9 +151,12 @@ void Query() {
         int qt, v, val;
         cin >> qt >> v;
         if(qt == 2) {
+            // ans is added twice so half
             cout << st.query(ent[v], ex[v]) / 2 << endl;
         } else {
             cin >> val;
+            // point update 
+            // we have two occurnce of node- entry and exit - so update at both places  
             st.update(ent[v], ent[v], val);
             st.update(ex[v], ex[v], val);
         }
@@ -142,7 +167,8 @@ void solve() {
     dfs(1);
     inout();
                                     
-    for(int i = 0; i < 2*n; i++) {                      // providing nodes their value b[i]
+    for(int i = 0; i < 2*n; i++) {                      
+        // node number replaced by value of node 
         a[i] = b[a[i]];
     }
     Query();

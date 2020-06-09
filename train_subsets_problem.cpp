@@ -6,7 +6,9 @@ using namespace std;
 
 // CHFRAN - codechef
 // on the logic of min platform problem: 
-// but this time we need to remove the trains such that we can sepearate the trains in two subsets(trains are in the same subset if their arr- dep range intersect with another) 
+// but this time we need to remove the trains such that we 
+// can sepearate the trains in two subsets(trains are in the 
+// same subset if their arrival-departure time range intersect with another) 
 // or we can say there is a time where there is no train on the platrom 
 
 

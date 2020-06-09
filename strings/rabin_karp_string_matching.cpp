@@ -1,24 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 #define int long long int 
+
+/* 
+string hashes are sure to collide since there are exponential strings and 2^64 hashes only 
+p = 31 is a good choice if the chars are lowercase letters only 
+if string has bith lowercase and uppercase letters then p = 53 is a good choice 
+p is roughly equal to the number of distinct chars in string
+*/
+
+const int mod = 1e9+9;
 int p = 31;
 
-int create_hash(string str, int n)
-{
-    int h = 0;
-    for(int i = 0; i < n; i++)
-    {
-        h += (int)str[i] * pow(p, i);
+int create_hash(string s, int n) {
+    int hash_value = 0;
+    int p_pow = 1;
+    for(int i = 0; i < n; i++) {
+        hash_value += ((s[i]-'a'+1) * p_pow) % mod;
+        p_pow = (p_pow * p) % mod;
     }
-    return h;
+    return hash_value;
 }
 
-bool match(string s, string pat, int st, int en)
-{
-    for(int i = st; i <= en; i++)
-        if(s[i] != pat[i-st])
+bool match(string s, string pat, int st, int en) {
+    for(int i = st; i <= en; i++) {
+        if(s[i] != pat[i-st]) {
             return false;
+        }
+    }
     return true;
 }
 
