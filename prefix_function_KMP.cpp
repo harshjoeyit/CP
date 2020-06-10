@@ -21,6 +21,8 @@ vector<int> prefix_function(string s) {
     }
     return pi;
 }
+
+// pattern matching 
 void pattern_match(string s, string pat) {
     vector<int> pi = prefix_function(pat + "#" + s);
     int pl = pat.length();
@@ -32,6 +34,20 @@ void pattern_match(string s, string pat) {
     cout << endl;
 }
 
+// counting different substrings of in O(n)
+void count_unique_substrings(string s) {
+    string temp;
+    int ans = 0;
+    for(int i=0; i<s.length(); i++) {
+        temp = s.substr(0, i+1);
+        reverse(temp.begin(), temp.end());
+        auto pi = prefix_function(temp);
+        int mx = *max_element(pi.begin(), pi.end());
+        ans += temp.length() - mx;
+    }
+    cout << "number of different substring: ";
+    cout << ans << endl;
+} 
 
 // Counting the number of occurrences of each prefix of s in s
 void count_each_prefix(string s) {
@@ -46,22 +62,43 @@ void count_each_prefix(string s) {
     
     for (int i = 0; i <= n; i++)            // adding all the prefixs too to the count
         ans[i]++;
-    
+
     print(ans);
 }
 
 int main() {
-    string s, pat;
-    cin >> s;
-    print(prefix_function(s));
+    // string s, pat;
+    // cin >> s;
+    // print(prefix_function(s));
+    
     // count_each_prefix(s);
     // for couting each type of prefix of t in s make string (t + "#" + s) and do the same
     // output ans[i] till length of i <= t; 
-    cin >> pat;
-    pattern_match(s, pat);
-
+    
+    // cin >> pat;
+    // pattern_match(s, pat);
 
     /*
     Longest possible prefix which is also a suffix - pi[n-1]
+    */
+
+    string s;
+    cin >> s;
+    count_unique_substrings(s);
+
+    /*
+    Compression of string 
+    - compression means the string s can be represented as concatination of one of more strings t. 
+    example 
+        s = "ababab" - comperssed string t = "ab" - s = "ab" + "ab" + "ab" 
+        s = "aaa" - compressed string t = "a"
+
+        s = "abba" - no compressed string exists 
+
+        we define 
+        k = n − π[n−1]
+
+        if k divides n, then k will be the answer, 
+        otherwise there doesn't exists an effective compression and the answer is n.
     */
 }
