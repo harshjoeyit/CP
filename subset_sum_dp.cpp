@@ -1,3 +1,6 @@
+
+// finding all the unique subset sums 
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,16 +11,14 @@ set<int> res;
 vector<int> v;
 int n;
 
-void subset_sum(int pos=0,int sum=0)
-{
-    if(pos==v.size())
-    {
+void subset_sum(int pos=0,int sum=0) {
+    if(pos == v.size()) {
         res.insert(sum);
         return ;
     }
     if(dp[pos][sum])
-        return;
-    
+        return;   
+         
     dp[pos][sum]=true;
     subset_sum(pos+1,sum);
     subset_sum(pos+1,sum + v[pos]);
@@ -39,6 +40,5 @@ void solve() {
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-
     solve();
 }

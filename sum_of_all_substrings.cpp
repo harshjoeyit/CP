@@ -1,3 +1,10 @@
+
+/*
+given a number - find the sum of all the substrings of the number 
+for - 123
+ans = 1+2+3+12+23+123
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long int
