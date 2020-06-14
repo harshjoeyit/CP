@@ -24,6 +24,7 @@ using namespace std;
 const int mxN = 1e5+10;
 int n, a[mxN];
 
+// counting subarrays with a given sum 
 int count_subarrays(int sum) {
     unordered_map<int, int> ump;
     int curr = 0, cnt = 0;
