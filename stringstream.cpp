@@ -10,6 +10,23 @@ void solve() {
       while(ss >> s) {
             cout << s << "-";
       }cout << endl;
+
+      /*
+      stringstream ss;
+      string s1 = "this is a nice place tp sit";
+      ss << s1;
+      string word;
+      while(ss >> word) {
+            cout << word << endl;
+      }
+      
+      string s2 = "here i am again!";
+      ss.clear();
+      ss << s2;
+      while(ss >> word) {
+            cout << word << endl;
+      }
+      */
 }
 
 signed main() {
