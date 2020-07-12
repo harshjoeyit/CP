@@ -14,59 +14,53 @@ then apply the same concept for the new vertices with new distances and so on
 Optimized version is disjktra - O(V^2) , with min priority queue, O(V + Elog(V))
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
 #define SIZE 100000 + 1
 
-vector <pair<int, int> > v[SIZE];   
-vector<int> dist(SIZE, INT_MAX);                    // set the vertices distances as infinity
-
+vector<pair<int, int>> v[SIZE];
+vector<int> dist(SIZE, INT_MAX); // set the vertices distances as infinity
 vector<int> vis(SIZE);
 
-void dijkstra()
-{
-                                                
+void dijkstra() {
     dist[1] = 0;
-    multiset <pair<int, int> > s;                   // multiset do the job as a min-priority queue, complexity same, sorted in increasing order 
+    // multiset do the job as a min-priority queue, complexity same, sorted in increasing order
+    multiset<pair<int, int>> s; 
+    // insert the source node with distance = 0
+    s.insert({0, 1}); 
 
-    s.insert({0 , 1});                              // insert the source node with distance = 0
-
-    while(!s.empty())
-    {
-
-        pair <int , int> p = *s.begin();            // pop the vertex with the minimum distance
+    while (!s.empty()) {
+        // pop the vertex with the minimum distance
+        pair<int, int> p = *s.begin(); 
         s.erase(s.begin());
+        int u = p.second;
 
-        int u = p.second; 
+        // check if the popped vertex is visited before
+        if (vis[u])
+            continue; 
 
-        if(vis[u]) 
-        continue;                                   // check if the popped vertex is visited before
-            
         vis[u] = true;
 
-        for(int i = 0; i < v[u].size(); i++)
-        {
-            int w = v[u][i].first;                  // each neighbour vertex
+        for (int i = 0; i < v[u].size(); i++) {
+            // each neighbour vertex
+            int w = v[u][i].first; 
             int neighb = v[u][i].second;
 
-            if(dist[u] + w < dist[neighb])
-            {                                       // check if the next vertex distance could be minimized
+            if (dist[u] + w < dist[neighb]) {
+                // check if the next vertex distance could be minimized 
                 dist[neighb] = dist[u] + w;
-                s.insert({dist[neighb],  neighb});            // insert the next vertex with the updated distance
+                // insert the next vertex with the updated distance
+                s.insert({dist[neighb], neighb}); 
             }
         }
     }
 }
 
-
-int main()
-{
+int main() {
     int nodes, edges, x, y;
     int weight;
     cin >> nodes >> edges;
-    for(int i = 0;i < edges;++i)
-    {
+    for (int i = 0; i < edges; ++i) {
         cin >> x >> y >> weight;
         v[x].push_back(make_pair(weight, y));
         v[y].push_back(make_pair(weight, x));
@@ -74,7 +68,10 @@ int main()
 
     dijkstra();
 
-    for(int i = 1; i <= nodes; i++)
-        cout << "dist of "<< i << " from " << 1 << " = " << dist[i] << endl; 
-
+    for (int i = 1; i <= nodes; i++)
+        cout << "dist of " << i << " from " << 1 << " = " << dist[i] << endl;
 }
+
+/*
+similar problem - maximum probability path
+*/
