@@ -1,63 +1,60 @@
-/*
-weighted job scheduling
-*/
-
 #include<bits/stdc++.h>
 using namespace std;
 
-struct job {
-      int st, en, profit;
-};
-
-bool comp(job &a, job &b) {
-      return (a.en < b.en);
-}
-
-const int mxN = 1000;
-job jobs[mxN];
-int n;
-
-int binary_search(int index) {
-      int l=0, h=index-1;
-      while(l <= h) {
-            int mid = (l+h)/2;
-            if(jobs[mid].en <= jobs[index].st) {
-                  // there could be multiple jobs ending at same time, 
-                  if(jobs[mid+1].en <= jobs[index].st) {
-                        l = mid+1;
-                  } else {
-                        return mid;
-                  }
-            } else {
-                  h = mid-1;
-            }
+int maxJumps(vector<int>& arr, int d) {
+      if(arr.size() == 1) {
+            return 1;
       }
-      return -1;
-}
-
-int go() {
-      int dp[n];
-      memset(dp, 0, sizeof(dp));
-      dp[0] = jobs[0].profit;
-
-      for(int i=1; i<n; i++) {
-            int x = jobs[i].profit;
-            int l =  binary_search(i);
-            if(l == -1) {
-                  x += dp[i];
-            }
-            dp[i] = max(x, dp[i-1]);
-      }     
-
-      return dp[n-1];
-}
-
-int main() {      
-      cin >> n;
+      int n = arr.size();
+      int maxJumpFrom[n];
       for(int i=0; i<n; i++) {
-            cin >> jobs[i].st >> jobs[i].en >> jobs[i].profit;
+            maxJumpFrom[i] = 1;
       }
-      sort(jobs, jobs+n, comp);
+      
+      multimap<int, int> mp;
 
-      cout << go() << endl;
+      for(int i=0; i<n; i++) {
+            mp.insert(pair<int, int>(arr[i], i));
+      }
+
+      int h, j, left, right, mj, ans = 1;
+      for(auto p: mp) {
+            h = p.first;
+            j = p.second;
+            left = max(0, j-d);
+            right = min(n-1, j+d);
+            mj = 0;
+
+            for(int i=j; i>=left; i--) {
+                  if(arr[i] > h) {
+                        break;
+                  } else if(arr[i] != h) {
+                        mj = max(mj, maxJumpFrom[i]);
+                  }
+            }
+
+            for(int i=j; i<=right; i++) {
+                  if(arr[i] > h) {
+                        break;
+                  } else if(arr[i] != h) {
+                        mj = max(mj, maxJumpFrom[i]);
+                  }
+            }
+            
+            maxJumpFrom[j] += mj;
+            ans = max(ans, maxJumpFrom[j]);
+      }
+      return ans;
+}
+
+int main() {
+      ios_base::sync_with_stdio(0);
+      cin.tie(0);
+      int n, d;
+      // cin >> n >> d;
+      vector<int> v = {59,8,74,27,92,36,95,78,73,54,75,37,42,15,59,84,66,25,35,61,97,16,6,52,49,18,22,70,5,59,92,85};
+      // for(auto &x: v) {
+      //       cin >> x;
+      // }
+      cout << maxJumps(v, d);
 }
