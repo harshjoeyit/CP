@@ -28,7 +28,7 @@ vector<vector<int>> merge(vector<vector<int>> &intervals) {
             }
       }
       return ans;
-    }
+}
 
 int main()
 {

@@ -1,23 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// placing default arguments in the prototype  
+void foo1(int a = 10,int b = 12);  
 
-void function_1(int a=10)  // way 1 of passing default arguments
-{                           // in the body itself
-    cout<<a<<endl;
+void foo1(int a, int b) {
+    cout << a + b << endl;
 }
 
-void function_2(int a=10,int b=12);  // way 2 int the prototype
-
-int main()
-{
-    function_1();
-    function_2('\0');
+int main() {
+    foo1();
+    foo1(50);
+    foo1(4, 5);
 }
-
-void function_2(int a,int b)
-{
-    cout<<a<<" "<<b<<endl;
-}
-
 
