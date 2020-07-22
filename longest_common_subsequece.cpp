@@ -1,3 +1,8 @@
+
+/*
+Read and apply the recursive version too (its easy) 
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
