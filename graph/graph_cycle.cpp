@@ -8,6 +8,12 @@ vector<int> Arr(1000);
 vector<pair<int, int>> Edges;
 
 /*
+Logic - simple dfs - if a visited vertex is found again and 
+it is not a parent then there is a cycle, 
+a recursive function can be easily implemented  
+*/
+
+/*
 Copy and paste part
 
 int vis[1005];
@@ -115,26 +121,21 @@ bool find_cycle_dsu()
     return false;
 }
 
-
-bool find_cycle(int u)
-{   
+// DFS using a stack 
+bool find_cycle(int u) {   
     stack<int> s;
     s.push(u);
     vis[u] = 1;
 
-    while(! s.empty())
-    {
+    while(! s.empty()) {
         u = s.top();
         s.pop();
-        //cout << u << " ";
-        for(auto v: G[u])
-        {
-            //  cout << "v: " << v << " -prev = "<< prev[v] << endl; 
-            if(vis[v] == 1 && v != prev[u])         // if a vis node is found then it shuld not be the parent or prev node that came earlier in dfs
+        for(auto v: G[u]) {
+            // if a vis node is found then it shuld not be the parent or prev node that came earlier in dfs
+            if(vis[v] == 1 && v != prev[u])         
                 return true;
 
-            if(vis[v] != 1)
-            {
+            if(vis[v] != 1) {
                 s.push(v);
                 vis[v] = 1;
                 prev[v] = u;
@@ -147,23 +148,20 @@ bool find_cycle(int u)
 
 
 
-int main()
-{
-    
+int main() {
     int x, y, nodes, edges;
-    cin >> nodes;       //Number of nodes
-    cin >> edges;       //Number of edges
+    cin >> nodes;       
+    cin >> edges;      
 
-    for(int i = 0;i < edges;++i)
-    {
-            cin >> x >> y;
-        G[x].push_back(y);        //Undirected Graph
+    // Undirected Graph
+    for(int i = 0;i < edges;++i) {
+        cin >> x >> y;
+        G[x].push_back(y);        
         G[y].push_back(x);       
         Edges.push_back(make_pair(x, y)); 
     }
 
-    for(int i = 1; i <= nodes; i++)
-    {
+    for(int i = 1; i <= nodes; i++) {
         prev[i] = i;    
         Arr[i] = i;
     }
@@ -171,12 +169,9 @@ int main()
     int i;
     bool flag = 0;
     vis.assign(1000, 0);
-    for(i = 1; i <= nodes; i++)
-    {
-        if(! vis[i])
-        {
-            if(find_cycle(i))
-            {
+    for(i = 1; i <= nodes; i++) {
+        if(! vis[i]) {
+            if(find_cycle(i)) {
                 flag = 1;
                 break;
             }

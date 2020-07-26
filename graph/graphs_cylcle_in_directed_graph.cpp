@@ -6,6 +6,7 @@ int recStack[100005];
 int vis[100005];
 int n, m;
 
+// using DFS
 bool cycle_in_directed_graph(int u)
 {
     vis[u] = true;
@@ -30,6 +31,43 @@ bool find_cycle()
             if(cycle_in_directed_graph(i))
                 return true;
     return false;
+}
+
+
+// using BFS topological sort 
+bool canFinish(int n, vector<vector<int>> &edges) {
+      vector<vector<int>> g(n, vector<int>());
+      int indegree[n] = {};
+      for (auto e : edges) {
+            g[e[0]].push_back(e[1]);
+            indegree[e[1]] += 1;
+      }
+      // no if the topological sort algo works fine 
+      // then all the vertices will be covered in the end
+      // it will happen when there is no cycle 
+      // if cycle exist , some vertices remian unvisited
+      queue<int> q; 
+      int cnt = 0;
+      for(int i=0; i<n; i++) {
+            if(indegree[i] == 0) {
+                  q.push(i);
+            }
+      }
+      
+      while(!q.empty()) {
+            int u = q.front();
+            q.pop();
+            cnt += 1;
+
+            for(auto v: g[u]) {
+                  indegree[v] -= 1;
+                  if(indegree[v] == 0) {
+                        q.push(v);
+                  }
+            }
+      }
+
+      return cnt == n;
 }
 
 int main()
