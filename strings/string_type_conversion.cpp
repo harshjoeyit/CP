@@ -1,6 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+int toInt(string num) {
+      int val = 0, t = 1;
+      for(int i=num.length()-1; i>=0; i--) {
+            val += t * (num[i] - '0');
+            t *= 10;
+      }
+      return val;
+}
+
 // string to number and number to string 
 int main()
 {
@@ -11,10 +21,10 @@ int main()
 
     //stod() // function 
     d = stod(s);
-    cout<<"string to double: "<<d<<endl;
+    cout<<"string to double: "<<(d + 10)<<endl;
 
     // stoi(i) function 
-    cout<<"string to int: "<<stoi(s)<<endl;
+    cout << "string to int: " << stoi(s) << endl;
 
     string str = "3254 with words ";  // can be converted
    // string str1 = "words with 3453";  , cannot be converted
@@ -26,9 +36,10 @@ int main()
 
     // solution for the str1 case 
     d = stod(s2.substr(s2.find_first_of("+-.0123456789")));
-    cout<<"to double"<<d<<endl;
+    cout << "to double" << d << endl;
 
-    // if the string cannot be converted into the int then an exception is thrown 
+    // if the string cannot be converted into 
+    // the int then an exception is thrown 
     string S = "klkl";
     cout<<"S to int : "<<stoi(S)<<endl;
 }

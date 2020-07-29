@@ -7,34 +7,27 @@ Exmaples of array -
 1 2 3
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define int long long int
 
-void solve() {
-    int n;
-    cin >> n;
-    int arr[n];
-    for(int i=0; i<n; i++) {
-        cin >> arr[i];
+int findMin(vector<int>& a) {
+    int n = a.size(), low = 0, high = a.size() - 1, mid;
+    
+    while(low <= high) {
+        mid = low + (high - low)/2;
+        // condition 1
+        if(a[mid] > a[high]) {
+            low = mid + 1;
+        }
+        // condition 2
+        else if(a[mid] < a[high]) {
+            high = mid;
+        } 
+        // high - low = 0
+        else {
+            return a[low];
+        }
     }
-    int l = 0, h = n-1, mid;
-    while(l < h) 
-    { 
-        int mid = l + (h - l)/2; 
-        if (arr[mid] == arr[h]) 
-            h--; 
-        else if(arr[mid] > arr[h]) 
-            l = mid + 1; 
-        else
-            h = mid; 
-    } 
-    cout << arr[h] << endl;
-}
-
-signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
-    solve();
+    return -1;
 }

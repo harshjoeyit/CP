@@ -13,40 +13,58 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
       if(n <= 1) {
             return people;
       }
-      auto comp = [](const vector<int> &a, const vector<int> &b) {
+      // we arrange people in descending order of height 
+
+      // comparitor for sorting people on the basis of height and index 
+      auto comp = [](vector<int> &a, vector<int> &b) {
             if(a[0] == b[0]) {
-                  return a[1] < b[1];
-            } 
+                // if height equal arrange them increasing order of index 
+                return a[1] < b[1];
+            }  
+            // arrange them in increasing height
             return a[0] > b[0];
       };
+      
       sort(people.begin(), people.end(), comp);
-      // for(auto v: people) {
-      //       cout << v[0] << " " << v[1] << endl;
-      // }
-      // return people;
-      stack<vector<int> > s;
-      stack<vector<int> > temp;
+      
+      stack<vector<int>> s, temp;
 
-      for(auto v: people) {
-            while(s.size() > v[1]) {
+      // now we just need to people in the right spot 
+      // we know how many people are taller than a particular person(actually but they are not arranged this way in the queue )
+      // there are shorter people in between 
+      // the only thing we do is use the (given) number of taller people TO PUT THE PERSON IN THE CORRECT SPOT 
+      // SO THAT ONLY THAT NUMBER OF TALLER PEOPLE ARE BEFORE IN THE QUEUE 
+      // for example there are 5 people in total that are taller than current peson 
+      // but in the queue  only 2 were before him 
+      // so we place this person after those 2 person and before remaining 3 person
+
+      for(auto &p: people) {
+            int h = p[0];
+            int idx = p[1];
+
+            while(s.size() > idx) {
                   temp.push(s.top());
                   s.pop();
             }
-            s.push(v);
+
+            s.push(p);
+          
             while(!temp.empty()) {
                   s.push(temp.top());
                   temp.pop();
-            }
+            }     
       }
-
-      vector<vector<int> > ans;
+      
+      vector<vector<int>> ans;
       while(!s.empty()) {
             ans.push_back(s.top());
             s.pop();
       }
       reverse(ans.begin(), ans.end());
+      
       return ans;
 }
+
 
 /*
       There is a nlogn approach using segment/fenwick tree
