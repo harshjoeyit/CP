@@ -1,57 +1,60 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define int long long 
 
+// the matrix is binary (0, 1 only)
+// we find the have to find the maximum area of rectangle with all the ones 
 // solution is based on JUDGE algo for max area histogram 
 // https://www.youtube.com/watch?v=g8bSdXCG-lA
 
 
-#define int long long 
-#define MAX 1005
-#define height      first
-#define index       second
-int a[MAX][MAX];
-
-int maxRecArea(int A[MAX][MAX], int ind, int m) {
-    int mxarea = -1, left , curr;
-    stack<pair<int, int>> S;
+int niceMaxRectangleArea(vector<int> &heights) {
+    heights.push_back(0);
+    int n = heights.size();
+    stack<int> s;
+    int area, maxArea = 0, i = 0;
+    
+    while (i < n) {
         
-    for(int j = 0; j <= m; j++ ) {
-        while( !(S.empty()) && ( j == m || S.top().height > A[ind][j] )) {
-            if( S.size() > 1) {                 // min 2 items 
-                auto t = S.top();
-                S.pop();
-                left = S.top().index;           // 2nd item on the stack
-                S.push(t);
-            }                                             
-            else
-                left = -1;
+        if (s.empty() || heights[i] > heights[s.top()]) {
+            s.push(i);
+            i++;
 
-            curr = (j - left - 1) * S.top().height;
-            S.pop();
-
-            if( curr > mxarea )
-                mxarea = curr;
+        } else {
+            int top = s.top();
+            s.pop();
+            area = heights[top] * (s.empty() ? i : i - s.top() - 1);
+            maxArea = max(maxArea, area);
         }
-
-        if(j < m)                                               
-            S.push( {A[ind][j], j} );
-        
-    } 
-    return mxarea;
+    }
+    return maxArea;
 }
 
-int maxArea(int a[MAX][MAX], int n, int m) {
+
+int maximalRectangle(vector<vector<int>> &a) {
+    int n = a.size();
+    int m = a[0].size();
+
+    // sum up the columns vertically 
     for(int j=0; j<m; j++) {
         for(int i=1; i<n; i++) {
-            if(a[i][j] > 0 && a[i-1][j] > 0) {
+            // if a[i][j] = 0, then prev height not taken
+            if(a[i][j] > 0 /*&& a[i-1][j] > 0*/) {
                 a[i][j] += a[i-1][j];
             }
         }
     }
+
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<m; j++) {
+            cout << a[i][j] << " ";
+        }cout << endl;
+    }
     
     int maxA = 0;
     for(int i=0; i<n; i++) {
-        maxA = max(maxA, maxRecArea(a, i, m));
+        // passing the ith row
+        maxA = max(maxA, niceMaxRectangleArea(a[i]));
     }
     
     return maxA;
@@ -60,11 +63,12 @@ int maxArea(int a[MAX][MAX], int n, int m) {
 void solve() {
     int n, m;
     cin >> n >> m;
+    vector<vector<int>> a(n, vector<int>(m));
     for(int i=0; i<n; i++)
         for(int j=0; j<m; j++)
             cin >> a[i][j];
 
-    cout << maxArea(a, n, m) << endl;
+    cout << maximalRectangle(a) << endl;
 }
 
 signed main()
