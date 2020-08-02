@@ -18,6 +18,8 @@ int countStartingFromThisCell(vector<vector<int>> &mat, int x, int y) {
       for (int i = x; i < rows; i++) {
             for (int j = y; j < bound; j++) {
                   if (mat[i][j] == 1) {
+                        // add 1 since, if we are at i, j 
+                        // it means this is (x, y) -> (i, j) is a new (unique rectangle)
                         ans += 1;
                   }
                   else {

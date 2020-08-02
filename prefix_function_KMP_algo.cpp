@@ -67,9 +67,9 @@ void count_each_prefix(string s) {
 }
 
 int main() {
-    // string s, pat;
-    // cin >> s;
-    // print(prefix_function(s));
+    string s, pat;
+    cin >> s;
+    print(prefix_function(s));
     
     // count_each_prefix(s);
     // for couting each type of prefix of t in s make string (t + "#" + s) and do the same
@@ -82,9 +82,9 @@ int main() {
     Longest possible prefix which is also a suffix - pi[n-1]
     */
 
-    string s;
-    cin >> s;
-    count_unique_substrings(s);
+    // string s;
+    // cin >> s;
+    // count_unique_substrings(s);
 
     /*
     Compression of string 
