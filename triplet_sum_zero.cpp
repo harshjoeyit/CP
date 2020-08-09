@@ -1,11 +1,61 @@
-// basic approach - O(n^3)
+
+/*
+triplet sum 0
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
 
+// returning all unique pairs 
+vector<vector<int>> threeSum(vector<int>& nums) {
+      if(nums.size() == 0) {
+            return {};
+      }
+      
+      int n = nums.size();
+      sort(nums.begin(), nums.end());
+      
+      vector<vector<int>> ans;
+
+      for(int i=0; i<n; i++) {
+            int left = i+1, right = n-1;
+            
+            if(nums[i] > 0) {
+                break;
+            }
+          
+            while(left < right) {
+                  int s = nums[i] + nums[left] + nums[right];
+                  if(s == 0) {
+                        vector<int> temp = {nums[i], nums[left], nums[right]};
+                        ans.push_back(temp);
+
+                        // skipping the duplicates
+                        while(left < right && nums[left] == temp[1]) {
+                              left++;
+                        }
+                        while(left < right && nums[right] == temp[2]) {
+                              right--;
+                        }
+
+                  } else if(s > 0) {
+                        right--;
+                  } else {
+                        left++;
+                  }
+            }
+
+            // skipping the duplicates
+            while(i+1 < nums.size() && nums[i+1] == num[i]) {
+                  ++i;
+            }
+      }
+      return ans;
+}
+
+
+// checking 
 // hashing O(n^2) - O(n) - space 
-
-
 void findTriplets(int arr[], int n) 
 { 
     bool found = false; 
@@ -33,18 +83,9 @@ void findTriplets(int arr[], int n)
 } 
   
 
-int main()
-{
-    int n;
-    cin >> n;
+// two pointer approach
 
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
-        cin >> v[i];
-
-    // 2 pointer approach O(n^2) 
-    // space O(1)
-
+void twoPointerApproach(vector<int> &v) {
     sort(v.begin(), v.end());
 
     int i = 0, l, r;
@@ -75,9 +116,24 @@ int main()
         }
         ++i;
     }
-
     if(!flag)
         cout << v[i-1] << " " << v[l] << " " << v[r] << endl;
     else
         cout << "not possible" << endl;
+} 
+
+
+// counting all triplets with sum = 0
+// use either a + b + c = d
+// or use two pointer with counting pair with a given sum
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> v(n);
+    for(int i = 0; i < n; i++)
+        cin >> v[i];
+
+
 }

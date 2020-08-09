@@ -134,3 +134,49 @@ signed main() {
     cin.tie(0);
     solve();
 }
+
+
+
+
+/*
+Kth Ancestor using binary lifting
+
+int height;
+vector<vector<int>> P;
+
+void preprocess(int n, vector<int>& parent) {
+      height = (int)ceil(log2(n));
+      P.resize(n+1, vector<int>(height+1, -1));
+
+      for(int i=1; i<n; i++) {
+            P[i][0] = parent[i];
+
+            for(int j=1; j<=height; j++) {
+                  P[i][j] = P[P[i][j-1]][j-1];
+                  if(P[i][j] == -1) {
+                        break;
+                  }
+            }
+      }
+}
+
+int getKthAncestor(int node, int k) {
+      for(int i=0; i<=height; i++) {
+            // using k in binary form to reach the node 
+            if(k & (1 << i)) {
+                  node = P[node][i];
+                  if(node == -1) {
+                        break;
+                  }
+            }
+      }
+      return node;
+}
+
+void solve() {
+      // stdin
+      // create the parent array
+      // call preprocess 
+      // call getKthAncestor 
+}
+*/

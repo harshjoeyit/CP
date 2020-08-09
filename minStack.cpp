@@ -1,6 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 1) a simple implementation is using a pair of stack 
+// 2) another solution is using two stacks 
+
 struct MyStack {
     stack<int> s;
     int minEle;

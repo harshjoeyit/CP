@@ -1,6 +1,49 @@
 #include<bits/stdc++.h> 
 using namespace std; 
 
+// operator overloading on sets 
+struct comp {
+    
+    bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
+
+        int lena = a.second - a.first + 1;
+        int lenb = b.second - b.first + 1;
+        // if segment lengths are equal then 
+        // choose the one with lower start index
+        if(lena == lenb) {
+            return a.first < b.first;
+        }
+        // else choose the segment with larger length
+        return lena > lenb;
+    }
+};
+
+class comparisonMap {
+public: 
+      //  custom comparison for key
+      bool operator() (const string &a, const string &b) const {
+            return a.length() < b.length();
+      }
+};
+
+// comp class for priority queue 
+// comp class is diff from that of sets and maps (as operation is reversed < becomes > & vice versa )
+class ComparisonClass {
+public:
+        bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
+                int lena = a.second - a.first + 1;
+                int lenb = b.second - b.first + 1;
+                // if segment lengths are equal then 
+                // choose the one with lower start index
+                if(lena == lenb) {
+                    return !(a.first < b.first);
+                }
+                // else choose the segment with larger length
+                return !(lena > lenb);
+    }
+};
+
+
 class Complex { 
 private: 
 	int real, imag; 
@@ -39,48 +82,6 @@ public:
         return out; 
     }
 };
-
-// operator overloading on sets 
-struct comp {
-    
-    bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
-
-        int lena = a.second - a.first + 1;
-        int lenb = b.second - b.first + 1;
-        // if segment lengths are equal then 
-        // choose the one with lower start index
-        if(lena == lenb) {
-            return a.first < b.first;
-        }
-        // else choose the segment with larger length
-        return lena > lenb;
-    }
-};
-
-// operator overloading for priority queue - just reverse the ops of sets (pq is min heap by default
-class ComparisonClass {
-public:
-        bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
-                int lena = a.second - a.first + 1;
-                int lenb = b.second - b.first + 1;
-                // if segment lengths are equal then 
-                // choose the one with lower start index
-                if(lena == lenb) {
-                    return !(a.first < b.first);
-                }
-                // else choose the segment with larger length
-                return !(lena > lenb);
-    }
-};
-
-class comparisonMap {
-public: 
-      //  custom comparison for key
-      bool operator() (const string &a, const string &b) const {
-            return a.length() < b.length();
-      }
-};
-
 
 int main() 
 { 

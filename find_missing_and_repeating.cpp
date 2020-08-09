@@ -2,6 +2,62 @@
 using namespace std;
 #define int long long 
 
+/*
+https://leetcode.com/problems/find-the-duplicate-number/solution/
+read all the methods 
+IMPORTANT
+There is only one duplicate number in the array, 
+but it could be repeated MORE THAN ONCE.
+
+Solution uses - Floyd's Hare and Tortoise Algo (used for finding cycle int the linked list)
+*/
+int findDuplicate(vector<int>& nums) {
+      // the cycle is here for sure 
+      // due to given conditions 
+      int slow = 0, fast = 0;   
+      do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+      } while(slow != fast);
+
+      slow = 0;
+
+      while(slow != fast) {
+            fast = nums[fast];
+            slow = nums[slow];
+      }
+      return slow;
+}
+
+/*
+all the numbers in the array occur twice except for 2 values 
+find those (could be negetive as well)
+*/
+vector<int> singleNumber(vector<int>& nums) {
+      // int xor1 = 0;        
+      // for(auto &val: nums) {
+      //       xor1 ^= val;
+      // }
+
+      // better way to find the xor 
+      int lastSet = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+      // we could find any set bit (one will be set since the no are distinct)
+      // here we find value with the last set bit
+      lastSet &= -lastSet;
+
+      cout << lastSet << endl;
+
+      int x = 0, y = 0;
+      for(auto val: nums) {
+            if(val & lastSet) {
+                  x ^= val;
+            } else {
+                  y ^= val;
+            }
+      }
+      return {x, y};
+}
+
 void solve() {
     int n;
     cin >> n;

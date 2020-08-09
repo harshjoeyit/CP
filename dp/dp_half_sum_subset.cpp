@@ -7,7 +7,7 @@ using namespace std;
 bool subset_half_sum(vi a)
 {
     int n = a.size();
-    int k = accumulate(a.begin(), a.end(), 0);
+    int k = accumulate(a.begin(), a.end(), 0LL);
     vector<bool> dp(k+1, false);                            // marks dp[i] = 1 if the sum i is possible 
 
     dp[0] = 1;              // 0 sum is always possible for a empty subset  

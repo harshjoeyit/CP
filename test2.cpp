@@ -1,46 +1,58 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define int long long int
 
-void solve() {
-      int x, n;
-      cin >> n;
-      vector<bitset<12>> v(n);
-      for(int i=0; i<n; i++) {
-            cin >> x;
-            v[i] = bitset<12>(x);
-            cout << v[i] << endl;
-      }
+vector<int> findMinHeightTrees(int n, vector<vector<int>> &edges) {
+	if (n <= 1)	{
+		return {0};
+	}
 
-      if(n % 2 == 1) {
-            cout << -1 << endl;
-            return;                 
-      }
+	vector<int> degree(n, 0);
+	vector<int> g[n];
 
-      int ans = 0;
-      for(int i=0; i<11; i++) {
-            int cnt = 0;
-            for(int j=0; j<n; j++) {
-                  if(v[j][i] == 1) {
-                        cnt += 1;
-                  }
-            }
-            if(cnt == n/2) {
-                  ans += (1 << i);
-            }
-      }
-      if(ans == 0) {
-            ans = -1;
-      }
-      cout << ans << endl;
-}
+	for (auto e : edges) {
+		int u = e[0], v = e[1];
+		g[u].push_back(v);
+		g[v].push_back(u);
+		degree[u] += 1;
+		degree[v] += 1;
+	}
 
-signed main() {
-      ios_base::sync_with_stdio(0);
-      cin.tie(0);
-      int t;
-      cin >> t;
-      while(t--) {
-            solve();
-      }
+	queue<int> q;
+	int vis = 0;
+
+	for (int i = 0; i < n; i++) {
+		if (degree[i] == 1) {
+			q.push(i);
+		}
+	}
+
+	while (!q.empty()) {
+		int sz = q.size();
+
+		if (n - vis <= 2) {
+			break;
+		}
+
+		while (sz--) {
+			int u = q.front();
+			q.pop();
+			vis += 1;
+
+			for (auto v : g[u]) {
+				degree[v] -= 1;
+				if (degree[v] == 1) {
+					q.push(v);
+				}
+			}
+		}
+	}
+
+	vector<int> ans;
+	// size can be 2 max
+	while (!q.empty()) {
+		ans.push_back(q.front());
+		q.pop();
+	}
+
+	return ans;
 }

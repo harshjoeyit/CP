@@ -19,27 +19,59 @@
        30     20 20    30
 */
 
+bool go(TreeNode *a, TreeNode *b) {
+      if (!a && !b) {
+            return true;
+      }
+      else if (!a || !b) {
+            return false;
+      }
+      else if (a->val != b->val) {
+            return false;
+      }
 
-bool mirror(Node *r1, Node *r2) {
-    if(r1 == NULL && r2 == NULL)
-        return 1;
-    if(r1 == NULL || r2 == NULL)
-        return 0;
-    
-    return(r1->data == r2->data && mirror(r1->left, r2->right) && mirror(r1->right, r2->left));
+      if (a == b) {
+            return go(a->left, b->right);
+      }
+
+      return go(a->left, b->right) && go(a->right, b->left);
 }
 
-// return true/false if the is Symmetric or not
-bool isSymmetric(struct Node* root)
-{
-	if(root == NULL)
-	    return 1;
-	 
-	if(root->left == NULL && root->right == NULL)
-	    return 1;
-	 
-	if(root->left == NULL || root->right == NULL)
-	    return 0;
-	   
-	return mirror(root->left, root->right);
+bool isSymmetric(TreeNode *root) {
+      return go(root, root);
+}
+
+public
+boolean isSymmetric(TreeNode root) {
+      if (root == null) {
+            return true;
+      }
+
+      stack<TreeNode *> st;
+      st.push(root.left);
+      st.push(root.right);
+
+      while (!st.empty()) {
+            // just as in recursion 
+            TreeNode a = st.pop(), b = st.pop();
+            
+            if (!a && !b) {
+                  // go on, correct till now
+                  continue;
+            } if (!a || !b) {
+                  return false;
+            } else if(a.val != b.val) {
+                  return false;
+            }
+            
+            // left and right
+            st.push(a.left);
+            st.push(b.right);
+            
+            // right and left 
+            st.push(a.right);
+            st.push(b.left);
+      }
+      
+      return true;
 }

@@ -1,62 +1,121 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+public: 
+      Node *prev, *next;
+      int key, val;
+      Node (int _key=0, int _val=0):key(_key), val(_val) {}
+};
+
 class LRUCache {
-  private:
-    static unordered_map<int, Node *> hsmap;
-    static int capacity, count;
-    static Node *head, *tail;
+      unordered_map<int, Node *> ump;
+      int capacity, count;
+      Node *head, *tail;
 
-  public:
-    LRUCache(int cap) {
-        unordered_map<int, Node *> temp;
-        hsmap = temp;
-        capacity = cap;
-        head = new Node(0, 0);
-        tail = new Node(0, 0);
-        head->next = tail;
-        head->pre = NULL;
-        tail->next = NULL;
-        tail->pre = head;
-        count = 0;
-    }
+public:
+      LRUCache(int capacity) {
+            unordered_map<int, Node*> temp;
+            ump = temp;
+            this->capacity = capacity;
+            // make doubly linked list of 2 nodes 
+            head = new Node();
+            tail = new Node();
+            head->next = tail;
+            head->prev = NULL;
+            tail->next = NULL;
+            tail->prev = head;
+            count = 0;
+      }
 
-    static void addToHead(Node *node) {     // head is (0, 0)
-        node->next = head->next;    // to next element of head
-        node->next->pre = node;     // next element of head to new
-        node->pre = head;           // new to head
-        head->next = node;          // head to new
-    }
+      void addToHead(Node *node) {
+            // like we do in doubly linked list 
+            node->next = head->next;
+            node->next->prev = node;
+            node->prev = head;
+            head->next = node;
+      }
 
-    static void deleteNode(Node *node) {
-        node->pre->next = node->next;
-        node->next->pre = node->pre;
-    }
-    static int get(int key) {
-        if (hsmap.count(key) > 0) {
-            Node *node = hsmap[key];
-            int result = node->value;
-            deleteNode(node);
-            addToHead(node);
-            return result;
-        }
+      void deleteNode(Node *node) {
+            // like in doubly linked list
+            node->prev->next = node->next;
+            node->next->prev = node->prev;
+      }
+
+      int get(int key) {
+            if(ump.count(key) > 0) {
+                  Node *ptr = ump[key];
+                  int result = ptr->val;
+                  // delete from here 
+                  deleteNode(ptr);
+                  // add to front
+                  addToHead(ptr);
+                  return result;
+            }
+            return -1;
+      }
+
+      void put(int key, int value) {
+            if(ump.count(key) > 0) {
+                  Node *ptr = ump[key];
+                  // update value
+                  ptr->val = value;
+                  deleteNode(ptr);
+                  addToHead(ptr);
+            } else {
+                  Node *newNode = new Node(key, value);
+                  ump[key] = newNode;
+                  if(count < capacity) {
+                        count += 1;
+                        addToHead(newNode);
+                  } else {
+                        // count > capacity
+                        // remove the last node from list 
+                        ump.erase(tail->prev->key);
+                        deleteNode(tail->prev);
+                        addToHead(newNode);
+                  }
+            }
+      }
+};
+
+
+// can be implememtned using list in c++ 
+// list::erase function works in liner complexity of number of elements deleted 
+// that means we can delete a single element in constant time 
+
+class LRUCache {
+    unordered_map<int, list<pair<int,int>>::iterator> table;
+    list<pair<int,int>> usage;
+    int size;
+
+public: 
+    LRUCache(int capacity): size(capacity) { }
+
+    int get(int key) {
+         if(table.count(key)) {
+            int val = table[key]->second;
+            usage.erase(table[key]);
+            usage.emplace_front(key, val);
+            table[key] = usage.begin();
+            return val;
+        }       
         return -1;
     }
-
-    static void set(int key, int value) {
-        if (hsmap.count(key) > 0) {
-            Node *node = hsmap[key];
-            node->value = value;
-            deleteNode(node);
-            addToHead(node);
+    
+    void put(int key, int value) {
+        if(table.count(key)) {
+            usage.erase(table[key]);
+            usage.emplace_front(key, value);
+            table[key] = usage.begin();            
         } else {
-            Node *node = new Node(key, value);
-            hsmap[key] = node;
-            if (count < capacity) {
-                count++;
-                addToHead(node);
-            } else {
-                hsmap.erase(tail->pre->key);
-                deleteNode(tail->pre);
-                addToHead(node);
+            if(static_cast<int>(usage.size()) == size) {
+                auto leastUsed = *usage.rbegin();
+                table.erase(leastUsed.first);
+                usage.pop_back();
             }
-        }
+            usage.emplace_front(key, value);
+            table[key] = usage.begin();
+        }        
     }
 };

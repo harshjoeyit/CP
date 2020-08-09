@@ -205,3 +205,69 @@ Node* deleteK(Node *head, int K) {
     delete q;
     return head;
 }
+
+
+struct ListNode
+{
+      int val;
+      ListNode *next;
+      ListNode() : val(0), next(nullptr) {}
+      ListNode(int x) : val(x), next(nullptr) {}
+      ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+// add two numbers represented as a linked list of digits 
+ListNode *addTwoNumbers(ListNode *a, ListNode *b) {
+      if (a == NULL) {
+            return b;
+      }
+      if (b == NULL) {
+            return a;
+      }
+
+      ListNode *head = NULL, *last;
+      int carry = 0, s;
+
+      while (a && b) {
+            s = a->val + b->val + carry;
+            carry = s / 10;
+            s = s % 10;
+
+            ListNode *newNode = new ListNode(s);
+
+            if (head == NULL) {
+                  head = newNode;
+                  last = head;
+            }
+            else {
+                  last->next = newNode;
+                  last = last->next;
+            }
+
+            a = a->next;
+            b = b->next;
+      }
+      while (a) {
+            s = a->val + carry;
+            carry = s / 10;
+            s = s % 10;
+            last->next = new ListNode(s);
+            last = last->next;
+            a = a->next;
+      }
+
+      while (b) {
+            s = b->val + carry;
+            carry = s / 10;
+            s = s % 10;
+            last->next = new ListNode(s);
+            last = last->next;
+            b = b->next;
+      }
+
+      if (carry > 0) {
+            last->next = new ListNode(carry);
+      }
+
+      return head;
+}
