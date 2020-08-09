@@ -1,3 +1,13 @@
+
+/*
+      https://leetcode.com/problems/minimum-height-trees/
+      
+      find the nodes, which form min height rooted tree
+      Approach 
+      use multisorce BFS like topological sort 
+      the last 1/2 nodes are the answer 
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 

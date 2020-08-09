@@ -5,17 +5,17 @@ using namespace std;
 int n, capc;
 int dp[102][100005];
 
-int fill_knapsack(int i, int w, int val[], int wt[]){
+int go(int i, int w, int val[], int wt[]){
     if(i < 0)
         return 0;
     if(dp[i][w] != -1)
         return dp[i][w];
     
     if(wt[i] > w) {                 // skip the current object, can't include
-        dp[i][w] = fill_knapsack(i-1, w, val, wt);
+        dp[i][w] = go(i-1, w, val, wt);
     } else {                        // two ways of calling - include, skip
-        dp[i][w] = max(val[i]+fill_knapsack(i-1, w-wt[i], val, wt),
-                        fill_knapsack(i-1, w, val, wt));
+        dp[i][w] = max(val[i]+go(i-1, w-wt[i], val, wt),
+                        go(i-1, w, val, wt));
     }
     return dp[i][w];
 }
@@ -29,7 +29,7 @@ void solve() {
         cin >> wt[i] >> val[i];
 
     memset(dp, -1, sizeof(dp));
-    cout << fill_knapsack(n-1, capc, val, wt) << endl;
+    cout << go(n-1, capc, val, wt) << endl;
 }
 
 signed main() {

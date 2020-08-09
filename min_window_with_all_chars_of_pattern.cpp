@@ -29,7 +29,7 @@ string find_window(string s, string pat) {
         ++hashPat[pat[i]];
     }
 
-    int l = 0, ansLeft = -1, minLeft = INT_MAX;
+    int l = 0, ansLeft = -1, minLen = INT_MAX;
     int count = 0;
 
     for(int j=0; j<n; j++) {
@@ -61,8 +61,8 @@ string find_window(string s, string pat) {
             // update window size 
             // we can work even without right pointer, only left pointer and length does the job 
             int wind = j - l + 1; 
-            if (minLeft > wind) { 
-                minLeft = wind; 
+            if (minLen > wind) { 
+                minLen = wind; 
                 ansLeft = l; 
             } 
         }
@@ -72,7 +72,7 @@ string find_window(string s, string pat) {
         return "";
     }
 
-    return s.substr(ansLeft, minLeft);
+    return s.substr(ansLeft, minLen);
 }
 
 

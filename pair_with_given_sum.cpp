@@ -14,10 +14,11 @@ int pairsWithGivenSum(vector<int> &a, int target) {
             twiceCnt += ump[target - x];
             // decrease count by 1 since we dont want the element 
             // pairing with itself
-            if(x == target/2) {
+            if(target % 2 == 0 && x == target/2) {
                   twiceCnt--;
             }
       }
+
       return twiceCnt/2;
 }
 

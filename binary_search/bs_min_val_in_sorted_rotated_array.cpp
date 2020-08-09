@@ -31,3 +31,24 @@ int findMin(vector<int>& a) {
     }
     return -1;
 }
+
+// find value in rotated sorted array 
+void findValInRotatedSortedArray(vector<int> &a, int val) {
+      int low = findMin(a);
+      int n = a.size();
+      bool f;
+
+      cout << "low: " << low << endl;
+
+      if(a[low] <= val && val <= a[n-1]) {
+            f = binary_search(a.begin()+low, a.end(), val);
+      } else {
+            f = binary_search(a.begin(), a.begin()+low, val);
+      }
+
+      if(f) {
+            cout << "found\n";
+      } else {
+            cout << "not found\n";
+      }
+}

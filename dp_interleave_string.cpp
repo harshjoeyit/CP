@@ -36,6 +36,46 @@ bool isInterleave(string s1, string s2, string s3) {
       return go(s1, s2, s3, 0, 0, 0);
 }
 
+
+// all interleave patterns 
+void interleave(string &a, string &b, int i, int j, string s) {
+      if(i == a.length() && j == b.length()) {
+            cout << s << endl;
+            return;
+      }
+
+      if(i < a.length()) {
+            interleave(a, b, i+1, j, s + a[i]);
+      }
+
+      if(j < b.length()) {
+            interleave(a, b, i, j+1, s + b[j]);
+      }
+}
+
+
+// may be efficient interleave 
+void interleave2(string &a, string &b, int i, int j, string &s) {
+      if(i == a.length() && j == b.length()) {
+            cout << s << endl;
+            return;
+      }
+
+      if(i < a.length()) {
+            s.push_back(a[i]);
+            interleave2(a, b, i+1, j, s);
+            s.pop_back();
+      }
+
+      if(j < b.length()) {
+            s.push_back(b[j]);
+            interleave2(a, b, i, j+1, s);
+            s.pop_back();
+      }
+}
+
+
+
 int main() {
 
 }

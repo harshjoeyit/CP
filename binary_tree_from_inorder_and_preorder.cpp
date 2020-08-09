@@ -15,7 +15,9 @@ TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
       return create(preorder, inorder, ps, 0, inorder.size() - 1);
 }
 
+// do not use static int since it causes problem for multiple test cases 
 TreeNode *create(vector<int> &preorder, vector<int> &inorder, int &ps, int is, int ie) {
+      // find example for the case when ps >= preorder.size()
       if (ps >= preorder.size() || is > ie) {
             return nullptr;
       }

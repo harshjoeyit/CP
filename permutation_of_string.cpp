@@ -13,6 +13,7 @@ son - print next permutation if exist else -1
 #include <bits/stdc++.h> 
 using namespace std; 
 
+// unique permutations 
 void permute(string a, int l, int r, set<string> &st) { 
 	if (l == r) {
 		st.insert(a);
@@ -25,6 +26,18 @@ void permute(string a, int l, int r, set<string> &st) {
 	} 
 } 
 
+// this implementation is better 
+void permute(string a, int i) {
+    if(i == a.length()) {
+        cout << a << " ";
+    }
+    for(int j=i; j<a.length(); j++) {
+        swap(a[i], a[j]);
+        permute(a, i+1);
+        swap(a[i], a[j]);
+    }
+}
+
 int main() { 
     int t;
     cin >> t;
@@ -36,6 +49,8 @@ int main() {
         for(auto x: st)
             cout << x << " ";
         cout << endl;
+        cout << ".................\n";
+        permute(s, 0);
     }
 } 
 
