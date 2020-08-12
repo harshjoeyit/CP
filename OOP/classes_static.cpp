@@ -1,19 +1,25 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+
+
+
+// 1. 
 // always declare the static variable outside the class , 
 // uninitialized static class members give an error 
 
 class student {
       string name;
       static string college;
-      // for value initialization - must be const 
+      // 2. 
+      // for value initialization of static variable - must be const 
       const static int semeseter = 2;
 
 public: 
       static string hostel;
-      // hostel is a non static data member - cannot be 
-      // inititalized in the initializer list of a constructor 
+      // 3. 
+      // hostel is a static data member - cannot be 
+      // inititalized in the initializer list of a constructor, only non-static varibles can be  
       student(string Name="none"): name(Name) {
       }      
       void change_hostel(string new_hostel) {
@@ -30,12 +36,15 @@ public:
             cout << endl;
       }
 };
+
 // static member value initialization - 
 // doesnt matter if it is private , also type must be mentioned when defining 
 string student::college = "MNNIT";
 string student::hostel = "M.M.Malviaya";
-// gives the redefination error 
+
 // string student::college = "NIT-A";   
+// gives the redefination error 
+
 
 
 
@@ -47,12 +56,12 @@ private:
       static double Irate;
       // constexpr variable definened inside the class
       static constexpr int period = 30;       
-      // must inclass initializers for constexpr 
+      // must inclass initializers for constexpr and const static vars  
       static const int IFSCcode = 987456;
       double daily_tbl[period];           
       // array size is defined using period
 public:
-    static double initRate();
+      static double initRate();
       void calculate() {
             amount += amount * Irate;
       }
@@ -88,7 +97,7 @@ public:
 private:
     static int empcount; 
     int id;
-    string name = "noname" ;
+    string name = "noname";
 };
 
 // assigning ids using a static member - perfect use of static member 
@@ -112,15 +121,17 @@ int main() {
     ptr2->print();
     auto ptr3 = new student("Sahil");
     ptr3->print();
+    
     // static member changed
     student::hostel = "Tondon";
+
     // private - cannot be accessed and changed 
     // student::college = "NIT-A";  
     auto ptr4 = new student("Kenny");
     ptr4->print();
+    
     // printing 1st after static value changed
     ptr1->print();
-
 
     // use -
     Account Ac1;

@@ -1,4 +1,4 @@
-std::sort - 
+>>>>>> std::sort - 
 
 A hybrid sorting algorithm provides average and worst case time complexity of O(nlogn). The sorting algorithm which it uses is called Introsort.
 Introsort is combination of both quicksort and heapsort, It begins with quicksort and switch to heapsort if recursion depth exceeds a level based on the number of elements being sorted.
@@ -10,7 +10,7 @@ stable_sort() function usually uses mergesort. Therefore, stable_sort() preserve
 
 
 
-cross initialization error -
+>>>>> cross initialization error -
 
 Occurs when variables are declared in case in the switch.
 To remove error use a block {} to enclose the variables declared. 
@@ -18,7 +18,7 @@ To remove error use a block {} to enclose the variables declared.
 
 
 
-container adapters-
+>>>>>> container adapters-
 
 both stack and queues are container adapters and implemented on deque
 priorirty queue is implemented on a vector 
@@ -26,14 +26,14 @@ priorirty queue is implemented on a vector
 
 
 
-minimum required to compile a file -
+>>>>>> minimum required to compile a file -
 
 int main() { }
 
 
 
 
-Statement
+>>>>>> Statement
 
 We know that every statement in C++ must end with a semicolon. However, unlike other languages, almost all statements in C++ can be treated as expressions. So, if we place the statement inside an if statement with a blank pair of parentheses, we don’t have to end it with a semicolon anymore.
 
@@ -64,16 +64,49 @@ here expressions are evaluated at compile time.
 
 >>>> constexpr vs const
 
-They serve different purposes. constexpr is mainly for optimization 
+They serve different purposes. 
+constexpr is mainly for optimization 
 while const is for practically const objects like value of Pi.
-Both of them can be applied to member methods. Member methods are 
-made const to make sure that there are no accidental changes by 
-the method. On the other hand, the idea of using constexpr is to 
+
+Both of them can be applied to member methods. 
+
+Member methods are made const to make sure that there are no accidental changes by 
+the method. 
+
+On the other hand, the idea of using constexpr is to 
 compute expressions at compile time so that time can be saved when code is run.
+
 const can only be used with non-static member function whereas 
+
 constexpr can be used with member and non-member functions, even 
 with constructors but with condition that argument and return type 
 must be of literal types
 
 
+
+
+>>>>> Why is scanf faster than cin?
+
+On a high level both of them are wrappers over theread() system call, just syntactic sugar. 
+The only visible difference is that scanf() has to explicitly declare the input type, 
+whereas cin has the redirection operation overloaded using templates. This does not seem 
+\like a good enough reason for a performance hit of 5x.
+
+It turns out that iostream makes use of stdio‘s buffering system. So, cin wastes time 
+synchronizing itself with the underlying C-library’s stdio buffer, so that calls to 
+both scanf()and cin can be interleaved.
+
+The good thing is that libstdc++ provides an option to turn off synchronization
+of all the iostream standard streams with their corresponding standard C streams using
+std::ios::sync_with_stdio(false);
+and cin becomes faster than scanf() as it should have been.
+
+NOTE: 
+With synchronization turned off, using cin and scanf() together will result in an undefined mess.
+With synchronization turned off, the above results indicate that cin is 8-10% faster than scanf(). 
+This is probably because scanf() interprets the format arguments at runtime and makes use of 
+variable number of arguments, whereas cin does this at compile time.
+
 .............................................................................
+
+

@@ -1,6 +1,9 @@
 
 // some good uses of lambda expressions
 /* basic lambda expression
+
+- NOTE: no functions can be called from inside the lambda function
+
 [capture](args) { 
     functionality 
 }
