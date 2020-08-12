@@ -89,7 +89,7 @@ int main()
     p = g;
 
     // overidding is possible when pointer is used 
-    child c;
+    // child c;
     parent *ptr = &c;
     // overrride 
     callfoo(ptr);       

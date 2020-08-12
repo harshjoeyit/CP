@@ -91,4 +91,6 @@ int main() {
     cout<<"base si: "<< b1.si <<" "<< Base1::si<<endl;
     cout<<"der si: "<< d1.si <<" "<< Derived1::si<<endl;
     cout<<endl;
+
+    // objects go out of scope in oreder they are assigned in the program
 }

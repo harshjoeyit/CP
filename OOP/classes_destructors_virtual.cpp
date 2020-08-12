@@ -113,22 +113,27 @@ int main()
 
 
     three *ptr3 = new three();
-      two *ptr2 = ptr3;
-      one *ptr1 = ptr3;
+    two *ptr2 = ptr3;
+    one *ptr1 = ptr3;
      
-      /*
-      delete ptr1; 
-      or 
-      delete ptr2;
-      or 
-      delete ptr2;
+    /*
+    delete ptr1; 
+    or 
+    delete ptr2;
+    or 
+    delete ptr2;
 
-      output: 
-      one constructor
-      two constructor
-      three constructor 
-      three destructor
-      two destructor
-      one destructor
+    output: 
+    one constructor
+    two constructor
+    three constructor 
+    three destructor
+    two destructor
+    one destructor
+
+    NOTE : 
+    because it all depends on which class the object is of.
+    destructors will be called according to that 
+    
     */
 }
