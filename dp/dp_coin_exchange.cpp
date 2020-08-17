@@ -53,6 +53,31 @@ int fasterWays(int pos, int S) {
 	return ans;
 }
 
+
+// finding the maximum number of coins we can give as a change for the given amount
+
+int maxChange(vector<int> &coins, int i, int amount) {
+    if(i == (int)coins.size()) {
+        if(amount == 0) {
+            return 0;
+        }
+        return INT_MIN;
+    }
+    if(amount < 0) {
+        return INT_MIN;
+    }
+
+    int &ans = dp[i][amount];
+    if(ans != -1) {
+        return ans;
+    }
+
+    ans = maxChange(coins, i+1, amount);
+    ans = max(ans, 1 + maxChange(coins, i, amount-coins[i]));
+
+    return ans;
+}
+
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
@@ -69,18 +94,19 @@ signed main() {
     
 }
 
+
 /*
-Minimum coins to amount to total
+Minimum coins to amount to amount
 
 const int mxN = 1005;
 const int mxS = 1005;
-int total;
+int amount;
 int n;
 int coin[mxN];
 int dp[mxN][mxS];
 
 int go(int i, int sum) {
-      if(sum == total) {
+      if(sum == amount) {
             return 0;
       }
       if(i >= n) {
@@ -94,7 +120,7 @@ int go(int i, int sum) {
 }
 
 void solve() {
-      cin >> n >> total;
+      cin >> n >> amount;
       for(int i=0; i<n; i++) {
             cin >> coin[i];
       }     

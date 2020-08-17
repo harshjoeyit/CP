@@ -1,18 +1,18 @@
 
 /*
 	You are given two arrays A,B(1-indexed) of equal size N and a number K.
-	For every index i(1..N) we have to select either Ai or Bi, such that sum of 
-	selected numbers is minimum and atleast K numbers from selected numbers must be from array A.
+	For every index i(1..N) we have to select either Ai or Bi, such that 
+    - sum of selected numbers is minimum and 
+    - atleast K numbers from selected numbers must be from array A.
 
-	Simply: for each index we can either choose A[i] or corresponding B[i], and least k should be from A[i]
+	Simply: for each index we can either choose A[i] or corresponding B[i], 
+    and least k should be from A[i]
 
 	Logic: first we are choosing the k elements from A[i] and reject corresponding B[i]
-			we do this by finding diff = A[i] - B[i]
-			the more lower diff is the lower our sum will be for k elements 
-
-			for rest n-k elements we can choose min(A[i], B[i])
-
-			so we sort the array in this fasion 
+	we do this by finding diff = A[i] - B[i]
+	the more lower diff is the lower our sum will be for k elements 
+	for rest n-k elements we can choose min(A[i], B[i])
+	so we sort the array in this fashion 
 */
 
 
@@ -26,6 +26,7 @@ const int mxN = 1e6+10;
 bool comp(pair<int, int> p1, pair<int, int> p2) {
     int dif1 = p1.first - p1.second;
     int dif2 = p2.first - p2.second;
+    // lower differences pair occur earlier in the array 
     return (dif1 < dif2);
 }
 

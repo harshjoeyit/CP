@@ -2,7 +2,43 @@
 using namespace std;
 
 // 1) a simple implementation is using a pair of stack 
-// 2) another solution is using two stacks 
+
+// 2) another solution is using a single stack 
+/*
+main logic is 
+
+Min element - current minimum element in the stack is stored in minEle var and can be accesed in O(1)
+
+Push (x) -
+    when x >= minEle, no updates in minEle
+    when x < minEle, push (2*x - minEle) and minEle = x
+
+Pop (x) - 
+    when x >= minEle, no updates in minEle
+    when x < minEle, return minELe, minEle = 2*minEle - x
+
+............................................................
+
+Why we choose 2 as a factor 
+consider case - to be pushed ele < minEle
+
+pushed < minEle
+2*pushed < 2*minEle
+
+2*pushed - minEle < minEle
+>> this works as a condition for us to check while popping 
+>> while popping we check if popped is < minEle or not 
+
+
+Also,
+
+pushed < minEle
+pushed - minEle < 0
+
+2*pushed - minEle < pushed
+>> this pushed value is always less than the actual pushed value 
+
+*/
 
 struct MyStack {
     stack<int> s;
@@ -77,52 +113,3 @@ int main() {
     s.peek();
 }
 
-
-/*
-For elemenets >= 0
-
-int _stack :: getMin()
-{
-    if(s.empty()) {
-        return -1;
-    } else {
-        return minEle;
-    }
-}
-
-int _stack ::pop()
-{
-   if(s.empty()) {
-       return -1;
-   }
-   if(s.top() >= 0) {
-       int temp = s.top();
-       s.pop();
-       return temp;
-   } else {
-       int temp = minEle;
-       minEle = minEle - s.top();
-       s.pop();
-       return temp;
-   }
-   
-}
-
-void _stack::push(int x)
-{
-    if(s.empty()) {
-        minEle = x;
-        s.push(x);
-        return;
-    }
-    
-    if(x >= minEle) {
-        s.push(x);
-    } else {
-        int temp = x - minEle;
-        s.push(temp);
-        minEle = x;
-    }
-}
-
-*/

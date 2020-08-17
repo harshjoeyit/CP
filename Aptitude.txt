@@ -1,0 +1,125 @@
+
+
+Question 4 : Find the largest number which divides 64, 136 and 238 to leave the same remainder in each case.
+Solution : To find the required number, we need to find the HCF of (136-64), (238-136) and (238-64), i.e., HCF (72, 102, 174).
+72 = 23 x 32
+102 = 2 x 3 x 17
+174 = 2 x 3 x 29
+Therefore, HCF (72, 102, 174) = 2 x 3 = 6
+hence, 6 is the required number.
+
+
+Question 5 : Find the least number which when divided by 5,7,9 and 12, leaves the same remainder 3 in each case
+Solution : In these type of questions, we need to find the LCM of the divisors and add the common remainder (3) to it.
+So, LCM (5, 7, 9, 12) = 1260
+Therefore, required number = 1260 + 3 = 1263
+
+
+
+Question 7 : Two pipes A and B can fill a tank in 20 hours and 30 hours respectively. 
+If both the pipes are opened simultaneously, find after how much time should pipe B be closed so that the tank is full in 18 hours?
+Solution: for some t hours A and B worked and (18-t) hours only A worked so sum of work done by them in those time when added = 1 
+
+
+
+Question 7 : A non – stop train started from Delhi towards Mumbai and at the same time, another non – stop train started from Mumbai towards Delhi. If after meeting in Bhopal they took 9 and 16 hours respectively to reach their destinations, find the speed of the train that started from Delhi, given that the speed of the train that started from Mumbai was moving at a speed of 90 km / hr.
+Solution : We know that for two trains starting at the same time, S1 : S2 = T21/2 : T11/2
+Here, S2 = 90 km / hr
+T1 = 9  hrs
+T2 = 16  hrs
+=> S1 : 90 = 4 : 3
+=> S1 = 120 km / hr
+Therefore, speed of train that started from Delhi = 120 km / hr
+
+
+
+
+Formula - Percentages 
+
+>> Expenditure
+
+1. If price of an article increases by P %, the necessary reduction 
+in consumption to avoid increase in expenditure = [(P/(100 + P))x100] %
+
+2. If price of an article decreases by P %, the necessary increase 
+in consumption to keep the same expenditure = [(P/(100 – P))x100] %
+
+
+
+>> Population : 
+
+1. If the population of a group/community/country/place(etc.) is 
+currently P and if it increases by R % every year, then :
+      Population after ‘n’ years = P x [1 + (R / 100)]n
+      Population before ‘n’ years = P / [1 + (R / 100)]n
+
+
+
+
+>> Successive Inc/Dec
+
+1. x % of y and y % of x are same. For example, 10 % of 100 and 100 % of 10 are same.
+
+2. A successive increase of a% and b% is equivalent to a net increase of a + b + ((a x b) / 100) %
+
+3. A successive decrease of a% and b% is equivalent to a net decrease of a + b – ((a x b) / 100) %
+
+4. A successive increase of a% and decrease of b% is equivalent to a net change of 
+a – b + ((a x (-b) / 100) % = a – b – ((a x b) / 100) %
+
+5. A successive decrease of a% and increase of b% is equivalent to a net change of 
+b – a + (((-a) x b) / 100) % = b – a – ((a x b) / 100) %
+
+6. An increase by n % and a successive decrease by n % is equal to 
+an equivalent decrease of (n/10)2 %. For example, 
+if the price of an article is increased by 10 %, 
+and is then successively decreased by 10 %, 
+then this is equal to a decrease of (10/10)2 = 1 %
+
+
+
+
+
+Question 7 : Three friends A, B and C started a business, each investing Rs. 10,000. After 5 months A withdrew Rs. 3000, B withdrew Rs. 2000 and C invested Rs. 3000 more. At the end of the year, a total profit of Rs. 34,600 was recorded. Find the share of each.
+Solution : We know that if the period of investment is not uniform, the gains/losses from the business are divided in the ratio of their inputs, where input is calculated as the product of amount of investment and time period of investment.
+So, input = value of investment x period of investment, and here, period of investment would be broken into parts as the investment is not uniform throughout the time period.
+A’s input = (10,000 x 5) + (7,000 x 7) = 99,000
+B’s input = (10,000 x 5) + (8,000 x 7) = 1,06,000
+C’s input = (10,000 x 5) + (13,000 x 7) = 1,41,000
+=> A : B : C = 99000 : 106000 : 141000
+=> A : B : C = 99 : 106 : 141
+=> A : B : C = (99 / 346) : (106 / 346) : (141 / 346)
+Thus, A’s share = (99 / 346) x 34600 = Rs. 9900
+B’s share = (106 / 346) x 34600 = Rs. 10600
+C’s share = (141 / 346) x 34600 = Rs. 14100
+
+
+
+Question 8 : A invested Rs. 70,000 in a business. After few months, B joined him with Rs. 60,000. At the end of the year, the total profit was divided between them in ratio 2 : 1. After how many months did B join?
+Solution : Let A work alone for ‘n’ months.
+=> A’s input = 70,000 x 12
+=> B’s input = 60,000 x (12 – n)
+So, (70,000 x 12) / [60,000 x (12 – n)] = 2 / 1
+=> (7 x 12) / [6 x (12 – n)] = 2 / 1
+=> 12 – n = 7
+=> n = 5
+Therefore, B joined after 5 months.
+
+
+
+
+Question 1 : From a vessel of 20 liters pure milk, 1 liter is taken out and replaced with water, so as to keep the volume constant to 20 liters. This process is repeated 5 times. Find the percentage of pure milk left in the vessel after 5 replacements.
+Solution : Here, we need to apply the formula P x [1 – (R / P)]n
+P = Initial quantity of pure element = 20 liters
+R = Quantity replaced every time = 1 liter
+n = Number of replacements = 5
+So, quantity of pure milk after 5 replacements = 20 x [1 – (1 / 20)]5
+Quantity of pure milk after 5 replacements = 20 x (0.95)5 = 20 x 0.773780938 = 15.4756 liters
+Therefore, percentage of pure milk left in the vessel after 5 replacements = (15.4756 / 20) x 100 = 77.378 %
+
+
+
+
+
+
+

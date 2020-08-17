@@ -34,7 +34,7 @@ void pattern_match(string s, string pat) {
     cout << endl;
 }
 
-// counting different substrings of in O(n)
+// counting different substrings of in O(n*n)
 void count_unique_substrings(string s) {
     string temp;
     int ans = 0;
@@ -44,6 +44,9 @@ void count_unique_substrings(string s) {
         auto pi = prefix_function(temp);
         int mx = *max_element(pi.begin(), pi.end());
         ans += temp.length() - mx;
+        // temp.length() is the max possible unique substrings
+        // mx is the number of substring that we have been counted 
+        // already in previous iterations
     }
     cout << "number of different substring: ";
     cout << ans << endl;
