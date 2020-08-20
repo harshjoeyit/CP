@@ -6,6 +6,8 @@ const int mxN = 1e4 + 5;
 vector <PII> G[mxN];
 bool marked[mxN];
 
+// O(VlogV + ElogV) = O(ElogV) using binary heaps, making it the same as Kruskal's algorithm.
+// However, Prim's algorithm can be improved using Fibonacci Heaps to O(E + logV
 int prim(int u) {
     priority_queue<PII, vector<PII>, greater<PII>> pq;                  
     pq.push(make_pair(0, u));

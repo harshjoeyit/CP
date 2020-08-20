@@ -73,3 +73,8 @@ int pathSum(TreeNode* root, int sum) {
       pathSum(root->left, sum) + 
       pathSum(root->right, sum);
 }
+
+
+/*
+similar problem - print all those paths 
+*/

@@ -1,50 +1,26 @@
-
-/*
-Find the longest substring with 
-equal number of zeroes and ones
-*/
-
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define int long long int
 
-void solve() {
-      string s;
-      cin >> s;
-      int n = (int)s.length();
-      vector<int> v(n + 1);
-
-      for (int i = 0; i < n; i++) {
-            if (s[i] == '1') {
-                  v[i + 1] = 1;
-            }
-            else {
-                  v[i + 1] = -1;
-            }
-            // prefix sum array;
-            v[i + 1] += v[i];
+class Demo {
+public:
+      static int x;
+      static void print() {
+            cout << "static function called\n";
       }
-
-      int ans = 0;
-      // <sum , first index> 
-      unordered_map<int, int> ump;
-      for (int i = 0; i <= n; i++) {
-            // if the sum repeats in an array then there exists a subarray with sum = 0
-            if (ump.count(v[i])) {
-                  int j = ump[v[i]];
-                  ans = max(ans, i - j);
-            }
-            else {
-                  // if sum if encountered for the first time then the st, en index are same - subarrray size = en-st = 0
-                  ump[v[i]] = i;
-            }
+      Demo() {
+            cout << "const called\n";
       }
+      Demo(int x) {
+            x = 2;
+            cout << "p c cla";
+      }
+};
 
-      cout << ans << "\n";
+int Demo::x = 19;
+
+int main() {
+      Demo::print();
+      cout << Demo::x << endl;
+      Demo *d = new Demo[10];
 }
 
-signed main() {
-      ios_base::sync_with_stdio(0);
-      cin.tie(0);
-      solve();
-}

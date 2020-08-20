@@ -1,8 +1,4 @@
 
-/*
-Read and apply the recursive version too (its easy) 
-*/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -48,6 +44,23 @@ void LCS(string s, string t) {
     print_LCS(s, t, n, m);
 }
 
+
+// Recursive Solution - dp can be used for top down
+int LCSRecursive(string &a, string &b, int i=0, int j=0) {
+      int n = a.length(), m = b.length();
+      if(i >= n || j >= m) {
+            return 0;
+      }
+
+      if(a[i] == b[j]) {
+            return 1 + LCSRecursive(a, b, i+1, j+1);
+      }     
+
+      // a[i] != b[i]
+      return max(LCSRecursive(a, b, i+1, j), LCSRecursive(a, b, i, j+1));
+}
+
+
 void solve() {
     string s, t;
     cin >> s >> t;
@@ -55,8 +68,40 @@ void solve() {
     LCS(s, t);
 }
 
+
+/*
+An eisier problem 
+
+Different From LCS 
+Since here the first string present as subsequence in second string 
+We just have to check that 
+
+Simple Two pointer O(n)
+*/
+
+bool isSubSequence(string sub, string str) {
+	int m = sub.length(), n = str.length();
+	int j = 0;
+	for (int i = 0; i < n && j < m; i++) {
+		if (sub[j] == str[i])
+		{
+			// if char match move pointer forward
+			j++;
+		}
+	}
+	// check if all chars we covered
+	return (j == m);
+}
+
+
+
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
+    
     solve();
+
+    cout << isSubSequence("apple", "abpcplea") << "\n";
+	cout << isSubSequence("orange", "sporauungtte") << "\n";
+	cout << isSubSequence("pie", "plea") << "\n";
 }
