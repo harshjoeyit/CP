@@ -18,6 +18,7 @@ int main() {
     cout << "\n";
 
     // lambda expression
+    // NOTE: no functions can be called from inside lambda
     for_each(arr, arr+6, [](int &a){            // arguement is a reference - changes are reflected in the original 
         a = a+2;
         cout << a << " ";

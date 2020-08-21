@@ -6,30 +6,50 @@ int recStack[100005];
 int vis[100005];
 int n, m;
 
-// using DFS
-bool cycle_in_directed_graph(int u)
-{
+// using DFS, and keeping visited vertex in the stack 
+// we need to keep the recusive stack because 
+// consider the case 
+
+/*
+    (c1) ------->  (v) <-------- (c2)
+
+    c1 and c2 are cconnected components without cycles 
+    suppose dfs makes c1 & v visited 
+
+    now second dfs from c2 when visits the vertex v, we cannot declare a cycle 
+    just as we did it in undirected graph
+
+    we need to keep track of those vitsited in the same dfs 
+
+    this can be done using a recStack array or an unordered_set 
+*/
+bool cycle_in_directed_graph(int u) {
     vis[u] = true;
     recStack[u] = true;
-    for(auto v: G[u])
-    {
-        if( !vis[v] && cycle_in_directed_graph(v))
+    // add to recstack 
+
+    for(auto v: G[u]) {
+        if( !vis[v] && cycle_in_directed_graph(v)) {
             return true;
-        else if(recStack[v])      
+        }
+        else if(recStack[v]) {
             return true;
+        }
     }   
 
+    // remove, backtracking 
     recStack[u] = false;
     return false;
 }
 
 // if the directed graph is not connected then there are components
-bool find_cycle()
-{
+bool find_cycle() {
     for(int i = 1; i <= n; i++)
-        if(!vis[i])
-            if(cycle_in_directed_graph(i))
+        if(!vis[i]) {
+            if(cycle_in_directed_graph(i)) {
                 return true;
+            }
+        }
     return false;
 }
 

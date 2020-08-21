@@ -52,14 +52,14 @@ bool wordBreak(string s, vector<string> &wordDict) {
             string curr = "";
             for(int j=i; j<n; j++) {
                   curr.push_back(s[j]);
-                  // string s[i.....j] can be found in dict 
                   if(dict.count(curr)) {
-                        // dp[j+1] = true means
-                        // string from s[j+1.........n] 
-                        // can be succesfully broken 
+                        // string s[i.....j] can be found in dict 
                         if(dp[j+1]) {
-                              // this means s[i......n-1] can be succesfully broken
+                              // dp[j+1] = true means
+                              // string from s[j+1.........n] 
+                              // can be succesfully broken 
                               dp[i] = true;
+                              // this means s[i......n-1] can be succesfully broken
                             break;
                         }
                   }

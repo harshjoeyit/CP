@@ -6,12 +6,54 @@ using namespace std;
 // sort and make new list 
 
 
-// Approach 2 
+// Approach 2: Use a priority Queue 
+// compare element based on the head -> val, lowest one is at the top
+
+// O(n*klog(k))
+struct comp {
+      bool operator()(const ListNode *a, const ListNode *b) {
+            return a->val > b->val;
+      }
+};
+
+
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+      priority_queue<ListNode *, vector<ListNode*>, comp> pq;
+      ListNode *head = NULL, *tail;
+      
+      for(auto &list: lists) {
+            if(list) {
+                  pq.push(list);
+            }
+      }
+      while(!pq.empty()) {
+            auto node = pq.top();
+            pq.pop();
+            
+            if(head == NULL) {
+                  head = node;
+                  tail = node;
+            } else {
+                  tail->next = node;
+                  tail = tail->next;
+            }
+            if(node->next) {
+                  pq.push(node->next);
+            }
+      }
+      return head;
+} 
+
+
+
+// Approach 3
 // divide and conquer 
 // merge lists in pairs and finally single list is formed takes 
 // n ---> n/2 ---> n/4 ---->....----> 1
 // log(k) total steps to merge all list into 1 and O(n) time for each level of merging 
+// while loop runs log k times and every time it processes nk elements.
 
+// O(n*klog(k))
 ListNode* mergeKLists(vector<ListNode*>& lists) {
       if(lists.empty()) {
             return NULL;

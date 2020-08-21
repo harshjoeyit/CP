@@ -1,6 +1,11 @@
+
+/*
+find the sum = (min + max)
+of all subarrays of size k
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
-
 #define int long long int
 
 void solve() {
@@ -20,11 +25,13 @@ void solve() {
     cout << (it1->first + it2->first) << " ";
     
     for(int i=k; i<n; i++) {
-        ++mp[a[i]];
-        if(mp[a[i-k]] > 1)
+        mp[a[i]] += 1;
+        
+        if(mp[a[i-k]] > 1) {
             --mp[a[i-k]];
-        else 
+        } else {
             mp.erase(a[i-k]);
+        }
         
         it1 = mp.begin();
         it2 = mp.rbegin();
@@ -33,10 +40,8 @@ void solve() {
     cout << endl;
 }
 
-signed main()
-{
+signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-
-        solve();
+    solve();
 }

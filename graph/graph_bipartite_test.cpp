@@ -7,22 +7,21 @@ vector<int> col(200);
 
 // a graph with the cycle of odd length is always a bipartite graph
 
-bool bip_dfs(int u, int c)
-{
+// IMP NOTE: a disconnected graph is bipartite if all the connected components are bipartite 
+
+bool bip_dfs(int u, int c) {
     vis[u] = true;
     col[u] = c;
-    cout << u << " - " << c << endl;
 
-    for(auto v: G[u])
-    {
-        if(vis[v] == 0)
-        {
+    for(auto v: G[u]) {
+        if(vis[v] == 0) {
             if(bip_dfs(v, c ^ 1) == false)
                 return false;
-        }
-        else if(col[u] == col[v])
+        } else if(col[u] == col[v]) {
             return false;
+        }
     }
+    
     return true;
 }
 

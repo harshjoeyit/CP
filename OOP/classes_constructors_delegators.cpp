@@ -10,9 +10,9 @@ public:
     // sales_data() = default     
     // no need for above default constuctor 
     // our default arguments make constructor work as default constructo1r
-    // values of the data members are iniitalized using                                        iniitalizer list 
+    // values of the data members are iniitalized using                                        
     sales_data( const string &s = "ISBN00000000" , unsigned int n = 0 , double price  = 0.0 ): book_no(s) , units_sold(n) , revenue(price*n) {}        
-    void print() {
+    void print() {                                                    //   iniitalizer list 
        cout<<"book_no: "<<book_no<<endl;
        cout<<"units_sold: "<<units_sold<<endl;
        cout<<"revenue: "<<revenue<<endl<<endl;

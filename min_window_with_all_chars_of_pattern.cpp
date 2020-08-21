@@ -14,12 +14,12 @@ const int mxN = 256;
 string find_window(string s, string pat) {
     int n = s.length();
     int m = pat.length();
-
+    
     if(n < m) {
         // return blank string
         return "";
-    } 
-
+    }  
+    
     // depends on the char present in the string 
     const int mxN = 256;
     int hashPat[mxN] = {0};

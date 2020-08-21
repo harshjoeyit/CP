@@ -64,12 +64,14 @@ class Bulk_quote: public Quote {
         Bulk_quote() = default;
         
         // this constructor has 4 parameters since it also calls he parametrized constr. of base class
-        Bulk_quote(const string& _bookNo, double _price, size_t _min_qty, double _discount): Quote(_bookNo, _price), min_qty(_min_qty), discount(_discount) {  
+        Bulk_quote(const string& _bookNo, double _price, size_t _min_qty, double _discount): min_qty(_min_qty), discount(_discount), Quote(_bookNo, _price) {  
             /*  
             sequence of running
                 1.base class constructor
                 2.initialization of members of this class
                 3.function body
+
+                the order of mention in initializer list does not affect the execution
             */
         }  
         //generates a discounted price  

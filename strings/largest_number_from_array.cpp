@@ -41,4 +41,7 @@ string largestNumber(vector<int> &nums) {
 int main() {
     // NOTE : if the numbers are already given as strings then 
     // we just need the comparitor function and nothing else
+    // note no function can be called inside a lambda function 
+    // gives error 
+    // so convert the int vector to string vector then apply the same concept 
 }

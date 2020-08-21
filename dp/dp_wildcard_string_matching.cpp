@@ -1,6 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// recursive
+
+vector<vector<int>> dp;
+
+int wildCard(string &s, string &pat, int i=0, int j=0) {
+      int n = (int)s.length(), m = (int)pat.length();
+      if(i >= n && j >= m) {
+            return true;
+      }
+      if(i < n && j >= m) {
+            return false;
+      } else if(i >= n && j < m) {
+            if(pat[j] != '*') {
+                  return false;
+            }
+            // skip extra *
+            return wildCard(s, pat, i, j+1);
+      }
+
+      int &ans = dp[i][j];
+      if(ans != -1) {
+            return ans;
+      }     
+
+      if(pat[j] == '*') {
+            return ans = (wildCard(s, pat, i+1, j) | wildCard(s, pat, i, j+1));
+            
+      } else if((pat[j] == '?') || (s[i] == pat[j])) {
+            return ans = (wildCard(s, pat, i+1, j+1));
+      } 
+      // remaining case is s[i] != pat[j]
+      return ans = 0;
+}
+
+// iterative 
 bool wildcardPatternMatching(string s, string pat) {
     int n= s.length();
     int m= pat.length();

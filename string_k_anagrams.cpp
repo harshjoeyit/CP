@@ -7,6 +7,9 @@ Two strings can become anagram by changing at most k characters in a string.
 
 */
 
+#include<bits/stdc++.h>
+using namespace std;
+
 bool areKAnagrams(string s, string t, int k) {
     int n = s.length();
     int m = t.length();
@@ -33,8 +36,9 @@ bool areKAnagrams(string s, string t, int k) {
         }
     }
     
-    if(common >= n-k) {                 // logic - at least n-k chars should be common, 
-                                        // since at max k can be replaced  
+    // logic - at least n-k chars should be common, 
+    // since at max k can be replaced 
+    if(common >= n-k) {                  
         return 1;
     }
     

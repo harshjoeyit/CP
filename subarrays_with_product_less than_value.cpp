@@ -2,23 +2,20 @@
 using namespace std;
 
 // count subarrays with the product less than a given number
-int count_subarrays(vector<int> &v, int k)
-{
+int count_subarrays(vector<int> &v, int k) {
     int st = 0, en = 0, prod = v[0], Count = 0;
 
-
-    while(en != v.size())
-    {
-        if(prod < k)
-        {
+    while(en != v.size()) {
+        if(prod < k) {
             Count += (en - st) + 1;
-            //cout << "st: " << st << " end " << en << endl;
-            //cout << Count << endl;
+            // (en - st) total number of subarrays ending 
+            // at en and starting from st, st+1 ..... en-1
             prod = prod * v[++en];
         }
     
-        while(prod >= k)
+        while(prod >= k) {
             prod = prod/v[st++];
+        }
     }
     return Count;
 }

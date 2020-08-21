@@ -1,6 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 1. A class is abstract if it has at least one pure virtual function.
+// 2. We can have pointers and references of abstract class type.
+// 3. we cannot instantiate abstract class 
+// 4. If we do not override the pure virtual function in derived class, 
+// then derived class also becomes abstract class.
+// 5. can have constructors 
+
 class enemy 
 {
     public:       

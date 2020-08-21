@@ -1,13 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 #define int long long int
+
+// O (n log n) using sets 
 
 void printKmax1() {
     int n, k;
     cin >> n >> k;
     int a[n+1];
     
+    // value, index pair is inserted 
     set<pair<int, int>> s;
     
     for(int i=1; i<=n; i++) {
@@ -17,6 +19,7 @@ void printKmax1() {
     }
     cout << s.rbegin()->first << " ";
     for(int i=k+1; i<=n; i++) {
+        // window is shifted 
         s.erase({a[i-k], i-k});
         s.insert({a[i], i});
         cout << s.rbegin()->first << " ";
@@ -24,6 +27,7 @@ void printKmax1() {
     cout << endl;
 }
 
+// O (n) using deque 
 void printKmax() {
     int n, k;
     cin >> n >> k;   
@@ -44,9 +48,11 @@ void printKmax() {
     for(; i<n; i++) {
         cout << a[dq.front()] << " ";
 
-        while((!dq.empty()) && dq.front() <= i-k)           // remove elements that are out of current window
+        // remove elements that are out of current window
+        while((!dq.empty()) && dq.front() <= i-k)           
             dq.pop_front();
         
+        // remove the lesser elements that this element 
         while(!dq.empty() && a[i] >= a[dq.back()])
             dq.pop_back();
         

@@ -4,9 +4,9 @@ using namespace std;
 
 /* 
 string hashes are sure to collide since there are exponential strings and 2^64 hashes only 
-p = 31 is a good choice if the chars are lowercase letters only 
-if string has bith lowercase and uppercase letters then p = 53 is a good choice 
-p is roughly equal to the number of distinct chars in string
+>>> p = 31 is a good choice if the chars are lowercase letters only 
+>>> if string has bith lowercase and uppercase letters then p = 53 is a good choice 
+>>> p is roughly equal to the number of distinct chars in string
 */
 
 const int p = 31;
