@@ -7,6 +7,8 @@ using namespace std;
 
 const int N = 2e5 + 5;
 int n, m;
+
+//                D, U, R, L          
 const int dx[] = {1, -1, 0, 0};
 const int dy[] = {0, 0, 1, -1};
 
@@ -51,13 +53,28 @@ signed main() {
                 continue;
             }
 
+            // k = 0 , go down 
+            // k = 1 , go up
+            // k = 2 , go right
+            // k = 3 , go left   
+
+            // if v[x][y] == k, that means we are moving as written in the block (x, y)
+            // no cost need to be paid 
+
+            // (k+1 != (v[x][y] - '0')) = 1, when the move is agains what is written 
+            // cost is paid as 1 is added 
+            // (k+1 != (v[x][y] - '0')) = 0, when move is as written in the block
+            // no cost is paid and 0 is added 
+
             if(cost[nx][ny] > cost[x][y] + (k+1 != (v[x][y] - '0'))) {
                 
                 cost[nx][ny] = cost[x][y] + (k+1 != (v[x][y] - '0'));
                 
                 if((k+1 == (v[x][y] - '0'))) {
+                    // no cost paid the move is as written on the block (x, y)
                     dq.push_front({nx, ny});
                 } else {
+                    // the move is different from that written on the block (x, y)
                     dq.push_back({nx, ny});
                 }
             }

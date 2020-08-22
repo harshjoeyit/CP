@@ -85,5 +85,60 @@ int numIslands(vector<vector<char>> &grid)
       return islands;
 }
 
+
+// another version of island problems 
+// all connected 0 are island 
+// island should be completely surrounded by the water(1) on all sides 
+// that is island should not be on the border
+
+
+int rows, cols;
+    int dir[5] = {0, 1, 0, -1, 0};
+    bool flag;
+    
+    void dfs(int i, int j, vector<vector<int>>& grid) {
+        grid[i][j] = 1;
+        
+        for(int k=0; k<4; k++) {
+            int x = i + dir[k];
+            int y = j + dir[k+1];
+        
+            if(x<0 || y<0 || x>=rows || y>=cols) {
+                // border reached, not a island
+                flag = false;
+                // do not return, we have to exhaust all the 0 to 1
+                // so continue
+                continue;
+            }
+            if(grid[x][y] == 1) {
+                continue;
+            }
+
+            dfs(x, y, grid);
+        }
+    }
+    
+    int closedIsland(vector<vector<int>>& grid) {
+        
+        rows = grid.size();
+        cols = grid[0].size();
+        
+        int ans = 0;
+        for(int i=0; i<rows; i++) {
+            for(int j=0; j<cols; j++) {
+                if(grid[i][j] == 0) {
+                    flag = true;
+                    dfs(i, j, grid);
+                    if(flag) {
+                          // add if valid island
+                        ans += 1;
+                    }
+                }
+            }
+        }
+        
+        return ans;
+    }
+
 int main() {
 }

@@ -1,48 +1,34 @@
+
+/*
+check if the graph contains hamiltonian path 
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
-
-#define ll                    long long int
-#define ld                    long double
-#define mid(s,e)              (s+(e-s)/2)
-#define MOD                   1000000007
-#define F                     first
-#define S                     second
-#define mp                    make_pair
-#define pb                    push_back
-#define eb                    emplace_back
-#define itoc(c)               ((char)(((int)'0')+c))
-#define vi                    vector<int>
-#define pll                   pair<ll, ll>
-#define pii                   pair<int,int>
-
   
 // in O(N.N!)
 
-bool check_all_permutations(vi G[], vi nodes)
-{   
-    do
-    {
-        bool path_present = false;
-        auto st = nodes.begin();                // first node 
-        auto en = nodes.end() - 1;              // last node
+bool checkHamiltonian(vector<int> G[], vector<int> nodes) {   
+    
+    do {
+        // check if it possible that there exists a
+        // hamiltonian path starts at st and ends at en 
+        auto st = nodes.begin();                
+        auto en = nodes.end() - 1;              
+        int p = nodes.size() - 1, u;
 
-        vi PATH;
-        PATH.push_back(*st);                    // first node pushed 
+        vector<int> path;
+        path.push_back(*st);                    
 
-        int u;
-        int p = nodes.size() - 1;
-
-        for(auto it = st; it != en; it++)
-        {
+        for(auto it = st; it != en; it++) {
             u = *it;
+            // check if path exists to the next vertex in the permutation 
             bool path_present = false;
 
-            for(int &v : G[u])
-            {
-                if(v == *(it+1))
-                {
+            for(int &v : G[u]) {
+                if(v == *(it+1)) {
                     path_present = true;
-                    PATH.push_back(v);
+                    path.push_back(v);
                     --p;
                     break;
                 }
@@ -50,14 +36,16 @@ bool check_all_permutations(vi G[], vi nodes)
             if(! path_present)
                 break;
         }
-        if(p == 0)
-        {
-            for(auto &i: PATH)
+
+        if(p == 0) {
+            // all nodes we consumed and there exists a path from st ---> en
+            for(auto &i: path) {
                 cout << i << " ";
+            }
             cout << endl;
             return true;
         }
-    
+
     } while (next_permutation(nodes.begin(), nodes.end()));
     
     return false;
@@ -69,20 +57,20 @@ int main()
     int n, m, x, y;
     
     cin >> n >> m;
-    vi G[n+1];
+    vector<int> G[n+1];
 
     for(int i = 0; i < m; i++)
     {
         cin >> x >> y;
-        G[x].pb(y);
-       // G[y].pb(x);
+        G[x].push_back(y);
+       // G[y].push_back(x);
     }
 
-    vi nodes(n);
+    vector<int> nodes(n);
     for(int i = 0; i < n; i++)
         nodes[i] = i;
 
-    if(check_all_permutations(G, nodes))
+    if(checkHamiltonian(G, nodes))
         cout << "path exists\n";
     else
         cout << "does not exist\n";
