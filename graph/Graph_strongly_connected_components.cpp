@@ -1,109 +1,85 @@
+/* 
+Strongly connected components -
+
+>> Kosajaru's Algorithm
+
+>> https://www.youtube.com/watch?v=RpgcYiky7uw
+
+- we store vertex in increasing order of finsh/exit time in df1 
+- after this if we consider SCC to be a single node then
+- reverse graph looks like Directed Acyclic Graph
+- and now we can find the SCC in topological sort order
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
-#define ll                    long long int
-#define ld                    long double
-#define mid(s,e)              (s+(e-s)/2)
-#define MOD                   1000000007
-#define F                     first
-#define S                     second
-#define mp                    make_pair
-#define pb                    push_back
-#define eb                    emplace_back
-#define itoc(c)               ((char)(((int)'0')+c))
-#define vi                    vector<int>
-#define pll                   pair<ll,ll>
-#define pii                   pair<int,int>
+vector<vector<int>> g, gr;
+vector<bool> vis;
+vector<int> order, component;
+int n, m;
 
+template <typename T>
+void print(vector<T> v) {
+    for(auto x: v)
+        cout << x << " ";
+    cout << endl;
+}
 
-void DFS(vi G[], int u, vector<bool> &vis)
-{
+void dfs1(int u) {
     vis[u] = true;
-    cout << u << " ";
-
-    for(auto &v: G[u])
-        if(! vis[v])
-            DFS(G, v, vis);
+    for(auto v: g[u]) {
+        if(!vis[v]) {
+            dfs1(v);
+        }
+    }
+    order.push_back(u);
 }
 
-
-void fillOrder(vi G[], int u, vector<bool> &vis, stack<int> &stck)
-{
+void dfs2(int u) {
     vis[u] = true;
-
-    for(auto &v: G[u])
-        if(!vis[v])
-            fillOrder(G, v, vis, stck);;
-
-    // All vertices reachable from v are processed by now, push v 
-    stck.push(u);
-}
-
-
-void disp(vi G[], int n)
-{
-    for(int i = 1; i <= n; i++)
-    {    
-        cout << i << "---> ";
-        for(auto &v: G[i])
-            cout << v << " ";
-        cout << endl;
-    } 
-}
-
-
-void printSCCs(vi G[], int n)
-{
-    stack<int> stck;
-
-    vector<bool> vis(n+1);
-    for(int i = 1; i <= n; i++)
-        vis[i] = false;
-
-    for(int i = 1; i <= n; i++)
-        if(!vis[i])
-            fillOrder(G, i, vis, stck);
-
-    vi g[n+1];
-
-    for(int i = 1; i <= n; i++)
-        for(auto v: G[i])
-            g[v].push_back(i);
-
-    //disp(g, n);
-
-    for(int i = 1; i <= n; i++)
-        vis[i] = false;
-
-    while( ! stck.empty())
-    {
-        int v = stck.top();
-        stck.pop();
-
-        if( !vis[v])
-        {
-            DFS(g, v, vis);
-            cout << endl;
+    component.push_back(u);
+    for(auto v: gr[u]) {
+        if(!vis[v]) {
+            dfs2(v);
         }
     }
 }
 
+void graphInput() {
+      cin >> n >> m;
+      g.assign(n, vector<int>());
+      // transpose/reversed graph
+      gr.assign(n, vector<int>());
+      
+      for(int i=0; i<m; i++) {
+            int u, v;
+            cin >> u >> v;
+            g[u].push_back(v);
+            gr[v].push_back(u);
+      }
+}
 
+int main() {
+    graphInput();
 
-int main()
-{
-    int n, m, x, y;
-    cin >> n >> m;
-
-    vi G[n+1];
-
-    for(int i = 0; i < m; i++)
-    {
-        cin >> x >> y;
-        G[x].pb(y);         // directed 
-        // G[y].pb(x);
+    // store vertices int order of finish time 
+    vis.assign(n, false);
+    for(int i = 0; i < n; i++) {
+        if( !vis[i]) {
+            dfs1(i);
+        }
     }
-
-    printSCCs(G, n);
-
+    
+    // use the reversed graph
+    // generate SCCs in topological sort 
+    vis.assign(n, false);
+    for(int i = 0; i < n; i++) {
+        int u = order[n-i-1];
+        if( !vis[u]) {
+            dfs2(u);
+            print(component);
+            component.clear();
+        }
+    }
 }

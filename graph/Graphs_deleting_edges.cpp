@@ -3,13 +3,78 @@
 // logic run dijkstra for k+1 vertices only - as edges are k
 
 
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long int
+
+const int N = 3E5 + 50;
+int n, m, K;
+
+int dis[N], vis[N];
+vector<int> ans;
+vector<edge> g[N];
+priority_queue<edge> pq;
+
+struct edge  {
+	int v, id, c;
+	edge(int _v, int _id, int _c) : v(_v), id(_id), c(_c) {}
+    	// defining the less than operator fot the structure
+	bool operator < (const edge &a) const {
+		return a.c < c;
+	}
+};
+ 
+int main() {
+	cin >> n >> m >> K;
+	for(int i = 1, u, v, c; i <= m; i++) {
+		cin >> u >> v >> c;
+		g[u].push_back(edge(v, i, c));
+		g[v].push_back(edge(u, i, c));
+	}
+	
+	vis[1] = 1;
+	for(auto s : g[1]) {
+		pq.push(s);
+	}
+	K = min(K, n - 1);
+
+	// dijkstra running 
+	for(int i = 1; i <= K; ++i) {
+		edge e = pq.top(); 
+        	pq.pop();
+		
+        	for(; vis[e.v]; e = pq.top(), pq.pop()) {
+			if(pq.empty()) {
+				break;
+			}
+		}
+		
+		if(vis[e.v]) {
+			break;
+		}
+	
+        	ans.push_back(e.id);
+		vis[e.v] = 1, 
+
+        	dis[e.v] = e.c;
+		for(auto u : g[e.v]) {
+			pq.push(edge(u.v, u.id, dis[e.v] + u.c));
+		}
+	}
+
+    
+	cout << ans.size();
+	for(auto u: ans) {
+		cout << u << " ";
+	}cout << endl;
+}
 
 
 
 // #include<bits/stdc++.h>
 // using namespace std;
 
-// #define int long long int
+// #define int int int
 
 // vector<pair<int, int>> G[3000005];
 // bool vis[3000005];
@@ -88,73 +153,3 @@
 //     cout << endl;
 // }
 
-
-#include <bits/stdc++.h>
-using namespace std;
- 
-const int N = 3E5 + 50;
- 
-int n, m, K, vis[N];
-long long dis[N];
-
-struct ed 
-{
-	int v, id; long long c;
-
-	ed(int v, int id, long long c) : v(v), id(id), c(c) {}
-
-    // defining the less than operator fot the structure
-	bool operator < (const ed &a) const 
-    {
-		return a.c < c;
-	}
-};
-
-
-vector<int> ans;
-vector<ed> g[N];
-priority_queue<ed> las;
- 
-int main() {
-	scanf("%d%d%d", &n, &m, &K);
-	for(int i = 1, u, v, c; i <= m; i++) {
-		scanf("%d%d%d", &u, &v, &c);
-		g[u].push_back(ed(v, i, c));
-		g[v].push_back(ed(u, i, c));
-	}
-	vis[1] = 1;
-
-
-	for(auto s : g[1]) 
-        las.push(s);
-	K = min(K, n - 1);
-
-	for(int i = 1; i <= K; ++i)             // distra running 
-    {
-		ed s = las.top(); 
-        las.pop();
-		
-        for(; vis[s.v]; s = las.top(), las.pop()) 
-        {
-			if(las.empty()) 
-                break;
-		}
-		if(vis[s.v])
-            break;
-        
-        ans.push_back(s.id);
-		vis[s.v] = 1, 
-        dis[s.v] = s.c;
-
-		// printf("u = %d dis = %lld\n", )
-
-		for(auto u : g[s.v]) 
-            las.push(ed(u.v, u.id, dis[s.v] + u.c));
-        
-	}
-
-    
-	printf("%d\n", (int) ans.size());
-	for(auto u : ans) printf("%d ", u);
-	return 0;
-}

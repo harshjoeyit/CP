@@ -2,6 +2,7 @@
 using namespace std;
 #define int long long int
 
+// smallest element is on the top
 stack<int> sortStack(stack<int> &s) {
     stack<int> tmpStack;
 

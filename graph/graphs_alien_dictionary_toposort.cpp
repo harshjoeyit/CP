@@ -107,6 +107,7 @@ void solve() {
     createGraph();
     // convert numbered edges to character 
     vector<int> ans = toopSort();
+    
     print(ans);
 }
 
