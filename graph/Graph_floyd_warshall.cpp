@@ -1,59 +1,68 @@
+
+
+/*
+All problems shortest path 
+can be solved using greedy approach using Dijkstra Algorithm 
+but we have a problems when edges are negetive
+
+
+Also it can be solved by Dynamic programming 
+which works on negetive edges too 
+Floyed Warshall 
+
+To detect a negetive weight cycle we do - 
+
+If distance of any verex from itself 
+becomes negative, then there is a negative 
+weight cycle. 
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
-#define SIZE 100
 
-vector <pair<int, int> > v[SIZE];   
-int dist[SIZE][SIZE];
+int n, m;
+vector<vector<int>> dis;
 
-// for wiegted (may be -ve ) directed graph dis[i][j] means i --> j 
-void floyd_warshall(int n)
-{
-    for(int k = 1; k <= n; k++)
-    {
-        for(int i = 1; i <= n; i++)
-        {
-            for(int j = 1; j <= n; j++)
-            {
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+void floyedWarshall(vector<vector<int>> &dis) {
+      for(int k=0; k<n; k++) {
+          // k is intermedia vertex 
+          // when the path  i ----> k ----> j 
+          // is considered 
+            for(int i=0; i<n; i++) {
+                  for(int j=0; j<n; j++) {
+                        dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
+                  }
             }
-        }
-    }
-}
+      }
 
+      for(int i=0; i<n; i++) {
+          if(dis[i][i] < 0) {
+              cout << "negetive weight cycle present!\n";
+              break;
+          }
+      }
+} 
 
-int main()
-{
-    int nodes, edges, x, y;
-    int weight;
-    cin >> nodes >> edges;
+int main() {
+      cin >> n >> m;
+      dis.assign(n, vector<int>(m, 10000000));
 
-    for(int i = 0; i < edges; ++i)
-    {
-        cin >> x >> y >> weight;
-        v[x].push_back(make_pair(weight, y));
-        v[y].push_back(make_pair(weight, x));
+      for(int i=0; i<m; i++) {
+            int x, y, w;
+            cin >> x >> y >> w;
+            dis[x][y] = w;
+      }
 
-        dist[x][y] = weight;
-    }   // dis[i][j] means i --> j           -- directed graph  read from row to column i to j for min distance 
+      // distance to itself = 0
+      for(int i=0; i<n; i++) {
+            dis[i][i] = 0;
+      }
 
-    for(int i = 1; i <= nodes; i++)
-    {
-        for(int j = 1; j <= nodes; j++)
-        {
-            if(i == j)
-                dist[i][j] = 0;
+      floyedWarshall(dis);
 
-            else if(dist[i][j] == 0)
-                dist[i][j] = 9999;          // arbitrary max value 
-        }
-    }
-    
-    floyd_warshall(nodes);
-
-    for(int i = 1; i <= nodes; i++)
-    {
-        for(int j = 1; j <= nodes; j++)
-            cout << dist[i][j] << " ";
-        cout << endl;
-    }
+      for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                  cout << i << "->" << j << "=" << dis[i][j] << "\n";
+            }
+      }
 }

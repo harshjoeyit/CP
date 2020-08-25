@@ -3,7 +3,7 @@ using namespace std;
 
 // operator overloading on sets 
 struct comp {
-    
+                    // parameter must be a const key refernce 
     bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
 
         int lena = a.second - a.first + 1;
@@ -19,15 +19,17 @@ struct comp {
 };
 
 class comparisonMap {
+    // if class is used for comparison 
+    // make sure the operator overloading is done in public
 public: 
-      //  custom comparison for key
+                    // always use const key refernce as parameter
       bool operator() (const string &a, const string &b) const {
             return a.length() < b.length();
       }
 };
 
 // comp class for priority queue 
-// comp class is diff from that of sets and maps (as operation is reversed < becomes > & vice versa )
+// comp class is diff from that of sets and maps (as operation is reversed `<` becomes `>` & vice versa )
 class ComparisonClass {
 public:
         bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {

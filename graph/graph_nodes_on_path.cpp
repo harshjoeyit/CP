@@ -16,6 +16,15 @@ int tin[mxN], tout[mxN], dis[mxN], par[mxN];
 vector<int> g[mxN];
 int n, T=0, q;
 
+void tree_input() {
+    for(int i=0; i<n-1; i++) {
+        int x, y;
+        cin >> x >> y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+}
+
 void dfs(int u, int p=-1) {
     tin[u] = T++;
     for(auto v: g[u]) {
@@ -25,15 +34,6 @@ void dfs(int u, int p=-1) {
         dfs(v, u);
     }
     tout[u] = T++;
-}
-
-void tree_input() {
-    for(int i=0; i<n-1; i++) {
-        int x, y;
-        cin >> x >> y;
-        g[x].push_back(y);
-        g[y].push_back(x);
-    }
 }
 
 void query() {
@@ -49,16 +49,11 @@ void query() {
             if(dis[v[j]] > dis[fv])
                 fv = v[j];                      // finding the deepest node
         }
-        // cout << "fv: " << fv << endl;
-
-        // for(int j=0; j<k; j++)
-        //     cout << v[j] << " ";
-        // cout << endl;
 
         bool ans = true;
-                                                // checking if all the nodes in the vector belong on path from (1 to fv)
-                                                // this can only happen if in time of the node and outime of nodes is 
-                                                // in between 1 and fv
+        // checking if all the nodes in the vector belong on path from (1 to fv)
+        // this can only happen if in time of the node and outime of nodes is 
+        // in between 1 and fv
         for(int j=0; (j<k) && ans; j++) {       
             if( tin[1] <= tin[v[j]] && tin[v[j]] <= tin[fv] && 
                 tout[fv] <= tout[v[j]] && tout[v[j]] <= tout[1] ) {

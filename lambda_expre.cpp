@@ -1,8 +1,15 @@
 
-// some good uses of lambda expressions
-/* basic lambda expression
+
+/* 
+basic lambda expression
 
 - NOTE: no functions can be called from inside the lambda function
+
+
+- NOTE: Never | Never use bool to denote type of return of lambda 
+        always use auto 
+        
+
 
 [capture](args) { 
     functionality 

@@ -1,15 +1,6 @@
 
 /*
 Minimum swaps to sort the array
-
-Similar problem - min swaps to sort a binary array 
-Approach - count the no of zeroes from i = n-1 to i = 0, if(a[i] == 1) ans += zeroes_cnt
-1 0 0 1 0 1
-ans = 0+1+3 = 4
-1 1 0 0 
-ans = 2+2
-1 0 1 0 1 0
-ans = 1+2+3 = 6
 */
 
 #include<bits/stdc++.h>   
@@ -22,14 +13,20 @@ int minSwaps(int arr[], int n) {
         arrPos[i].first = arr[i]; 
         arrPos[i].second = i; 
     }   
-    // after sorting the elements are at their correct place and THERE IS AN EDGE BETWEEN arrPos[i].second ----> arrPos[i].first 
+    
     sort(arrPos, arrPos + n); 
+    // after the sorting the 
+    // correct index of arrPos[i].first (element) is i 
+    // and wrong index is arrPos[i].second
+    // so we make a cycle from correct index to wrong index and carray on untill 
+    // we revisit any index
 
     vector<bool> vis(n, false); 
     int ans = 0; 
 
     for (int i = 0; i < n; i++) { 
-        // already swapped and corrected or already present at correct pos 
+        // element already swapped and corrected (as arrPos[i].second is the correct position)
+        // or already present at correct pos 
         if (vis[i] || arrPos[i].second == i) 
             continue; 
   

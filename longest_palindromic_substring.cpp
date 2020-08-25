@@ -12,7 +12,7 @@ bool dp[mxN][mxN];
 string s;
 string ans_s;
 
-void pre_process() {
+void longestPalindromicSubstring() {
     int n = s.length();
     int ans_i = 0, ans_l = 0;
 
@@ -20,17 +20,18 @@ void pre_process() {
         for(int j=0; j<n; j++) 
             dp[i][j] = false;
       
-    for(int j=1; j<=n; j++){                    // j = for length of the string
-        for(int i=0; i<=n-j; i++) {             // i - iterate to every index where length j string is possible
-            if(j <= 2) {                        // for string of length = 1, 2
-                if(s[i] == s[i+j-1])            // [i - i+length-1] indices of start and end of string 
-                    dp[i][i+j-1] = true;
+    for(int l=1; l<=n; l++){                    // j = for length of the string
+        for(int i=0; i<=n-l; i++) {             // i - iterate to every index where length j string is possible
+            int j = i+l-1;
+            if(l <= 2) {                        // for string of length = 1, 2
+                if(s[i] == s[j])                // [i - i+length-1] indices of start and end of string 
+                    dp[i][j] = true;
 
-            } else if(s[i] == s[i+j-1]){
-                dp[i][i+j-1] = dp[i+1][i+j-2];  // for [l, r] to be palindrome [l+1, r-1] must be a palindrome    
+            } else if(s[i] == s[j]){
+                dp[i][j] = dp[i+1][j-1];        // for [l, r] to be palindrome [l+1, r-1] must be a palindrome    
             }
-            if(dp[i][i+j-1] == 1) {
-                if(j > ans_l) {
+            if(dp[i][j] == 1) {
+                if(l > ans_l) {
                     ans_l = j;
                     ans_i = i;
                 }
@@ -40,9 +41,51 @@ void pre_process() {
     ans_s = s.substr(ans_i, ans_l);
 }
 
+
+// longest palindromic subsequence 
+int longestPalindromicSubsequnce (string &s) {
+      int n = (int)s.length();
+      vector<vector<int>> dp(n, vector<int>(n, 1));
+
+      for(int l=2; l<=n; l++) {
+            for(int i=0; i<=n-l; i++) {
+                  int j = i+l-1;
+                  if(l == 2) {
+                        if(s[i] == s[j]) {
+                              dp[i][j] = 2;
+                        }
+                        continue;
+                  } 
+                  if(s[i] == s[j]) {
+                        // we max from what is remaining 
+                        // i.e. (i+1, j-1)
+                        dp[i][j] = dp[i+1][j-1] + 2;
+                  } else {
+                        // if terminal chars are not equal 
+                        // we take max from (i+1, j) and (i, j-1)
+                        dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
+                  }
+            }
+      }
+
+      for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++) {
+                  cout << dp[i][j] << " ";
+            }
+            cout << endl;
+      }
+
+      return dp[0][n-1];
+}
+
+// to print the longest palindromic subsequence, use the dp matrix 
+// just to the same comparison that is done and go to 
+// (i-1, j-1) if s[i] == s[j], else 
+// (i, j-1) or (i+1, j) whichever is greater 
+
 void solve() {
     cin>> s;
-    pre_process();
+    longestPalindromicSubstring();
     cout << ans_s << endl;
 }
 

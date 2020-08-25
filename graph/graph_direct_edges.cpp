@@ -12,7 +12,7 @@ using namespace std;
 vector<vector<int>> g;
 vector<bool> vis;
 
-void dfs(int u) {
+int dfs(int u) {
 	int change = 0;
 	vis[u] = true;
 	for(auto v: g[u]) {

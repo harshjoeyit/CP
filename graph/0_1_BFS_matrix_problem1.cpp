@@ -58,7 +58,12 @@ signed main() {
             // k = 2 , go right
             // k = 3 , go left   
 
-            // if v[x][y] == k, that means we are moving as written in the block (x, y)
+            // v[x][y] = 1 , go down
+            // v[x][y] = 2 , go up
+            // v[x][y] = 3 , go right
+            // v[x][y] = 4 , go left 
+
+            // if v[x][y] == k+1, that means we are moving as written in the block (x, y)
             // no cost need to be paid 
 
             // (k+1 != (v[x][y] - '0')) = 1, when the move is agains what is written 
