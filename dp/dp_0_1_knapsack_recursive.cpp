@@ -1,40 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 #define int long long int
+
 int n, capc;
 int dp[102][100005];
 
-int go(int i, int w, int val[], int wt[]){
-    if(i < 0)
-        return 0;
-    if(dp[i][w] != -1)
-        return dp[i][w];
-    
-    if(wt[i] > w) {                 // skip the current object, can't include
-        dp[i][w] = go(i-1, w, val, wt);
-    } else {                        // two ways of calling - include, skip
-        dp[i][w] = max(val[i]+go(i-1, w-wt[i], val, wt),
-                        go(i-1, w, val, wt));
-    }
-    return dp[i][w];
+int go(int i, int capc, int val[], int wt[]) {
+      if(i == n || capc < 0) {
+            return 0;
+      }
+      int &ans = dp[i][capc];
+      if(ans != -1) {
+            return ans;
+      }
+      // we can always skip the current 
+      ans = go(i+1, capc, val, wt);
+      if(capc >= wt[i]) {
+            // we may only include, if capacity allows 
+            ans = max(ans, val[i] + go(i+1, capc - wt[i], val, wt));
+      }
+
+      return ans;
 }
 
-void solve() {
+signed main() {
     cin >> n >> capc;
     int val[n];
     int wt[n];
 
     for(int i=0; i<n; i++)
-        cin >> wt[i] >> val[i];
+        cin >> val[i];
+    for(int i=0; i<n; i++)
+        cin >> wt[i];
 
     memset(dp, -1, sizeof(dp));
-    cout << go(n-1, capc, val, wt) << endl;
-}
-
-signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
-    solve();
+    cout << go(0, capc, val, wt) << endl;
 }

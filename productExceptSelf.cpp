@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Brute force
 vector<int> productExceptSelf(vector<int> &nums) {
       int n = nums.size();
       vector<int> ans(n);
@@ -32,6 +33,25 @@ vector<int> productExceptSelf(vector<int> &nums) {
       return ans;
 }     
 
+// O(n*log(maxVal)) time O(1) space complexity using *Log*
+vector<int> productExceptSelf(vector<int> nums) {
+      int n = nums.size();
+      int p = 1;
+      vector<int> ans(n);
+      for (auto &val : nums) {
+            p *= val;
+      }
+      
+      double lp = log10(p);
+      
+      for (int i = 0; i < n; i++) {
+            double lv = log10(nums[i]);
+            ans[i] = ceil(pow(10, lp - lv));
+            cout << ans[i] << " ";
+      }
+      return ans;
+}
+
 // O(n) time O(1) space complexity 
 vector<int> productExceptSelf(vector<int> &nums) {
       int n = nums.size();
@@ -47,6 +67,7 @@ vector<int> productExceptSelf(vector<int> &nums) {
       }
       return ans;
 }
+
 
 int main() {
       

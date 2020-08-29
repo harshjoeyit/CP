@@ -20,6 +20,20 @@ void reverseWords(string str) {
     cout << ans << endl;
 } 
 
+void reverseUsingSS(string s){
+    string s;
+    getline(cin, s);
+    reverse(s.begin(), s.end());
+    stringstream ss;
+    ss << s;
+    string ans = "", word;
+    while (ss >> word) {
+        reverse(word.begin(), word.end());
+        ans += word + " ";
+    }
+    cout << ans << endl;
+}
+
 void solve() {
     string s;
     cin >> s;

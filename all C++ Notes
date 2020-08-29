@@ -107,6 +107,54 @@ With synchronization turned off, the above results indicate that cin is 8-10% fa
 This is probably because scanf() interprets the format arguments at runtime and makes use of 
 variable number of arguments, whereas cin does this at compile time.
 
+
+
+
+>>>> what is sync_with_stdio(false), cin.tie(null);
+
+This is to synchronize IOs from C and C++ world. If you synchronize, then you have a guaranty that 
+the orders of all IOs is exactly what you expect. In general, the problem is the buffering of IOs 
+that causes the problem, synchronizing let both worlds to share the same buffers. For example 
+cout << "Hello"; printf("World"); cout << "Ciao";; without synchronization you'll never know if you'll 
+get HelloCiaoWorld or HelloWorldCiao or WorldHelloCiao...
+
+`tie` lets you have the guaranty that IOs channels in C++ world are tied one to each other, which means 
+for example that every output have been flushed before inputs occurs 
+(think about cout << "What's your name ?"; cin >> name;).
+
+
+
+>>>> How cin and cout work?
+
+https://stackoverflow.com/questions/36914079/how-does-cin-work
+
+By default, doing cin >> x means:
+From the point currently in the stream, skip any whitespace which might be there 
+and then keep reading as long as possible & necessary to get a valid representation of x.
+
+
+cin and cout are buffered streams. Both 'a' and 'b' goes into the input buffer when you press enter. 
+The '>>' operator reads from that buffer (one char at a time in your case). The '<<' writes to the 
+output buffer. The only thing that should surprise you is that you see "ab" on output without printing 
+"\n" (the latter symbol should flush the contents of the output buffer to the terminal).
+
+In short, both cin and cout are buffers. Input and output operators work with those buffers. 
+Newline symbol initiates the data transfer from real input to input buffer and from output 
+buffer to the real output.
+
+cin overloads `>>` for all kinds of input 
+cout overloads `<<` for all kinds of output vars 
+
+`<<` & `>>` can be overloaded by user defined classes too 
+then cin >> obj would become valid  
+
+
+
+
+
+
+
+
 .............................................................................
 
 

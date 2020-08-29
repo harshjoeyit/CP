@@ -43,6 +43,17 @@ bool check(int arr[], int n, int k) {
             }
       }
       return true;
+
+      // The same done above could also be done like
+      for (int rem = 0; rem < k; rem++) {
+            if(rem == 0 || 2*rem == k) {
+                  if (freq[rem] & 1) {
+                        return false;
+                  }
+            } else if(freq[rem] != freq[k - rem]) {
+                  return false;
+            }
+      }
 }
 
 int main()

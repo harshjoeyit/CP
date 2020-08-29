@@ -61,6 +61,23 @@ int LCSRecursive(string &a, string &b, int i=0, int j=0) {
 }
 
 
+// Longest Common Subsequence in 3 Strings 
+
+int LCS(string &a, string &b, string &c, int i=0, int j=0, int k=0) {
+      if(i == a.length() || j == b.length() || k == c.length()) {
+            return 0;
+      }
+      if(a[i] == b[j] && b[j] == c[k]) {
+            return 1 + LCS(a, b, c, i + 1, j + 1, k + 1);
+      }
+      
+      return 
+      max({LCS(a, b, c, i + 1, j, k), 
+      LCS(a, b, c, i, j + 1, k), 
+      LCS(a, b, c, i, j, k + 1)});
+}
+
+
 void solve() {
     string s, t;
     cin >> s >> t;

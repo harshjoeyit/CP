@@ -12,8 +12,8 @@ making sure attacks dont happen
 
 
 note - i is common is all same row elements 
-note - abs(i - j) is common in all left diagonal elements 
-note - abs(i + j) is common in all right diagonal elements 
+note - abs(i - col) is common in all left diagonal elements 
+note - abs(i + col) is common in all right diagonal elements 
 so we can mark the them.
 
 */

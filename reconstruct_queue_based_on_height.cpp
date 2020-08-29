@@ -13,7 +13,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
       if(n <= 1) {
             return people;
       }
-      // we arrange people in descending order of height 
+      // we arrange people in decreasing order of height 
 
       // comparitor for sorting people on the basis of height and index 
       auto comp = [](vector<int> &a, vector<int> &b) {
@@ -21,7 +21,7 @@ vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
                 // if height equal arrange them increasing order of index 
                 return a[1] < b[1];
             }  
-            // arrange them in increasing height
+            // arrange them in decreasing order of height
             return a[0] > b[0];
       };
       

@@ -76,6 +76,25 @@ void max_sum_subarray(int a[], int n) {
     cout << ans_l << " " << ans_r << endl;
 }
 
+
+// K concatenated array - maxSum
+// array has been concatinated k times 
+int kConcatenationMaxSum(vector<int>& arr, int k) {
+      long long arraySum = accumulate(arr.begin(), arr.end(), 0LL);
+      const int mod = 1e9 + 7;
+      int n = arr.size();
+      int maxSubarraySum = 0, s = 0;
+      // finding maxSum for 2 concatinated arrays
+      // considereing it to be a complete array of size 2*n
+      for (int i = 0; i < 2 * n; i++) {
+            s += arr[i % n];
+            maxSubarraySum = max(maxSubarraySum, s);
+            s = max(0, s);
+      }
+
+      return (maxSubarraySum + (arraySum > 0 ? arraySum * (k - 2) : 0)) % mod;
+}
+
 int main() {
     int n;
     cin >> n;
