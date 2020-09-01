@@ -1,60 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define int long long int 
-#define vi vector<int> 
+// divide array into two subsets with with minimum difference b.w them 
+// similar problem 
+// https://leetcode.com/problems/last-stone-weight-ii/submissions/
 
-bool subset_sum_possible(vi a, int sum)
-{
-    int n = a.size();
-    vector<vector<bool>> dp;
-    dp.assign(n+1, vector<bool>(sum+1));
 
-    // If sum is 0, then answer is true 
-    for (int i = 0; i <= n; i++) 
-      dp[i][0] = true; 
-   
-    // If sum is not 0 and set is empty, then answer is false 
-    for (int j = 1; j <= sum; j++) 
-        dp[0][j] = false; 
+// {index, sum}
+int dp[32][3005];
+int n, total;
 
-    // dp[i][j] = 1 if it is possible to find subset from number in a 1 to i  that produces a sum equal to j, otherwies dp[i][j] = 0  
-
-    for(int i = 1; i <= n; i++)
-    {
-        for(int j = 1; j <= sum; j++)
-        {
-            if(j < a[i-1])
-                dp[i][j] = dp[i-1][j];
-                
-            else if(j >= a[i-1])
-                dp[i][j] = max(dp[i-1][j], dp[i-1][j-a[i-1]]);
-
-        }       // if any of the conditions mentioned - is true dp[i][j] is true;
+int go(int i, int s, vector<int> &a) {
+    if(i == n) {
+        // s1 = s, s2 = total - s
+        // diff = abs(s2 - s1) = abs(total - 2*s) 
+        return abs(total - 2*s);
     }
-
-       // uncomment this code to print table 
-     for (int i = 0; i <= n; i++) 
-     { 
-       for (int j = 0; j <= sum; j++) 
-          cout << dp[i][j] << " ";
-       printf("\n");
-     }
-
-    return dp[n][sum];
+    int &ans = dp[i][s];
+    if(ans != -1) {
+        return ans;
+    }
+    
+    return ans = min(go(i+1, s, a), go(i+1, s + a[i], a));
 }
 
-signed main()
-{
-    int n, sum;
-    cin >> n >> sum;
-
-    vi a(n);
-    for(int i = 0; i < n; i++)
-        cin >> a[i];
-
-    if(subset_sum_possible(a, sum))
-        cout << "subset possible" << endl;
-    else 
-        cout <<" no such subset exists" << endl;
+int lastStoneWeightII(vector<int>& a) {
+    n = a.size();
+    total = accumulate(a.begin(), a.end(), 0);
+    memset(dp, -1, sizeof(dp));
+    return go(0, 0, a);
 }

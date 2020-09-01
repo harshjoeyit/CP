@@ -30,11 +30,9 @@ void merge(int a[], int n, int b[], int m) {
         if(a[i] > b[j]) {               
             // if an element in b is smaller than in a , it means it belongs in array a
             swap(b[j], a[largest]);           
-            // one of the values from array a(the last value) should be swapped with this value in array b
             largest--;                        
-            // largest points to largest element in a again
-            ++j;                        
-            // j points to smallest element in b again 
+            j++;                        
+
         } else {
             ++i;                        
             // a[i] < b[j] this means elements are in correct arrays as they should be
@@ -46,11 +44,11 @@ void merge(int a[], int n, int b[], int m) {
     sort(b, b+m);
     
     // all elements in b are greater than equal to all elements in a
-    for(int i=0; i<n; i++)
-        cout << a[i] << " ";
-    for(int j=0; j<m; j++)
-        cout <<  b[j] << " ";
-    cout << endl;
+    // for(int i=0; i<n; i++)
+    //     cout << a[i] << " ";
+    // for(int j=0; j<m; j++)
+    //     cout <<  b[j] << " ";
+    // cout << endl;
 }
 
 void solve() {

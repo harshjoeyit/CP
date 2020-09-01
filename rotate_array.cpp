@@ -2,7 +2,13 @@
 // d elements 
 #include <bits/stdc++.h> 
 using namespace std; 
-  
+
+
+// 1. O(n) space approach uses temp array 
+// 2. O(1) space, O(n*n) approach rotates 1 by 1
+// 3. A Juggling Algorithm
+// 4.  Revesal Algorithm
+
 /*Fuction to get gcd of a and b*/
 int gcd(int a, int b)  { 
     if (b == 0) 
@@ -32,6 +38,27 @@ void leftRotate(int arr[], int d, int n)  {
         } 
         arr[j] = temp; 
     } 
+} 
+
+
+// Reversal Algorithm 
+
+/*Function to reverse arr[] from index start to end*/
+void reverseArray(int arr[], int start, int end)  { 
+    while (start < end) {
+          swap(arr[start], arr[end]);
+          start++;
+          end--; 
+    } 
+} 
+  
+/* Function to left rotate arr[] of size n by d */
+void leftRotate(int arr[], int d, int n) { 
+    if (d == 0) 
+        return; 
+    reverseArray(arr, 0, d - 1); 
+    reverseArray(arr, d, n - 1); 
+    reverseArray(arr, 0, n - 1); 
 } 
 
 // Function to print an array 

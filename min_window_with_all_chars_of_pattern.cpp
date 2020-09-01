@@ -121,6 +121,31 @@ string minWindow(string s, string t) {
 
 
 
+// Similar problems ...
+// https://leetcode.com/problems/number-of-substrings-containing-all-three-characters
+
+// Return the number of substrings containing at least one 
+// occurrence of all these characters a, b and c.
+
+int numberOfSubstrings(string s) {
+    int n = s.length();
+    int count[3] = {0, 0, 0};
+    int ans = 0 , i = 0; 
+    
+    for (int j = 0; j < n; ++j) {
+        ++count[s[j] - 'a'];
+        while (count[0] && count[1] && count[2])
+            --count[s[i++] - 'a'];
+        
+        // important observation here is `i` number of substring are added 
+        ans += i;
+    }
+    return ans;
+}
+
+// ...
+
+
 void solve() {
     string s, t;
     cin >> s >> t;
