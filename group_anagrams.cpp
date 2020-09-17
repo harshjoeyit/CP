@@ -23,7 +23,7 @@ vector<vector<string>> groupAnagrams(vector<string>& strs) {
       }
       vector<vector<string>> ans;
       for(auto p: mp) {
-            ans.push_back(p.second)
+            ans.push_back(p.second);
       }
       return ans;
 }
@@ -48,6 +48,21 @@ vector<vector<string>> groupAnagrams(vector<string>& strs) {
       return ans;
 }
 
-int main()
-{
+int main() {
+      vector<string> strs;
+      int n;
+      cin >> n;
+      while(n--) {
+            string s;
+            cin >> s;
+            strs.push_back(s);
+      }
+      auto ans = groupAnagram(strs);
+
+      for(auto v: ans) {
+            for(auto s: v) {
+                  cout << s << " ";
+            }
+            cout << endl;
+      }
 }

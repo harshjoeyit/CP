@@ -20,6 +20,60 @@ ans
 1 / 1 / 1 / 1 1
 */
 
+
+// If just max pages person are required 
+
+bool divideWork(vector<int> &a, int mid, int k) {
+      int curr = 0;
+      for (auto val : a) {
+            if(val > mid) {
+                  return false;
+            }
+            curr += val;
+            if(curr > mid) {
+                  k -= 1;
+                  curr = val;
+            }
+      }
+      if(curr >= 0) {
+            k -= 1;
+      }
+
+      return (k >= 0);
+}
+
+int main() {
+      int n, k, ans, low = 0, high = 0;
+      cin >> n >> k;
+      vector<int> a(n);
+      for(auto &val: a) {
+            cin >> val;
+            high += val;
+            low = max(val, low);
+      }
+
+      cout << low << " " << high << endl;
+
+      while(low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if(divideWork(a, mid, k)) {
+                  cout << "divide true for " << mid << endl;
+                  ans = mid;
+                  high = mid - 1;
+            } else {
+                  cout << "divide false for " << mid << endl;
+                  low = mid + 1;
+            }
+      }
+
+      cout << ans << "\n";
+}
+
+
+
+// Putting slashes too
+
 int main() {
     int n;
     cin >> n;
@@ -128,3 +182,4 @@ int partition(int arr[], int n, int k)
 
 // ...2...
 // Later DP can be used to memoize the solution 
+

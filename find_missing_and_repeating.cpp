@@ -58,6 +58,10 @@ vector<int> singleNumber(vector<int>& nums) {
       return {x, y};
 }
 
+
+// values are in range [1, n] and 
+// one of them is missing and one is repeating 
+// find both numbers 
 void solve() {
     int n;
     cin >> n;

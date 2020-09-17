@@ -119,3 +119,43 @@ public:
         }        
     }
 };
+
+
+
+// simplae integer LRU Cache 
+
+class LRUCache {
+      list<int> cache;
+      unordered_map<int, list<int>::iterator> ump;
+      int cap;
+
+public:
+      LRUCache(int n): cap(n) {}
+      
+      int get(int key) {
+           if(ump.count(key)) {
+                 auto it = ump[key];
+                 cache.erase(it);
+                 cache.push_front(key);
+                 ump[key] = cache.begin();
+                 return key;
+           }
+           return -1;
+      }
+
+      void put(int key) {
+            if(ump.count(key)) {
+                  auto it = ump[key];
+                  cache.erase(it);
+                  cache.push_front(key);
+                  ump[key] = cache.begin();
+            } else {
+                  if(cache.size() == cap) {
+                        ump.erase(cache.back());
+                        cache.pop_back();
+                  }
+                  cache.push_front(key);
+                  ump[key] = cache.begin();
+            }
+      }
+};

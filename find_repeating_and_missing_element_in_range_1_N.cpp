@@ -15,6 +15,8 @@ void method1(int a[], int n) {
             vis[a[i]] = -1;
         } else {
             vis[a[i]] = -vis[a[i]];
+            // or simply 
+            // vis[a[i]] = 1;
         }
     }
     int mis, rep;

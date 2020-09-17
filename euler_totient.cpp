@@ -64,7 +64,7 @@ void phi_1_to_n(int n) {
                 // or more desctptively
                 // phi[j] = phi[j] * (i-1) / i 
                 // this is same as given in euler tot formula
-        }
+        
     }
 
     for(auto x : phi)

@@ -1,9 +1,10 @@
 
 /*
-Correction in problem statement 
-- we can choose a crystal only once 
-- any crystal may be chosen on any iteration 
-- the gicen order is not in which crystals are processed
+- Destroying a crystal with health h[i], if power >= h[i], adds  1 point to score 
+ -We may choose to add crystal health to power in exchange of 1 point (only if points > 0)
+
+Given power of a laser, and healths of crystals 
+find max score 
 */
 
 #include<bits/stdc++.h>
@@ -23,23 +24,24 @@ void solve() {
       int points = 0;
 
       for(int i=0; i<n; i++) {
-            if(p >= health[i]) {
-                  p -= health[i];
-                  points += 1;
-            } else {
+            if(p < health[i]) {
                   // if p < health[i]
-                  // then we decrement points and add the largest health[i] possible - last one
+                  // we recharge with largest health[i] possible - i.e. last one
                   if(i < n-1 && points > 0) {
                         p += health[n-1];
                         points -= 1;
                         n -= 1;
-                        // reduce the array size
+                        // reduce the array size, since 
+                        // last crystal used up in recharging power 
                         
                         // process current crystal 
                         p -= health[i];
                         points += 1;
                   }
             }
+            // destroy this crystal 
+            p -= health[i];
+            points += 1;
       }
       cout << points << endl;
 }

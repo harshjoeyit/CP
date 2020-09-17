@@ -7,16 +7,14 @@ using namespace std;
 // Otimized - Dp approach
 // Space -  O(n)
 vector<int> dp;
-int go(int i, vector<int> &a)
-{
+int go(int i, vector<int> &a) {
       int n = (int)a.size();
-      if (i >= n)
-      {
+      if (i >= n) {
             return 0;
       }
+      
       int &ans = dp[i];
-      if (ans != -1)
-      {
+      if (ans != -1) {
             return ans;
       }
 
@@ -25,47 +23,44 @@ int go(int i, vector<int> &a)
 
 // Using two variables
 // Space O(1) appraoch
-int goNice(vector<int> &a)
-{
-      int ex, inc, n = (int)a.size(), exNew;
-      ex = 0, inc = a[0];
+int goNice(vector<int> &a) {
+      int n = a.size();
+      int inc = a[0], ex = 0, temp;
 
-      for (int i = 1; i < n; i++)
-      {
-            exNew = (inc > ex) ? inc : ex;
-            inc = ex + a[i];
-            ex = exNew;
-      }
+      for (int i = 1; i < n; i++) {
+		temp = max(inc, ex);
+		inc = ex + a[i];
+		ex = temp;
+	}
 
-      return (inc > ex) ? inc : ex;
+      return max(inc, ex);
 }
-
 
 // Similar problems on k-ary trees
 // Find greatest sum, if you cannot select nodes with a edge between them
-int func(int node, int select)
-{
-      if (dp[node][select] != -1)
-            return dp[node][select];
+int func(int node, int select) {
 
-      int ans = 0, i;
+      int &ans = dp[node][select];
+      if (ans != -1)
+            return ans;
 
+      ans = 0;
       // we can select this node     
-      if (select)
+      if (select) {
             ans = node;
+      }
       
       //edges[i] stores children of node i
-      for (i = 0; i < edges[node].size(); i++)
-      {
-            if (select)
+      for (int i = 0; i < edges[node].size(); i++) {
+            if (select) {
                   // cannot select children, because this selected 
                   ans = ans + func(edges[node][i], 1 - select);
-            else
+            } else {
                   // can either select or skip children
                   ans = ans + max(func(edges[node][i], 0), func(edges[node][i], 1));
+            }
       }
 
-      dp[node][select] = ans;
       return ans;
 }
 

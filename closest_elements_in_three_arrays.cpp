@@ -3,7 +3,7 @@ using namespace std;
 
 void find_closet(int a[], int p, int b[], int q, int c[], int r) {
     int i=0, j=0, k=0;
-    int ans_i=0, ans_j=0, ans_k=0, diff = INT_MAX;
+    int p=0, q=0, r=0, diff = INT_MAX;
 
     while(i < p && j < q && k < r) {
        
@@ -11,24 +11,28 @@ void find_closet(int a[], int p, int b[], int q, int c[], int r) {
         int mn = min({a[i], b[j], c[k]});
 
         if(mx-mn < diff) {
-            ans_i = i;
-            ans_j = j;
-            ans_k = k;
+            p = i;
+            q = j;
+            r = k;
             diff = mx-mn;
         }
-        if(diff == 0)
+        if(diff == 0) {
+            // we cant get better result than 0
             break;
+        }
+
+        // the pointer with the min value moves forward 
 
         if(mn == a[i])      ++i;
         else if(mn == b[j]) ++j;
         else                ++k;
     }
-    cout << "closest: " << a[ans_i] << " " << b[ans_j] << " " << c[ans_k] << endl;
+    cout << "closest: " << a[p] << " " << b[q] << " " << c[r] << endl;
 }
 
 // brute force 
 void find_closet_bf(int a[], int p, int b[], int q, int c[], int r) {
-    int ans_i=0, ans_j=0, ans_k=0, diff = INT_MAX;
+    int p=0, q=0, r=0, diff = INT_MAX;
 
     for(int i=0; i<p; i++) {
         for(int j=0; j<q; j++) {
@@ -36,14 +40,14 @@ void find_closet_bf(int a[], int p, int b[], int q, int c[], int r) {
                 int curr_maxdiff = max({abs(a[i]-b[j]), abs(b[j]-c[k]), abs(c[k]-a[i])});
                 if(curr_maxdiff < diff) {
                     diff = curr_maxdiff;
-                    ans_i = i;
-                    ans_j = j;
-                    ans_k = k;
+                    p = i;
+                    q = j;
+                    r = k;
                 }
             }
         }
     }
-    cout << "closest: " << a[ans_i] << " " << b[ans_j] << " " << c[ans_k] << endl;
+    cout << "closest: " << a[p] << " " << b[q] << " " << c[r] << endl;
 }
 
 int main() {

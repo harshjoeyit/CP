@@ -27,15 +27,12 @@ int jump(vector<int> &nums)
 }
 
 // check if last index can be visited
-bool canJump(vector<int> &nums)
-{
+bool canJump(vector<int> &nums) {
       // corner cases
-      if (nums.size() == 1)
-      {
+      if (nums.size() == 1) {
             return true;
       }
-      if (nums[0] == 0)
-      {
+      if (nums[0] == 0) {
             return false;
       }
 
@@ -43,25 +40,19 @@ bool canJump(vector<int> &nums)
       // maxFar stores the farthest index that we can to
       int maxFar = 0;
 
-      for (int i = 0; i < n; i++)
-      {
+      for (int i = 0; i < n; i++) {
             // if at any time we can jump to last or further
-            if (maxFar >= n - 1)
-            {
+            if (maxFar >= n - 1) {
                   return true;
             }
-            if (nums[i] == 0)
-            {
+            if (nums[i] == 0) {
                   // check if we can jump farther than this 0
-                  if (i < maxFar)
-                  {
+                  if (i < maxFar) {
                         continue;
                   }
                   // if not
                   return false;
-            }
-            else
-            {
+            } else {
                   // update
                   maxFar = max(maxFar, i + nums[i]);
             }
@@ -69,34 +60,63 @@ bool canJump(vector<int> &nums)
       return true;
 }
 
+
+
+// Another problem 
+// in ith step we have to jump i steps
+// we start from 0 on infite number line 
+// find min jumps 
+
+/*
+The important think to note is we can reach any destination 
+as it is always possible to make a move of length 1. At any step i, 
+we can move forward i, then backward i + 1.
+*/
+
+int steps(int source, int step, int dest)  { 
+    // base cases 
+    if (abs(source) > (dest))  
+         return INT_MAX; 
+
+    if (source == dest) return step; 
+
+    // at each point we can go either way 
+
+    // if we go on positive side 
+    int pos = steps(source + step + 1, step + 1, dest); 
+    // if we go on negative side 
+    int neg = steps(source - step - 1, step + 1, dest); 
+  
+    // minimum of both cases 
+    return min(pos, neg); 
+} 
+
+
+
+// Another problem 
 // can reach zero value index, using BFS
-bool canReach(vector<int> &arr, int start)
-{
+bool canReach(vector<int> &arr, int start) {
       int n = arr.size();
       queue<int> que;
       que.push(start);
       vector<bool> vis(arr.size(), 0);
       vis[start] = 1;
 
-      while (!que.empty())
-      {
+      while (!que.empty()) {
             int ind = que.front();
             que.pop();
-            if (arr[ind] == 0)
-            {
+            if (arr[ind] == 0) {
                   return true;
             }
 
             int x = (ind - arr[ind]);
-            if (x >= 0 && x < n && !vis[x])
-            {
+            if (x >= 0 && x < n && !vis[x]) {
                   vis[x] = 1;
                   que.push(ind - arr[ind]);
             }
 
             int y = (ind + arr[ind]);
-            if (y >= 0 && y < n && !vis[y])
-            {
+            if (y >= 0 && y < n && !vis[y]) {
                   vis[y] = 1;
                   que.push(ind + arr[ind]);
             }
@@ -106,10 +126,8 @@ bool canReach(vector<int> &arr, int start)
 
 // other approches
 unordered_set<int> vis;
-bool canReach(vector<int> &arr, int st)
-{
-      if (st >= 0 && st < arr.size() && vis.insert(st).second)
-      {
+bool canReach(vector<int> &arr, int st) {
+      if (st >= 0 && st < arr.size() && vis.insert(st).second) {
             return arr[st] == 0 ||
                    canReach(arr, st + arr[st]) || canReach(arr, st - arr[st]);
       }
@@ -128,8 +146,7 @@ int minJumps(vector<int> &arr)
 
       int n = arr.size();
       map<int, vector<int>> mp;
-      for (int i = 1; i < n; i++)
-      {
+      for (int i = 1; i < n; i++) {
             mp[arr[i]].push_back(i);
       }
 
@@ -139,36 +156,29 @@ int minJumps(vector<int> &arr)
       q.push(0);
       vis[0] = true;
 
-      while (!q.empty())
-      {
+      while (!q.empty()) {
             int sz = q.size();
             //             standard level order traversal
-            while (sz--)
-            {
+            while (sz--) {
                   int i = q.front();
                   q.pop();
-                  if (i == n - 1)
-                  {
+                  if (i == n - 1) {
                         return steps;
                   }
 
                   int x = i - 1;
                   int y = i + 1;
 
-                  if (0 <= x && x <= n - 1 && arr[x] != arr[i] && !vis[x])
-                  {
+                  if (0 <= x && x <= n - 1 && arr[x] != arr[i] && !vis[x]) {
                         vis[x] = true;
                         q.push(x);
                   }
-                  if (0 <= y && y <= n - 1 && arr[y] != arr[i] & !vis[y])
-                  {
+                  if (0 <= y && y <= n - 1 && arr[y] != arr[i] & !vis[y]) {
                         vis[y] = true;
                         q.push(y);
                   }
-                  for (auto idx : mp[arr[i]])
-                  {
-                        if (!vis[idx])
-                        {
+                  for (auto idx : mp[arr[i]]) {
+                        if (!vis[idx]) {
                               vis[idx] = true;
                               q.push(idx);
                         }
@@ -185,8 +195,7 @@ int minJumps(vector<int> &arr)
       return n - 1;
 }
 
-int main()
-{
+int main() {
       int n;
       cin >> n;
       vector<int> v(n);

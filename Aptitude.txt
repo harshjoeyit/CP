@@ -120,6 +120,13 @@ Therefore, percentage of pure milk left in the vessel after 5 replacements = (15
 
 
 
+Question 2: In how many ways can 4 boys and 4 girls be seated around a circular table so that no two boys are in adjacent positions?
+Solution : If we first put 4 boys around the table, we can do this in 3! ways.
+Once the 4 boys are placed, we have to place 4 girls around the same table.
+Now, we can see 4 vacant places are there between all 4 boys so we can do in 4! ways.
+Total number of sitting arrangement = 3! x 4!
+
+
 
 
 

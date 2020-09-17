@@ -1,88 +1,44 @@
+
 #include<bits/stdc++.h>
 using namespace std;
-
 #define int long long 
 
-void medianInStream(vector<int> arr, int n) {
-    priority_queue<int> s; 
-    priority_queue<int,vector<int>,greater<int> > g; 
-  
-    int med = arr[0]; 
-    s.push(arr[0]); 
-  
-    cout << med << endl; 
-  
-    // reading elements of stream one by one 
-    /*  At any time we try to make heaps balanced and 
-        their sizes differ by at-most 1. If heaps are 
-        balanced,then we declare median as average of 
-        min_heap_right.top() and max_heap_left.top() 
-        If heaps are unbalanced,then median is defined 
-        as the top element of heap of larger size  */
+class MedianFinder {
+private:
+    priority_queue<int> firstQ; // max_heap for the first half
+    priority_queue<int, std::vector<int>, std::greater<int> > secQ; // min_heap for the second half
+public:
+    // Adds a number into the data structure.
+    void addNum(int num) {
+        if(firstQ.empty() || (firstQ.top()>num)) firstQ.push(num); // if it belongs to the smaller half
+        else secQ.push(num); 
+        
+        // rebalance the two halfs to make sure the length difference is no larger than 1
+        if(firstQ.size() > secQ.size()+1) {
+            secQ.push(firstQ.top());
+            firstQ.pop();
+        
+        } else if(firstQ.size()+1 < secQ.size()) {
+            firstQ.push(secQ.top());
+            secQ.pop();
+        }
+    }
 
-    for (int i=1; i < n; i++) { 
-        int x = arr[i]; 
+    // Returns the median of current data stream
+    double findMedian() {
+        if(firstQ.size() == secQ.size()) {
+            return firstQ.empty() ? 0 : ((firstQ.top()+secQ.top())/2.0);
+        }
+        return (firstQ.size() > secQ.size()) ? firstQ.top():secQ.top(); 
+    }
+};
 
-          // case1(left side heap has more elements) 
-         if(s.size() > g.size()) {  
-            if (x < med) { 
-                g.push(s.top()); 
-                s.pop(); 
-                s.push(x); 
-            } 
-            else {
-               g.push(x);
-            } 
-  
-            med = (s.top() + g.top())/2.0; 
-        } 
-  
-        // case2(both heaps are balanced) 
-         else if (s.size()==g.size()) { 
-            if (x < med) { 
-                s.push(x); 
-                med = (int)s.top(); 
-            } 
-            else { 
-                g.push(x); 
-                med = (int)g.top(); 
-            } 
-        } 
-  
-        // case3(right side heap has more elements) 
-         else { 
-            if (x > med) { 
-                s.push(g.top()); 
-                g.pop(); 
-                g.push(x); 
-            } 
-            else {
-               s.push(x);
-            } 
-  
-            med = (s.top() + g.top())/2.0; 
-        } 
-        cout << med << endl; 
-    } 
-} 
+/*
+Follow up 
 
-void solve() {
-   int n;
-   cin >> n;
-   vector<int> a(n);
+1. If all integer numbers from the stream are between 0 and 100, how would you optimize it?
 
-   for(int i=0; i<n; i++)
-      cin >> a[i];
+We can maintain an integer array of length 100 to store the count of each number along with a 
+total count. Then, we can iterate over the array to find the middle value to get our median.
 
-   medianInStream(a, n);
-}
-
-signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
-    int t;
-    cin >> t;
-    while(t--)
-        solve();
-}
+*/

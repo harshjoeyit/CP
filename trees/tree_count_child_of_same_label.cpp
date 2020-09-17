@@ -12,54 +12,47 @@ learned
 */
 
 
-#include <bits/stdc++.h>
-using namespace std;
-
 vector<vector<int>> g;
+// label[i] - ['a'], z'
+string label;
+vector<int> ans;
 
-void dfs(int u, int par, vector<int> &ans, vector<int> &cnt, string &labels)
-{
-      for (auto v : g[u])
-      {
-            if (v != par)
-            {
-                  vector<int> childCnt(26, 0);
-                  dfs(v, u, ans, childCnt, labels);
-                  for (int i = 0; i < 26; i++)
-                  {
-                        cnt[i] += childCnt[i];
-                  }
+void dfs(int u, int par, vector<int> &cnt) {
+    for (auto v : g[u]) {
+        if(v != par) {
+            vector<int> temp(26, 0);
+            dfs(v, u, temp);
+            for (int i = 0; i < 26; i++) {
+                cnt[i] += temp[i];
             }
-      }
-
-      int c = labels[u] - 'a';
-      cnt[c] += 1;
-      ans[u] = cnt[c];
+        }
+    }
+    cnt[label[u] - 'a'] += 1;
+    ans[u] = cnt[label[u] - 'a'];
 }
 
-vector<int> countSubTrees(int n, vector<vector<int>> &edges, string labels)
-{
-      if (n == 0 || edges.empty())
-      {
-            return {};
-      }
+int main() {
+    int n;
+    cin >> n;
 
-      g.assign(n, vector<int>());
-      for (auto e : edges)
-      {
-            int x = e[0], y = e[1];
-            g[x].push_back(y);
-            g[y].push_back(x);
-      }
+    ans.assign(n, 0);
+    label.assign(n, 0);
+    g.assign(n, vector<int>());
 
-      vector<int> cnt(26, 0);
+    for (int i = 0; i < n-1; i++) {
+        int x, y;
+        cin >> x >> y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
 
-      vector<int> ans(n);
-      dfs(0, -1, ans, cnt, labels);
+    cin >> label;
 
-      return ans;
-}
+    vector<int> cnt(26, 0);
+    dfs(0, -1, cnt);
 
-int main()
-{
+    for (int i = 0; i < n; i++) {
+        cout << ans[i] << " ";
+    }
+    cout << endl;
 }

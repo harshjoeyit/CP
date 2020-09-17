@@ -2,11 +2,13 @@
 using namespace std;
 
 
-// Brute force O(n^2)
+// The find smaller numbers than the current in whole array 
+// i.e find count of all j such that i != j and a[i] > a[j]
 
+// 1. Brute force O(n^2)
 
-// O(nlogn)
-
+// 2. O(nlogn)
+ 
 vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
       int n = (int)nums.size();
       vector<pair<int, int>> v;
@@ -43,7 +45,7 @@ vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
 }
 
 
-// O(n) - hashing 
+// 3. O(n) - hashing 
 // similar to counting sort 
 // can be used since there nums[i] <= 100
 
@@ -71,6 +73,74 @@ vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
 
       return ans;
 }
+
+
+
+
+// Similar Problem 
+// Count j such that j  > i and a[i] > a[j]
+// i.e count smaller elements after self 
+
+
+// can be solved using similar approach as inversion counting
+
+int n;
+vector<int> ans;
+vector<pair<int, int>> temp;
+
+void merge(vector<pair<int, int>> &p, int st, int mid, int en) {
+      int i = st, j = mid + 1, k = st;
+      while (i <= mid && j <= en) {
+            int smaller = en - j + 1;
+
+            if (p[i].first > p[j].first) {
+                  ans[p[i].second] += smaller;
+                  temp[k] = p[i];
+                  k++, i++;
+            }
+            else {
+                  temp[k] = p[j];
+                  k++, j++;
+            }
+      }
+      while(i <= mid) {
+            temp[k] = p[i];
+            k++, i++;
+      }
+      while(j <= en) {
+            temp[k] = p[j];
+            k++, j++;
+      }
+
+      for (int i = st; i <= en; i++) {
+            p[i] = temp[i];
+      }
+}
+
+void mergeSort(vector<pair<int, int>> &p, int st, int en) {
+      if(st < en) {
+            int mid = (st + en) / 2;
+            mergeSort(p, st, mid);
+            mergeSort(p, mid + 1, en);
+            merge(p, st, mid, en);
+      }
+}
+
+vector<int> countSmaller(vector<int>& nums) {
+      n = nums.size();
+      ans.assign(n, 0);
+      temp.assign(n, {0,0});
+      vector<pair<int, int>> p;
+      for (int i = 0; i < n; i++) {
+            p.emplace_back(nums[i], i);
+      }
+      mergeSort(p, 0, n - 1);
+      return ans;
+}
+
+
+
+
 
 int main() {
 

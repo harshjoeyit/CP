@@ -13,36 +13,49 @@ we need to form the queue back
 using namespace std;
 #define int long long int
 
+// the key is finding the first two persons
 void solve() {
       int n;
       cin >> n;
       int ans[n];
       unordered_map<int, int> mp;
-      unordered_set<int> st1, st2;
+      // store id of person before and after
+      unordered_set<int> before, after;
       for(int i=0; i<n; i++) {
             int x, y;
             cin >> x >> y;
-            mp[x] = y;                                // y is standing after x
-            st1.insert(x);                            // standing before a person   
-            st2.insert(y);                            // standing after a person 
+            // mapping the after person
+            mp[x] = y;
+            
+            before.insert(x);                              
+            after.insert(y);                           
             
             if(x == 0) {            
-                  ans[1] = y;                         // the second number in the sequence 
+                  // person standing at pos = 2
+                  ans[1] = y;                         
             }
       }
-      for(auto x: st1) {                              // we find a person that is standing before nobody - means he the first one in the queue
-            if(st2.count(x) == 0) {
-                  ans[0] = x;                         // the first number in the sequennce
+
+      // now we find the first person of the queue
+      // first person is the one who
+      // can be found in before set but not after set sinec
+      // he is not standing after anybody
+      for(auto x: before) { 
+            if(after.count(x) == 0) {
+                  ans[0] = x;
                   break;
             }
       }
-      // we have found the first two person stading - we can find the rest using mp
+
+      // we have found the first two person stading - 
+      // we can find the rest using mp
       for(int i=0; i<n; i++) {
             if(i >= 2) {
                   ans[i] = mp[ans[i-2]];
             }
             cout << ans[i] << " ";
-      }cout << endl;
+      }
+      cout << endl;
 }
 
 signed main() {

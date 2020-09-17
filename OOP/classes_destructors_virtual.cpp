@@ -3,6 +3,14 @@ using namespace std;
 
 
 /*
+Virtual Destructors
+
+Deleting a derived class object using a pointer to a base class 
+that has a non-virtual destructor results in undefined behavior. 
+To correct this situation, the base class should be defined with 
+a virtual destructor. For example, following program results in 
+undefined behavior.
+
 Making base class destructor virtual guarantees 
 that the object of derived class is destructed 
 properly, i.e., both base class and derived class 

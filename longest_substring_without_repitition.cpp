@@ -9,21 +9,9 @@ int lengthOfLongestSubstring(string s)
 	// stores the index of the char
 	unordered_map<char, int> ump;
 
-	for (int i = 0; i < n; i++)
-	{
-		if (ump.count(s[i]))
-		{
-			// if char is already in the window
-			// then start of the window moves to the next index
-			// of index of prev occurance of this char,
-			// while moving left pointer, also check if left
-			// is already greater than the new window left
-
-			// example test case for this is
-			// abbabba, l is already at 2, when second occurnace of a
-			// is seen and, it moves left to 1, but the left is already at 2
-			// becasue of b, so we choose the maximum one
-
+	for (int i = 0; i < n; i++) {
+		if (ump.count(s[i])) {
+			// why take max?
 			l = max(l, ump[s[i]] + 1);
 		}
 		// store the char index
@@ -34,6 +22,22 @@ int lengthOfLongestSubstring(string s)
 
 	return maxL;
 }
+
+/*
+why we take max ?
+
+if char is already in the window
+then start of the window moves to the next index
+of index of prev occurance of this char,
+while moving left pointer, also check if left
+is already greater than the new window 
+
+example test case for this is
+abbabba, l is already at 2, when second occurnace of a
+is seen and, it moves left to 1, but the left is already at 2
+becasue of b, so we choose the maximum one
+
+*/
 
 // method 2:
 

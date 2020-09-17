@@ -42,7 +42,7 @@ int LCASqrt(int u, int v)
     {
         if(depth[u] > depth[v])
             swap(u, v);
-        v = jump_parent[v];
+        v = jump_parent[v];     // block_sz jump
     }
 
     return LCANaive(u, v);

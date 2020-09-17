@@ -32,6 +32,9 @@ bool bipartite[mxN];
 //         return parent[v] = find_set(parent[v]);
 // }
 
+
+
+
 // by Sizee
 
 // void make_set(int v) {
@@ -50,7 +53,11 @@ bool bipartite[mxN];
 //         }
 // }  
 
-// by Rank
+
+
+
+// by Rank (by depth of the trees)
+// rank = max depth of that tree 
 
 // void make_set(int v) {
 //         parent[v] = v;

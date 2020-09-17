@@ -30,6 +30,10 @@ vector<pair<int, int>> g[SIZE];
 // initialize with INF distance
 vector<int> dist(SIZE, INT_MAX); 
 vector<int> vis(SIZE);
+vector<int> nodesInPath(SIZE, 1e6);
+vector<int> parent(SIZE);
+
+void printPath();
 
 // using priority queue
 void dijkstraUsingPQ() {
@@ -46,10 +50,14 @@ void dijkstraUsingPQ() {
             int v = pr.second;
             if(dist[u] + w < dist[v]) {
                 dist[v] = dist[u] + w;
+                // parent[v] = u;
                 pq.push({dist[v], v});
             }
         }
     }
+
+    /*printing shortest path from 0 as source*/
+    // printPath();
 }
 
 // multiset do the job as a min-priority queue 
@@ -111,23 +119,75 @@ void dijkstraUsingSet() {
 }
 
 
-int main() {
-    int n, e, x, y, w;
-    cin >> n >> e;
-    for (int i = 0; i < e; ++i) {
-        cin >> x >> y >> w;
-        g[x].push_back(make_pair(w, y));
-        g[y].push_back(make_pair(w, x));
+// For minimum nodes/edges in path (path is still shortest but with min nodes)
+void dijkstraMinNodesPath() {
+      nodesInPath[0] = 1;
+      dist[0] = 0;
+      priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+      pq.push({0, 0});
+
+      while (!pq.empty())
+      {
+            int u = pq.top().second;
+            pq.pop();
+
+            for (auto pr : g[u]) {
+                  int w = pr.second;
+                  int v = pr.first;
+
+                  if (dist[u] + w < dist[v]) {
+                        parent[v] = u;
+                        nodesInPath[v] = nodesInPath[u] + 1;
+                        dist[v] = dist[u] + w;
+                        pq.push({dist[v], v});
+                  
+                  } 
+                  else if ((dist[u] + w == dist[v]) && (nodesInPath[u] + 1 < nodesInPath[v])) {
+                        nodesInPath[v] = nodesInPath[u] + 1;
+                        parent[v] = u;
+                  }
+            }
     }
 
-    // source = 0
-    // dijkstraUsingPQ();
-    // dijkstraUsingMultiset();
-    // dijkstraUsingSet();
-
-    for (int i = 0; i < n; i++)
-        cout << "dist of " << i << " from " << 0 << " = " << dist[i] << endl;
+    /*printing shortest path from 0 as source*/
+//     printPath();
 }
+
+
+int n, m;
+void graph_input() {
+      cin >> n >> m;
+      for (int i = 0; i < m; i++)
+      {
+            int x, y, w;
+            cin >> x >> y >> w;
+            g[x].push_back({y, w});
+            g[y].push_back({x, w});
+      }
+}
+
+int main() {
+    graph_input();
+}
+
+void printPath() {
+    for (int i = 0; i < n; i++) {
+        int j = i;
+        vector<int> path;
+        path.push_back(i);
+        while (parent[j] != j) {
+            path.push_back(parent[j]);
+            j = parent[j];
+        }
+        reverse(path.begin(), path.end());
+        cout << "path for " << i << " : ";
+        for (auto u : path) {
+            cout << u << " ";
+        }
+        cout << endl;
+    }
+}
+
 
 /*
 similar problem - maximum probability path

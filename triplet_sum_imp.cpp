@@ -30,7 +30,7 @@ int maxTripletSum(vector<int> &a) {
 
 		auto it = st.lower_bound(a[i]);
 		
-		if(it == st.begin()) {
+		if(it == st.begin()) {#
 			// no element smaller exist 
 			continue;
 		}

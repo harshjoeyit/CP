@@ -151,7 +151,16 @@ then cin >> obj would become valid
 
 
 
+>> Why does virtual function increase the size of the class 
 
+When you have one or more virtual functions in your class, compiler adds a virtual pointer 
+to the class and code in the initializer list so that when the object is created it points 
+to the beginning of the right virtual table based on the object being passed. Its the size 
+of this one virtual pointer that compiler adds to your class. No matter how many virtual 
+functions you have, one virtual pointer is all thats added. Virtual table would have an 
+entry for each virtual function that occur across the class hierarchy, at run time the 
+virtual pointer is moved accordingly to call the respective function. Also, virtual pointer 
+is one per object and virtual table is one per class.
 
 
 

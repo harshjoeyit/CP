@@ -72,3 +72,24 @@ int main() {
 	        cout<<0<<endl;
         }
 }
+
+
+// another approach 
+void solve() {
+    string s;
+    cin >> s;
+    int n = s.length();
+    
+    int l = 0;
+    for(int i=0; i<n; i++) {
+        int s1 = 0, s2 = 0;
+        for(int j=i, k=i+1; j>=0 && k<n; --j, ++k) {
+            s1 += (int)(s[j]-'0');
+            s2 += (int)(s[k]-'0');
+            if(s1 == s2) {
+                l = max(l, k-j+1);
+            }
+        }
+    }
+    cout << l << endl;
+}

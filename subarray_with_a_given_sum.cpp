@@ -54,6 +54,57 @@ void solve() {
     }
 }
 
+
+// ..........................................................................................
+// Finding Min length subarray with a given sum 
+
+// Using lower bound (nlogn)
+int minSubArrayLen(int s, vector<int>& nums) {    
+    auto prefix = nums;
+    int n = prefix.size();
+    
+    for(int i=1; i<n; i++) {
+        prefix[i] += prefix[i-1];
+    }
+    
+    int ans = 2*n;
+    
+    for(int i=0; i<n; i++) {
+        int sum = prefix[i] + s - nums[i];
+        
+        auto it = lower_bound(prefix.begin(), prefix.end(), sum);
+        if(it == prefix.end()) {
+            break;
+        }
+        
+        int len = it - (prefix.begin() + i) + 1;
+        ans = min(ans, len);
+    }
+    
+    return (ans == 2*n) ? 0 : ans;
+}
+
+
+// Two pointers 
+int minSubArrayLen(int s, vector<int>& nums) {
+    int ans = 2*nums.size(), n = nums.size();
+    int st = 0, en = 0, curr = 0;
+    
+    while(en < n) {
+        curr += nums[en];
+        while(curr >= s) {
+            ans = min(ans, en - st + 1);
+            curr -= nums[st];
+            st += 1;
+        }
+        en += 1;
+    }
+    
+    return (ans == 2*n) ? 0 : ans;
+}
+
+// ...................................................................................
+
 signed main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);

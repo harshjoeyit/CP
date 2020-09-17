@@ -2,42 +2,30 @@
 using namespace std;
 
 // brute force - O(n^2)
-void maxRecArea() {
-    int a[] = {6, 2, 5, 4, 5, 1, 6}; // hieghts of the histogram bars
-    int size = sizeof(a) / sizeof(int);
-    int max, MAX = -9999, area, x;
+void maxRecArea(vector<int> &a) {
+	int n = a.size();
+	int ans = 0, area, h;
 
-    for (int i = 0; i < size; i++) {
-        // we try to find the max area while including ith bar
-        // later we find Max of all max areas 
-        x = a[i];                      
-        // x keeps the value of minimum bar height in the current iteration
-        max = -9999;                   
-        // max to find the max vallue of area in current iteration
-        for (int j = i; j < size; j++) {
-            // starting from current bar and goin to the end
-            if (a[j] < x) {
-                // if lesser bar height is found then x is reassigned
-                x = a[j];
-            }
-            area = x * (j - i + 1); 
-            // IMP: area is calculated as (min bar height (x) * number of bars)(till the current iteration)
-            
-            // changing max
-            if (area > max) {
-                max = area;
-            }
-        }
-        // max is max-area while including ith bar in the rectangle formed 
-        // changing MAX
-        if (max > MAX) {
-            MAX = max;
-        }
+	for (int i = 0; i < n; i++) {
+		// we try to find the max area while including ith bar
+		// h keeps the value of minimum bar height in the current iteration
+		h = a[i];
+
+		// go to all the bars in right
+		for (int j = i; j < n; j++) {
+			if (a[j] < h) {
+				// if lesser bar height is found then h is reassigned
+				h = a[j];
+			}
+			area = h * (j - i + 1);
+			ans = max(ans, area);
+		}
     }
-    cout << MAX;
+    cout << ans << "\n";
 }
 
 
+// O(n)
 int niceMaxRectangleArea(vector<int> &heights) {
     heights.push_back(0);
     int n = heights.size();
@@ -62,50 +50,10 @@ int niceMaxRectangleArea(vector<int> &heights) {
 }
 
 
-// aternative solution
-
-#define height first
-#define index second
-
-int maxRectangleArea(int A[], int n) {
-    int mxarea = -1, left, curr;
-    stack<pair<int, int>> S;
-
-    for (int i = 0; i <= n; i++) {
-        while (!(S.empty()) && (i == n || S.top().height > A[i])) {
-            if (S.size() > 1) { // min 2 items
-                auto t = S.top();
-                S.pop();
-                left = S.top().index; // 2nd item on the stack
-                S.push(t);
-            }
-            else
-                left = -1;
-
-            curr = (i - left - 1) * S.top().height;
-            cout << (i - left - 1) << " " << S.top().height << endl;
-            S.pop();
-
-            if (curr > mxarea)
-                mxarea = curr;
-        }
-        if (i < n)
-            S.push({A[i], i});
-    }
-    return mxarea;
-}
 
 
-int main()
-{
-    int a[] = {1,2,3,4,5,3,3,2};
-    // int a[] = {5, 4, 3, 2, 3, 4, 1, 2};
-    // hieghts of the histogram bars
-    int size = sizeof(a) / sizeof(int);
-
-    // cout << "max area: " << maxRectangleArea(a, size) << "\n";
-
-    // vector<int> v = {1,2,3,4,5,3,3,2};
-    vector<int> v = {5, 4, 3, 2, 3, 2, 1};
-    niceMaxRectangleArea(v);
+int main() {
+    vector<int> v = {1,2,3,4,5,3,3,2};
+    vector<int> v = {2, 4, 0, 2, 3, 2, 1};
+    maxRecArea(v);
 }    

@@ -79,37 +79,28 @@ vector<string> topKFrequent(vector<string>& words, int k) {
 // using buckets 
 
 vector<string> topKFrequent(vector<string>& words, int k) {
-        
-      int mxf = 0;
-      map<string, int> ump;
-      for(auto &word: words) {
-           ump[word]++;    
-           mxf = max(ump[word], mxf);
+      unordered_map<string, int> cnt;
+      for(auto word: words) {
+            cnt[word] += 1;
       }
-      
-      vector<string> pool[mxf+1];
-      
-      for(auto p: ump) {
-          int f = p.second;
-          string s = p.first;
-          pool[f].push_back(s);
+
+      int n = words.size();
+      vector<vector<string>> bucket(n + 1, vector<string>());
+
+      for(auto p: cnt) {
+            bucket[p.second].push_back(p.first);
       }
-      
+
       vector<string> ans;
-      while(k) {
-          for(int i=mxf; i>=1; i--) {
-              if(k == 0) {
-                  break;
-              }
-              for(auto s: pool[i]) {
-                  if(k == 0) {
-                      break;
-                  }
+      for (int i = n; i >= 0; i--) {
+            for(auto s: bucket[i]) {
                   ans.push_back(s);
-                  --k;
-              }
-          }
+                  if(ans.size() == k) {
+                        return ans;
+                  }
+            }
       }
+
       return ans;
 }
 

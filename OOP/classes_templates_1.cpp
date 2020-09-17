@@ -34,6 +34,31 @@ template<> const char* Max(const char*x, const char *y) {
 }
 */
 
+
+// Examples 
+
+// template functions
+template <typename T> 
+void fun(vector<T> v) {
+    cout << v[0] << endl;
+}
+
+// template classes 
+template <typename T1, typename T2> 
+class Pair {
+public: 
+    T1 first;
+    T2 second;
+    Pair(T1 f, T2 s):first(f), second(s) {
+    }
+    void getPair() {
+        cout << first << " " << second << endl;
+    }
+};
+
+
+
+
 int main() {
     
     cout << Max(2.3, 4.3) << endl;
@@ -66,4 +91,16 @@ int main() {
     // so we need explicit "specialization for this type"
     // comment explicit specialization for wrong ans
     cout << Max(a, b) << endl;
+
+
+    // Examples 
+
+    vector<float> v1 = {4.3};
+    vector<string> v2 = {"sds"};
+    fun(v1);
+    fun(v2);
+    
+    
+    Pair<int, char> p1 = {3, 'f'};
+    p1.getPair();
 }

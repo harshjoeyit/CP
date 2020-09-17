@@ -3,8 +3,8 @@
 choose k elements from array A 
 such that the sum defined below is MINIMUM possible 
 
-v1 = { ... } - set1
-v2 = {.....} - set2
+v1 = { ... } - set1 (has k elements)
+v2 = {.....} - set2 (has remaining elements)
 
 sum = 0;
 for(int i=0; i<v1.size(); i++) {
@@ -62,7 +62,9 @@ void solve() {
 
     // calc sum
     int ans = 0;
+    // v1 has k elements 
     for(int i=0; i<v1.size(); i++) {
+        // v2 has n-k elements 
         for(int j=0; j<v2.size(); j++) {
             ans += abs(v1[i] - v2[j]);
         }

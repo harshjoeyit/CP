@@ -6,6 +6,12 @@ using namespace std;
 // maximum sum subsequence 
 // maximmum chain length - elements are pairs (a, b), (c, d) chain is formed when b < c , given a < b and d > c alwauys 
 
+// similar problem 
+// find largest bitonic sequence, (first increasing and then decreasing or only inc or only dec)
+// Solution 
+// find lis array from left 
+// find list array from right 
+// find max(left[i] + right[i] - 1)
 
 int main()
 {

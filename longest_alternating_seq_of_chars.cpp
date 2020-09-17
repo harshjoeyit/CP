@@ -2,7 +2,9 @@
 
 /*
 string contains char from '0' to '9'
-find the largest alternating seq of any two chars 
+find the largest alternating seq of                   "any two diff chars" 
+
+Note: Alternating seq should contain only 2 diff chars [0, 9]
 
 example - 
 22252522555

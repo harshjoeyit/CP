@@ -36,6 +36,21 @@ void solve() {
       it = min_element(mp.begin(), mp.end());
       cout << it->first << " " << it->second << endl;
 
+
+
+      // using custom comparison with max, min, min_element, max_element function
+      vector<string> v = {"abds", "ds", "sdsds", "sdrsdf"};
+
+      auto comp = [](const string &a, const string &b) {
+            return a.length() < b.length();
+      };
+
+      cout << *max_element(v.begin(), v.end(), comp) << "\n";
+      cout << *min_element(v.begin(), v.end(), comp) << "\n";
+
+      cout << max({"asdas", "sd"}, comp) << "\n";
+      cout << min({"asdas", "sd"}, comp) << "\n";
+   
 }
 
 signed main() {

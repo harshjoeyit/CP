@@ -108,39 +108,3 @@ ListNode *mergeTwoLists(ListNode *a, ListNode *b) {
       return head;
 }
 
-// custom comparitor 
-struct comp {
-      bool operator()(const ListNode *a, const ListNode *b) {
-            // makes a min heap (comparision is reversed in linked lists)
-            return a->val > b->val;
-      }
-};
-
-// Approach 3
-// using priority queue O(k) + O((n-k)*log(k)) = O(nlogk)
-ListNode* mergeKLists(vector<ListNode*>& lists) {
-      priority_queue<ListNode *, vector<ListNode*>, comp> pq;
-      ListNode *head = NULL, *tail;
-      
-      for(auto &list: lists) {
-            if(list) {
-                  pq.push(list);
-            }
-      }
-      while(!pq.empty()) {
-            auto node = pq.top();
-            pq.pop();
-            
-            if(head == NULL) {
-                  head = node;
-                  tail = node;
-            } else {
-                  tail->next = node;
-                  tail = tail->next;
-            }
-            if(node->next) {
-                  pq.push(node->next);
-            }
-      }
-      return head;
-}

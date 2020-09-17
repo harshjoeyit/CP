@@ -71,31 +71,28 @@ vector<int> postorderTraversal(TreeNode *root)
 {
       vector<int> ans;
       stack<TreeNode *> st;
+      // last keeps track of vertex visited in previous interation 
       TreeNode *last = NULL;
 
-      while (root || !st.empty())
-      {
-            if (root)
-            {
+      while (root || !st.empty()) {
+            if (root) {
                   st.push(root);
                   root = root->left;
             }
-            else
-            {
+            else {
                   TreeNode *node = st.top();
-                  if (node->right && last != node->right)
-                  {
+                  // if node has a right child visit it first 
+                  // after visiting node->right, last points to it 
+                  // so we do not visit it again 
+                  if (node->right && last != node->right) {
                         root = node->right;
-                  }
-                  else
-                  {
+                  } else {
                         ans.push_back(node->val);
                         last = node;
                         st.pop();
                   }
             }
       }
-
       return ans;
 }
 

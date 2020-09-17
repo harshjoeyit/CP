@@ -60,6 +60,19 @@ public:
     }
 };
 
+
+// Only one cosntructor defined explicitly
+// it will raise error since default constructor is not defined 
+class Test {
+      int x;
+public:
+      // Test() = default;
+      Test(const Test &rhs) {
+            cout << "Copy\n";
+      }
+};
+
+
 int main() {
     //same constructor works for obj1 and obj2... 
     // there cannot be mre than one constructor with default arguments
@@ -96,4 +109,12 @@ int main() {
     db2.print();
     db3.print();
     db4.print();
+
+
+
+    // .........
+    // raises an error - no default constructor present 
+    Test t;
+    t.print();
+    Test t1 = t;
 }
