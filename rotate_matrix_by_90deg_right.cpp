@@ -1,6 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Easiest method 
+void transpose(vector<vector<int>> &mat) {
+    int n = mat.size();
+    for(int i=0; i<n; i++) {
+        for(int j=i; j<n; j++) {
+            swap(mat[i][j], mat[j][i]);
+        }
+    }
+}
+
+void rotate(vector<vector<int>>& mat) {
+    transpose(mat);
+    for(auto &v: mat) {
+        reverse(v.begin(), v.end());
+    }
+}
+
 // there is noticable pattern - to where the values a placed in rotated matrix 
 // with respect to their original positions in the given matrix 
 void rotate(vector<vector<int>>& matrix) {

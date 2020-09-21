@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// Appraoch 1: Using min heap 
+
+// Approach 2: Using max heap 
+
+// Using parition of quick sort
+
 // partition [l, r]
 int Partition(int a[], int l, int r) {                  
     int pivot = r;
@@ -10,7 +16,7 @@ int Partition(int a[], int l, int r) {
         if(a[i] <= a[pivot]) {
             swap(a[i], a[pindex]);
             ++pindex;
-        }
+        }   
     }
     swap(a[r], a[pindex]);
     return pindex;

@@ -41,7 +41,7 @@ string find_window(string s, string pat) {
         // so count of that char is hashStr[s[i]] is less than or equal to required
         if (hashPat[s[j]] != 0 && hashStr[s[j]] <= hashPat[s[j]]) {
             count++;
-        } 
+        }   
 
         // all chars are present in current window 
         // whenever this runs it means that current string hash has more 
@@ -126,6 +126,8 @@ string minWindow(string s, string t) {
 
 // Return the number of substrings containing at least one 
 // occurrence of all these characters a, b and c.
+
+// string contains only a, b, c
 
 int numberOfSubstrings(string s) {
     int n = s.length();

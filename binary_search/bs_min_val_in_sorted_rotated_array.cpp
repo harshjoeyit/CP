@@ -11,44 +11,50 @@ Exmaples of array -
 using namespace std;
 #define int long long int
 
-int findMin(vector<int>& a) {
-    int n = a.size(), low = 0, high = a.size() - 1, mid;
+int minEleIndex(vector<int> &a) {
+    int low = 0, high = a.size() - 1;
     
-    while(low <= high) {
-        mid = low + (high - low)/2;
-        // condition 1
+    while(low < high) {
+        int mid = (low + high)/2;
+        
         if(a[mid] > a[high]) {
             low = mid + 1;
-        }
-        // condition 2
-        else if(a[mid] < a[high]) {
+        } else {
             high = mid;
-        } 
-        // high - low = 0
-        else {
-            return a[low];
         }
     }
+    return low;
+}
+
+int bs(int st, int en, int target, vector<int> &a) {
+    while(st <= en) {
+        int mid = (st + en)/2;
+        if(a[mid] == target) {
+            return mid;
+        } else if(a[mid] > target) {
+            en = mid - 1;
+        } else {
+            st = mid + 1;
+        }
+    }
+    
     return -1;
 }
 
-// find value in rotated sorted array 
-void findValInRotatedSortedArray(vector<int> &a, int val) {
-      int low = findMin(a);
-      int n = a.size();
-      bool f;
-
-      cout << "low: " << low << endl;
-
-      if(a[low] <= val && val <= a[n-1]) {
-            f = binary_search(a.begin()+low, a.end(), val);
-      } else {
-            f = binary_search(a.begin(), a.begin()+low, val);
-      }
-
-      if(f) {
-            cout << "found\n";
-      } else {
-            cout << "not found\n";
-      }
+int search(vector<int>& a, int target) {
+    int i = minEleIndex(a);
+    int n = a.size();
+    
+    if(target == a[i]) {
+        return i;
+    }
+    
+    int ans;
+    if(target <= a[n-1]) {
+        ans = bs(i, n-1, target, a);
+    } else {
+        ans = bs(0, i, target, a);
+    }
+    
+    return ans;
 }

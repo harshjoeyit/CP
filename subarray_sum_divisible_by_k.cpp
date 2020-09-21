@@ -172,6 +172,53 @@ void longestSubarrayNotDivisible() {
 
 
 
+// Remove the smallest subarray to make array sum divisible by p
+
+/*
+    if there is a subarray that needs to be removed 
+    then suppose it has (sum) % p = need
+    
+    so the problem reduces to smallest subarray with 
+    (sum) % p = need;
+    
+    now suppose 
+    sum[0....i] % p = x
+    sum[i....j] % p = need
+    
+    then sum[0....j] % p == 0
+    
+    so we always find the complement of the need in the map
+*/
+
+int minSubarray(vector<int>& a, int p) {
+
+    int need = 0;
+    for(auto val: a) {
+        need += val;
+        need %= p;
+    }
+    // total sum is divisible by p
+    if(need == 0) {
+        return 0;
+    }
+
+    int n = a.size(), s = 0, ans = n;
+    unordered_map<int, int> last;
+    last[0] = -1;
+    
+    for(int i=0; i<n; i++) {
+        s = (s + a[i]) % p;
+        int comp = (p + s - need) % p;
+        
+        if(last.count(comp)) {
+            ans = min(ans, i - last[comp]);
+        }   
+        last[s] = i;
+    }
+
+    return ((ans == n) ? -1 : ans);
+}
+
 signed main() {
 	vector<int> a = {1, 9, 9, 1, 9, 1, 1, 9};
 	cout << countSubarrays(a, 10);

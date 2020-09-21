@@ -36,73 +36,58 @@ That is why if no negtive edge has negetive wieght we can use DIJKSTRA
 more : https://cp-algorithms.com/graph/bellman_ford.html
 */
 
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
-struct edge {
-    int a, b, cost;
-};
+const int inf = 1e9;
+vector<vector<int>> edges;
+int n, m;
 
-const int INF = 1e9;
-vector<edge> edges;
-int n, m, v;
+void graph_input() {
+    cin >> n >> m;
+    for(int i=0; i<m; i++) {
+        int x, y, w;
+        cin >> x >> y >> w;
+        edges.push_back({x, y, w});
+    }
+}
 
-void shortestPath(int u) {
-      vector<int> dis(n, INF);
-      dis[u] = 0;
-      bool any;
-
-      for(int i=1; i<=n-1; i++) {
-            any = false;
-            // all edges relax n-1 times 
-            for(auto e: edges) {
-                  if (dis[e.a] < INF) {
-                        if (dis[e.b] > dis[e.a] + e.cost) {
-                              // relax the edge b/w a and b
-                              dis[e.b] = dis[e.a] + e.cost;
-                              any = true;
-                        }
-                  }
-            }
-            if(!any) {
-                  break;
-            }
-      }
-
-      // try relaxing 1 more time, if relaxes more then 
-      // negetive wieght cycle is possible
-
-      any = false;
+bool relax(vector<int> &dis) {
+      bool any = false;
       for(auto e: edges) {
-            if (dis[e.a] < INF) {
-                  if (dis[e.b] > dis[e.a] + e.cost) {
-                        // relax the edge b/w a and b
-                        dis[e.b] = dis[e.a] + e.cost;
+            int u = e[0], v = e[1], w = e[2];
+            if(dis[u] != inf) {
+                  if(dis[v] > dis[u] + w) {
+                        dis[v] = dis[u] + w;
                         any = true;
                   }
             }
       }
-
-      if(any) {
-            cout << "Neg weight cycle present\n";
-      } else {
-            for(int i=0; i<n; i++) {
-                  cout << dis[i] << " ";
-            }
-            cout << "\n";
-      }
+      return any;
 }
 
-void graphInput() {
-      cin >> n >> m;
-      for(int i=0; i<m; i++) {
-            int a, b, w;
-            cin >> a >> b >> w;
-            edges.push_back({a, b, w});
+void bellmanFord(int u) {
+      vector<int> dis(n, inf);
+      dis[u] = 0;
+
+      for (int i = 0; i < n - 1; i++) {
+            if(!relax(dis)) {
+                  break;
+            }
+      }
+      // relax 1 more time to find neg weight cycle 
+      if(relax(dis)) {
+            cout << "neg weight cycle\n";
+            return;
+      }
+      for (int i = 0; i < n; i++) {
+            cout << u << " " << i << " : " << dis[i] << endl;
       }
 }
 
 int main() {
-      graphInput();
-      shortestPath(0);
+      graph_input();
+      bellmanFord(0);
 }
