@@ -30,3 +30,21 @@ int lastStoneWeightII(vector<int>& a) {
     memset(dp, -1, sizeof(dp));
     return go(0, 0, a);
 }
+
+
+// Divide array into 2 subsets with equal sum 
+// bitset approach 
+
+bool canPartition(vector<int>& nums) {
+    bitset<20001> b;
+    b[0] = 1;
+    for(auto val: nums) {
+        b = b | (b << val);
+    }
+    int s = accumulate(nums.begin(), nums.end(), 0);
+    // sum should be even first
+    if(s & 1) {
+        return false;
+    }
+    return b[s/2];
+}

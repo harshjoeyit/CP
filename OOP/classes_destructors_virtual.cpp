@@ -8,140 +8,62 @@ Virtual Destructors
 Deleting a derived class object using a pointer to a base class 
 that has a non-virtual destructor results in undefined behavior. 
 To correct this situation, the base class should be defined with 
-a virtual destructor. For example, following program results in 
-undefined behavior.
+a virtual destructor.
 
 Making base class destructor virtual guarantees 
 that the object of derived class is destructed 
 properly, i.e., both base class and derived class 
 destructors are called.
 
-check the output removing virtual 
 */
 
-#include<bits/stdc++.h>
-using namespace std;
-
-class one {
-      int a;
-public: 
-      one() {
-            cout << "one constructor\n";
-      }
-      virtual ~one() {
-            cout << "one destructor\n";
-      }
-};
-
-class two: public one {
-      int b;
-public:
-      two() {
-            cout << "two constructor\n";
-      }
-      ~two() {
-            cout << "two destructor\n";
-      }
-};
-
-class three: public two {
-      int c;
-public: 
-      three() {
-            cout << "three constructor \n";
-      }
-      ~three() {
-            cout << "three destructor\n";
-      }
-};
-
-
-class Base1
+#include <iostream>
+class Base
 {
 public:
-    Base1(){
-        cout << "Base Constructor Called\n";
-    }
-    ~Base1(){
-        cout << "Base Destructor called\n";
+    // virtual 
+    ~Base() // note: not virtual
+    {
+        std::cout << "Calling ~Base()\n";
     }
 };
-
-class Derived1: public Base1
+ 
+class Derived: public Base
 {
+private:
+    int* m_array;
+ 
 public:
-    Derived1(){
-        cout << "Derived constructor called\n";
+    Derived(int length)
+      : m_array{ new int[length] }
+    {
     }
-    ~Derived1(){
-        cout << "Derived destructor called\n";
+ 
+    // virtual
+    ~Derived() // note: not virtual (your compiler may warn you about this)
+    {
+        std::cout << "Calling ~Derived()\n";
+        delete[] m_array;
     }
 };
-
-
-
-class Base2
-{ 
-public:
-    Base2(){
-        cout << "Base Constructor Called\n";
-    }
-    virtual ~Base2(){
-        cout << "Base Destructor called\n";
-    }
-};
-
-class Derived2: public Base2
-{
-public:
-    Derived2(){
-        cout << "Derived constructor called\n";
-    }
-    ~Derived2(){
-        cout << "Derived destructor called\n";
-    }
-};
-
-
-
+ 
 int main()
 {
-    Base1 *b1 = new Derived1();
-    delete b1;
+    Derived *derived { new Derived(5) };
+    Base *base { derived };
+ 
+    delete base;
+    // when delete is called on base, it checks if destructor is virtual
+    // then it calls the child destructor, then base destructor 
 
-    cout << endl;
-
-    Derived1 *d1 = new Derived1();
-    delete d1;
-
-    cout << endl;
-    
-    Base2 *b2 = new Derived2();
-    delete b2;
-
-
-    three *ptr3 = new three();
-    two *ptr2 = ptr3;
-    one *ptr1 = ptr3;
-     
-    /*
-    delete ptr1; 
-    or 
-    delete ptr2;
-    or 
-    delete ptr2;
-
-    output: 
-    one constructor
-    two constructor
-    three constructor 
-    three destructor
-    two destructor
-    one destructor
-
-    NOTE : 
-    because it all depends on which class the object is of.
-    destructors will be called according to that 
-    
-    */
+    // else
+    // it calls only base destructor 
+ 
+    return 0;
 }
+
+// However, we really want the delete function to call Derived’s destructor 
+// (which will call Base’s destructor in turn), otherwise m_array will not be deleted. We do this by making Base’s destructor virtual:
+
+
+// uncomment virtual

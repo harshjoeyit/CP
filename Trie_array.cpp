@@ -1,4 +1,4 @@
-/*    Trie
+// /*    Trie
 Trie uses less memory as compared to hash table 
 We cam do a prefix based search in a trie 
 */

@@ -13,25 +13,26 @@ using namespace std;
 const int mxN = 60;
 int eggs, floors;
 
-// recursive - brute force
+// recursive + memoization,  O(F*F*k)
 int calculateRecursive(int eggs, int floors){
-        if(eggs == 1){
-            return floors;
-        }
-        if(floors == 0){
-            return 0;
-        }
-        int min = 1000;
-        for(int i=1; i <= floors; i++){
-            int val = 1 + max(calculateRecursive(eggs-1, i-1),calculateRecursive(eggs, floors-i));
-            if(val < min){
-                min = val;
-            }
-        }
-        return min;
+    if(eggs == 1){
+        return floors;
     }
+    if(floors == 0){
+        return 0;
+    }
+    int min = 1000;
+    for(int i=1; i <= floors; i++){
+        int val = 1 + max(calculateRecursive(eggs-1, i-1),calculateRecursive(eggs, floors-i));
+        if(val < min){
+            min = val;
+        }
+    }
+    return min;
+}
 
-// using dp
+
+// bottom up DP, O(F*F*k)
 void solve() {
     cin >> eggs >> floors;
     // dp[e][f] - number of eggs remaining, number of floors remaining to be tested
@@ -71,6 +72,36 @@ void solve() {
     }
     
     cout << dp[eggs][floors] << endl;
+}
+
+
+
+// In M*K time complexity, M is number of moves for K, N
+
+int superEggDrop(int K, int N) {
+    vector<vector<int>> dp(N + 1, vector<int>(K + 1, 0));
+    int m = 0;
+    while (dp[m][K] < N) {
+        m++;
+        for (int k = 1; k <= K; ++k)
+            dp[m][k] = dp[m - 1][k - 1] + dp[m - 1][k] + 1;
+    }
+    return m;
+}
+
+
+
+// Best time complexity - K*log(N)
+
+int superEggDrop(int K, int N) {
+    vector<int> dp(K + 1, 0);
+    int m;
+    for (m = 0; dp[K] < N; m++) {
+        for (int k = K; k > 0; --k) {
+            dp[k] += dp[k - 1] + 1;
+        }
+    }
+    return m;
 }
 
 signed main() {

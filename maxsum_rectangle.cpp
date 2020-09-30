@@ -40,6 +40,46 @@ void maxsum_rectangle(vector<vector<int>> matrix, int n, int m) {
       }
 }
 
+
+// Similar 
+// Maxsum rectangle, sum <= k 
+int subarraySumLessThanEqualToK(vector<int> &sums, int k) {
+      int sum = 0, ans = INT_MIN;
+      set<int> st;
+      st.insert(0);
+
+      for (int i = 0; i < sums.size(); i++) {
+            sum += sums[i];
+            auto it = st.lower_bound(sum - k);
+            if (it != st.end())
+            {
+                  ans = max(ans, sum - *it);
+            }
+            st.insert(sum);
+      }
+      return ans;
+}
+
+int maxSumSubmatrix(vector<vector<int>> &mat, int k) {
+      ios_base::sync_with_stdio(0);
+      cin.tie(0);
+      if (mat.size() == 0 || mat[0].size() == 0) {
+            return 0;
+      }
+      int rows = mat.size(), cols = mat[0].size(), res = INT_MIN;
+
+      for (int left = 0; left < cols; left++) {
+            vector<int> sums(rows);
+            for (int right = left; right < cols; right++) {
+                  for (int row = 0; row < rows; row++) {
+                        sums[row] += mat[row][right];
+                  }
+                  res = max(res, subarraySumLessThanEqualToK(sums, k));
+            }
+      }
+      return res;
+}
+
 signed main() {
       ios_base::sync_with_stdio(0);
       cin.tie(0);

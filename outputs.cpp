@@ -1,5 +1,98 @@
 
-IMP OUTPUTS 
+// IMP OUTPUTS 
+
+
+#include <iostream>
+using namespace std;
+class MyClass {
+   public:
+      MyClass() {
+         cout << "Calling Constructor" << endl;
+      }
+};
+void func() {
+   static MyClass myObj; //Local static object
+}
+int main() {
+   cout << "Inside Main\n";
+   func();
+   cout << "After creating object\n";
+   func();
+   cout << "After second time";
+}
+
+
+// Inside Main
+// Calling Constructor
+// After creating object
+// After second time
+
+
+
+class A
+{
+public:
+    virtual std::string getName() const { return "A"; }
+};
+ 
+class B: public A
+{
+public:
+    virtual std::string getName() const { return "B"; }
+};
+ 
+class C: public B
+{
+public:
+      virtual std::string getName() const { return "B"; }
+};
+ 
+class D: public C
+{
+public:
+    virtual std::string getName() const { return "D"; }
+};
+ 
+int main()
+{
+    C c;
+    A &rBase{ c };      
+    std::cout << rBase.getName() << '\n';
+
+    A *pBase{ &c };
+    std::cout << pBase->getName() << '\n';
+
+    return 0;
+}
+
+// Output 
+// B. rBase is an A reference pointing to a C object. Normally rBase.getName() 
+// would call A::getName(), but A::getName() is virtual so it instead calls the 
+// most derived matching function between A and C. That is B::getName(), which prints B.
+
+// Same goes for pointer 
+
+
+
+
+
+
+class Base
+{
+public:
+    virtual int getValue() const { return 5; }
+};
+ 
+class Derived: public Base
+{
+public:
+    virtual double getValue() const { return 6.78; }
+};
+
+// compile error - overriding function has diff signature - 
+// no runtime polymorphism - since 
+// function signature is different 
+
 
 using namespace std;    
   

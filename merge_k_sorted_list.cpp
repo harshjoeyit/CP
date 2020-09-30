@@ -9,7 +9,7 @@ using namespace std;
 // Approach 2: Use a priority Queue 
 // compare element based on the head -> val, lowest one is at the top
 
-// O(n*klog(k))
+// O(n*klog(k)) - n = number of elements in each list (n * k = total elements in all list)
 struct comp {
       bool operator()(const ListNode *a, const ListNode *b) {
             return a->val > b->val;

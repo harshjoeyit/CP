@@ -6,6 +6,11 @@ using namespace std;
 const int mxN = 3005;
 int dp[mxN][mxN];
 
+/*
+Application 
+1. Bridges building problem  - https://www.geeksforgeeks.org/dynamic-programming-building-bridges/
+*/
+
 void print_LCS(string s, string t, int n, int m) {
     int i=n, j=m;
     string lcs = "";
