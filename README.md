@@ -1,8 +1,7 @@
-This repo contains - 
+Contains -
 
-# Algorithmic Problems
-# Competitive Coding problems 
-# exmaples on Object Oriented Programming 
-# all in C++
+Algorithmic Problems
+Competitive Coding problems 
+exmaples on Object Oriented Programming 
 
  
