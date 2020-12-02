@@ -8,24 +8,22 @@ answers range query of [L, R] - if palindrome or not in O(1)
 using namespace std;
 
 const int mxN = 1e3+10;
-bool dp[mxN][mxN];
+int dp[mxN][mxN];
 string s;
 string ans_s;
 
 void longestPalindromicSubstring() {
     int n = s.length();
     int ans_i = 0, ans_l = 0;
+    
+    memset(dp, 0, sizeof(dp));
 
-    for(int i=0; i<n; i++) 
-        for(int j=0; j<n; j++) 
-            dp[i][j] = false;
-      
     for(int l=1; l<=n; l++){                    // j = for length of the string
         for(int i=0; i<=n-l; i++) {             // i - iterate to every index where length j string is possible
             int j = i+l-1;
             if(l <= 2) {                        // for string of length = 1, 2
                 if(s[i] == s[j])                // [i - i+length-1] indices of start and end of string 
-                    dp[i][j] = true;
+                    dp[i][j] = 1;
 
             } else if(s[i] == s[j]){
                 dp[i][j] = dp[i+1][j-1];        // for [l, r] to be palindrome [l+1, r-1] must be a palindrome    
@@ -43,6 +41,7 @@ void longestPalindromicSubstring() {
 
 
 // longest palindromic subsequence 
+// bottom up -DP
 int longestPalindromicSubsequnce (string &s) {
       int n = (int)s.length();
       vector<vector<int>> dp(n, vector<int>(n, 1));
@@ -87,6 +86,36 @@ void solve() {
     cin>> s;
     longestPalindromicSubstring();
     cout << ans_s << endl;
+}
+
+
+// longest palindromic subsequence 
+// top-down DP
+
+int go(int st, int en, string &s) {
+    if(st > en) {
+        return 0;
+    }
+    if(st == en) {
+        return 1;
+    }
+    
+    int &ans = dp[st][en];
+    if(ans != -1) {
+        return ans;
+    }
+    
+    if(s[st] == s[en]) {
+        return ans = 2 + go(st+1, en-1, s);
+    }
+    
+    return ans = max(go(st, en - 1, s), go(st + 1, en, s));
+}
+
+int longestPalindromeSubseq(string s) {
+    int n = s.length();
+    memset(dp, -1, sizeof(dp));
+    return go(0, n - 1, s);
 }
 
 int main() {

@@ -30,6 +30,34 @@ vector<vector<int>> merge(vector<vector<int>> &intervals) {
       return ans;
 }
 
-int main()
-{
+// Another approach 
+void merge() {
+      int n;
+	cin >> n;
+      vector<pair<int, int>> ranges, ans;
+
+	for (int i = 0; i < n; i++) {
+            int st, en;
+            cin >> st >> en;
+            ranges.push_back({st, en});
+      }
+
+      sort(ranges.begin(), ranges.end());
+
+      int st = ranges[0].first, en = ranges[0].second;
+
+      for (int i = 1; i < n; i++) {
+            if(ranges[i].first <= en) {
+                  if(ranges[i].second > en) {
+                        en = ranges[i].second;
+                  }
+            } else {
+                  ans.push_back({st, en});
+                  st = ranges[i].first, en = ranges[i].second;
+            }
+      }
+      ans.push_back({st, en});
+}
+
+int main() {
 }

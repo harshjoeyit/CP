@@ -5,7 +5,7 @@ vector<int> G[200];
 vector<bool> vis(200);
 vector<int> col(200);
 
-// a graph with the cycle of odd length is always a bipartite graph
+// a graph with the cycle of odd length is not a bipartite graph
 
 // IMP NOTE: a disconnected graph is bipartite if all the connected components are bipartite 
 

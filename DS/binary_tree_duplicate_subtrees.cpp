@@ -1,7 +1,64 @@
-// C++ program to find if there is a duplicate 
-// sub-tree of size 2 or more. 
+/*
+https://leetcode.com/problems/find-duplicate-subtrees
+
+A duplicate subtree has same structure and node values 
+*/
+
 #include<bits/stdc++.h> 
 using namespace std; 
+
+
+class Solution {
+public:
+    
+    // storing subtree(serialized)
+    unordered_map<string, TreeNode *> subtrees;
+    // for storing ans only once
+    unordered_map<string, TreeNode *> ans;
+	
+    string serialize(TreeNode *root) {
+        if(!root) {
+            return "#";
+        }
+      
+        string temp = to_string(root->val);
+        temp.push_back('#');
+        temp.insert(temp.length(), serialize(root->left));
+        temp.push_back('#');
+        temp.insert(temp.length(), serialize(root->right));
+        
+	  // check if subtree occured before 
+        if(subtrees.count(temp)) {
+			// check if already in the ans table
+            if(ans.count(temp) == 0) {
+                ans[temp] = subtrees[temp];
+            }
+        } else {
+            subtrees[temp] = root;
+        }
+        
+        return temp;
+    }
+    
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        ans.clear();
+        subtrees.clear();
+        serialize(root);
+        
+        vector<TreeNode *> res;
+        for(auto p: ans) {
+            res.push_back(p.second);
+        }
+        return res;
+    }
+};
+
+
+
+// Another similar approach
+
+// C++ program to find if there is a duplicate 
+// sub-tree of size 2 or more. 
 
 // Separator node 
 const char MARKER = '$'; 

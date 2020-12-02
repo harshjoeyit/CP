@@ -1,16 +1,18 @@
 
-/*  
+/*
 You are given a list of edges in a graph and for each pair of vertices that are 
 connected by an edge, there are two edges between them, one curved edge and one 
 straight edge i.e. the tuple (x, y, w1, w2) means that between vertices x and y,
- there is a straight edge with weight w1 and a curved edge with weight w2. You 
- are given two vertices a and b and you have to go from a to b through a series 
- of edges such that in the entire path you can use at most 1 curved edge. Your 
- task is to find the shortest path from a to b satisfying the above condition.
+there is a straight edge with weight w1 and a curved edge with weight w2.
+  
+You are given two vertices a and b and you have to go from a to b through a series 
+of edges such that in the entire path you can use at most 1 curved edge. 
+
+Your task is to find the shortest path from a to b satisfying the above condition.
 
 
  Approach 
-1.Run dijkstra from node a. Let's call Da[i] be the shortest path to node i from node a using only straight edges.
+1. Run dijkstra from node a. Let's call Da[i] be the shortest path to node i from node a using only straight edges.
 
 2. Again run dijkstra from node b. Let's call Db[i] be the shortest path to node i from node b using only straight edges.
 

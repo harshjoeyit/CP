@@ -61,3 +61,18 @@ public:
         return build(q, INT_MIN, INT_MAX);
     }
 };
+
+// https://www.geeksforgeeks.org/amazon-interview-set-117-campus-internship/?ref=rp
+
+// Similar Problem 
+// Serialize Deserialize a n-ary tree
+
+// Appriach 
+
+// Serialize 
+// For each node, store its value, number of children 
+// in array pass index by refernce
+
+// Deserialize 
+// Traverse array pass index by reference, call the 
+// resursion as many times are number of children

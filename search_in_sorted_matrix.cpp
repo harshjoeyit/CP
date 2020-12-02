@@ -18,30 +18,76 @@ The given number is equal to the current number: This will end the search.
 */
 
 // mat is row wise and column wise sorted matrix
-void searchMatrix(vector<vector<int>> &mat, int val) {
+void searchMatrix(vector<vector<int>> &mat, int target) {
 
       int rows = mat.size(), cols = mat[0].size();
-      if(val < mat[0][0] && mat[rows-1][cols-1] < val) {
+      if(target < mat[0][0] && mat[rows-1][cols-1] < target) {
             cout << "can't be found\n";
             return;
       }
 
       int i = 0, j = cols-1;
       while(j >= 0 && i < rows) {
-            if(mat[i][j] == val) {
+            if(mat[i][j] == target) {
                   cout << "found at " << i << "," << j << endl;
                   return;
-            } else if(mat[i][j] > val){
+            } else if(mat[i][j] > target){
                   // all the elements below this element in this column are bigger
                   j -= 1;    
             } else {
-                  // mat[i][j] < val
+                  // mat[i][j] < target
                   i += 1;
             }
       }
 
       cout << "not found\n";
 }
+
+// similar problem 
+// matrix is sorted as 
+// Matrix is sorted in a way such that all elements in a row are sorted in increasing order 
+// and for row ‘i’, where 1 <= i <= n-1, the first element of row ‘i’ is greater than or equal to the last element of row ‘i-1’.
+
+// O(log(n) + log(m))
+
+// 1. use binary search on last column, find index of row that has value >= target
+// 2. use binary_search on this row, return ans
+
+
+void searchEfficient(vector<vector<int>> &mat, int target) {
+      int n = mat.size(), m = mat[0].size();
+      
+      int low = 0, high = n-1, mid, i = -1;
+      
+      while(low <= high) {
+            mid = (low + high) / 2;
+            if(mat[mid][m-1] < target) {
+                  low = mid + 1;
+            } else if (mat[mid][m-1] >= target) {
+                  i = mid;
+                  high = mid - 1;
+            }
+      }
+      if(i == -1) {
+            cout << "not found\n";
+            return;
+      }
+      // find in ith row
+      low = 0, high = m - 1, mid;
+      while(low < high) {
+            mid = (low + high) / 2;
+            if(mat[i][mid] < target) {
+                  low = mid + 1;
+            } else if(mat[i][mid] > target) {
+                  high = mid - 1;
+            } else {
+                  cout << i << " " << mid << endl;
+                  return;
+            }
+      }
+      cout << "not found\n";
+}
+
 
 int main() {     
       vector<vector<int>> v = { { 10, 20, 30, 40 }, 

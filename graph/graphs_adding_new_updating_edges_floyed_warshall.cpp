@@ -8,12 +8,12 @@ signed main()
     int n, k;
     cin >> n;
 
-    vector<vector<int> > g;
-    g.assign(n, vector<int>(n));
+    vector<vector<int> > dis;
+    dis.assign(n, vector<int>(n));
 
     for(int i = 0; i < n; i++)
         for(int j = 0; j < n; j++)
-            cin >> g[i][j];
+            cin >> dis[i][j];
         
     cin >> k;
 
@@ -22,18 +22,18 @@ signed main()
 
     for(int p = 0; p < k; p++)
     {
-        int a, b, c, sum = 0;
-        cin >> a >> b >> c;
+        int a, b, wt, sum = 0;
+        cin >> a >> b >> wt;
         --a; --b;
 
         for(int i = 0; i < n; i++)
         {
             for(int j = 0; j < n; j++)
             {
-                int x = g[i][a] + g[b][j] + c;          // if the new path includes the path a--b then
-                int y = g[i][b] + g[a][j] + c;          // if the new path includes the path b--a then
-                g[i][j] = min(g[i][j], min(x, y));      // the path may remain unaffeccted by adding the new edge 
-                sum += g[i][j];
+                int x = dis[i][a] + dis[b][j] + c;          // if the new path includes the path a--b then
+                int y = dis[i][b] + dis[a][j] + c;          // if the new path includes the path b--a then
+                g[i][j] = min(dis[i][j], min(x, y));      // the path may remain unaffeccted by adding the new edge 
+                sum += dis[i][j];
             }
         }
         cout << sum/2 << " ";

@@ -45,27 +45,49 @@ bool find_cycle_dsu() {
 
 // using DSF
 
-bool dfs(vector<int> g[], int u, int par) {
+bool dfs(vector<int> g[], int u=0, int par=-1) {
     vis[u] = true;
 
     for(auto v: g[u]) {
         if(!vis[v]) {
-            if(dfs(g, v, u)) {
-                // cycle int the subtree
-                return true;
-            
-            } else if(v != par || v == u) {
-                // if the visited is not parent or 
-                // self loop
+            if(dfs(g, v, u)) {  // cycle int the subtree
                 return true;
             }
+        } else if(v != par) {
+            return true;
         }
+        // we can also check self loop seperately
     }
 
     return false;
 }
 
 
+// Using BFS
+
+bool bfs(vector<int> g[], int u) {
+    // check for self loop seperately
+    vector<int> parent(1000, -1);
+    vector<int> vis(1000, 0);
+    queue<int> q;
+    q.push(u);
+    vis[u] = 1;
+
+    while(!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for(auto v: g[u]) {
+            if(!vis[v]) {
+                vis[v] = 1;
+                parent[v] = u;
+            } else if (parent[u] != v) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 int main() {
     int x, y, nodes, edges;
@@ -81,7 +103,6 @@ int main() {
     }
 
     // using DSU
-
     for(int i = 1; i <= nodes; i++) {  
         parent[i] = i;
     }
@@ -96,13 +117,12 @@ int main() {
     int i;
     for(i=0; i<nodes; i++) {
         if(!vis[i]) {
-            if(dfs(g, i, -1)) {
+            if(dfs(G, i, -1)) {
                 cout << "cycle\n";
                 break;
             } 
         }
     }
-
     if(i == nodes) {
         cout << "No cycle\n";
     }

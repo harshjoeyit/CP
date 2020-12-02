@@ -1,21 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// variations 
+// >> variations 
+
 // bridges 
 // maximum sum subsequence 
 // maximmum chain length - elements are pairs (a, b), (c, d) chain is formed when b < c , given a < b and d > c alwauys 
+// bitonic sequence
 
-// similar problem 
-// find largest bitonic sequence, (first increasing and then decreasing or only inc or only dec)
-// Solution 
-// find lis array from left 
-// find list array from right 
-// find max(left[i] + right[i] - 1)
-
-int main()
-{
-    
+// O(n*n)
+int LIS() {
     int n;
     cin >> n;
 
@@ -24,26 +18,78 @@ int main()
         cin >> v[i];
 
     vector<int> dp(n, 1);
+    int lis = 1;
 
-    int maxlen = 1;
-    for(int i = 1; i < n; i++)
-    {   
-        int max = 0;
-        for(int j = 0; j < i; j++)
-            if((v[j] < v[i]) && (dp[j] > max))
-                max = dp[j];
-        
-        dp[i] = max + 1;
-        if(dp[i] > maxlen)
-            maxlen = dp[i];
-    }   
-
-    // for(auto &x: dp)
-    //     cout << x << " ";
-    // cout << endl;
-
-    cout << maxlen << endl;
+    for(int i = 1; i < n; i++) {   
+        for(int j = 0; j < i; j++) {
+            if(v[i] > v[j]) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+        lis = max(lis, dp[i]);
+    }
+    return lis;
 }
+
+// O(nlog(n))
+int LIS2(vector<int> a) {
+    vector<int> v;
+    for (int i = 0; i < a.size(); i++) {
+        auto it = lower_bound(v.begin(), v.end(), a[i]);
+        if (it != v.end()) 
+            *it = a[i];
+        else 
+            v.push_back(a[i]);
+    }
+    return v.size();
+}
+
+
+
+// Couting number of longest increasing subsequence 
+
+// O(n*n)
+int findNumberOfLIS(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> dp(n, 1);
+    
+    // cnt[i][len] = number of increasing sequence of length len ending at i  
+    vector<vector<int>> cnt(n, vector<int>(n+1, 0));
+    for(int i=0; i<n; i++) {
+        cnt[i][1] = 1;
+    }
+    
+    int lis = 1;
+    
+    for(int i=1; i<n; i++) {
+        for(int j=0; j<i; j++) {
+            if(nums[i] > nums[j]) {
+                int len = dp[j] + 1;
+                dp[i] = max(dp[i], len);
+                // add sequences 
+                cnt[i][len] += cnt[j][len-1];
+            }
+        }
+        lis = max(lis, dp[i]);
+    }
+    
+    // finally count all the subsequence of length lis, ending at any index
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+        ans += cnt[i][lis];
+    }
+    return ans;
+}
+
+
+
+
+// > Similar Problem 
+// find largest bitonic sequence, (first increasing and then decreasing or only inc or only dec)
+// >  Solution 
+// find lis array from left 
+// find list array from right 
+// find max(left[i] + right[i] - 1)
 
 // printing the longest bitonic sequence 
 void printBitonic() {

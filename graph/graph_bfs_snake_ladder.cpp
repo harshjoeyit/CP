@@ -6,7 +6,7 @@ int moves[mxN];
 
 // BFS
 int minDiceThrows() {
-      vector<bool> vis(mxN, false);
+      vector<bool> //&& children > 1)vis(mxN, false);
       int diceThrows = 0;
       queue<int> q;
       q.push(0);      

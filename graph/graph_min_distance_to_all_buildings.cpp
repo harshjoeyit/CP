@@ -6,7 +6,12 @@
       2 - obstacle, cannot pass through 
       Find the empty block such that all the buildings are at shortest distance from it.
 
-      cnt[i][j] - number of building reachable 
+      cnt[i][j] - number of https://leetcode.com/problems/minimum-height-trees/
+      
+      find the nodes, which form min height rooted tree
+      Approach 
+      use multisorce BFS like topological sort 
+      building reachable 
       dis[i][j] - total distance to reachable buildings from here 
 */
 
