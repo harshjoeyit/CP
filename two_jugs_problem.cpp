@@ -4,6 +4,11 @@
 using namespace std;
 
 /*
+Problem similar to BFS approach of this problem:
+    https://leetcode.com/problems/minimum-jumps-to-reach-home/submissions/
+*/
+
+/*
 Using Extended Euclid Algorithm
 
 The problem can be modeled by means of the Diophantine equation 

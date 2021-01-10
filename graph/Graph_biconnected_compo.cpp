@@ -1,3 +1,15 @@
+
+
+/*
+    Biconnected component: component with no articulation point 
+
+    Idea is to store visited edges in a stack while DFS on a graph and keep looking for Articulation Points. 
+    As soon as an Articulation Point u is found, all edges visited while DFS from node u onwards will form 
+    one biconnected component. When DFS completes for one connected component, all edges present in stack 
+    will form a biconnected component.
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 

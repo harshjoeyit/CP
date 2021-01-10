@@ -1,6 +1,8 @@
 
 /*
 maximum of all subarray of size k
+
+Ex - https://leetcode.com/contest/weekly-contest-220/problems/jump-game-vi/
 */
 
 #include <bits/stdc++.h>
@@ -65,6 +67,43 @@ vector<int> maxSlidingWindow(vector<int> &nums, int k) {
       }
       return ans;
 }
+
+
+// https://leetcode.com/contest/weekly-contest-220/problems/jump-game-vi/
+
+int maxResult(vector<int>& nums, int k) {
+      int n = nums.size();
+      deque<int> dq;
+      vector<int> dp(n, 0);
+      // dp[i] = ans till index i
+
+      for(int i=0; i<n; i++) { 
+            // remove those outside window of size k
+            while(!dq.empty() && dq.front() < i-k) {
+                  dq.pop_front();
+            }
+            if(!dq.empty()) {
+                  // add the ans of previous step 
+                  // previous jump was on dq.front()
+                  dp[i] = dp[dq.front()];
+            }
+
+            // since we are jumping now on ith index 
+            // add it to dp[i]
+            dp[i] += nums[i];
+
+            // if jumping on ith index gives greater ans than jumping 
+            // on any other index in the window, we will surely jump on i and not any other index 
+            while(!dq.empty() && dp[dq.back()] < dp[i]) {
+                  dq.pop_back();
+            }
+            // push in queue 
+            dq.push_back(i);
+      }
+
+      return dp[n-1];
+}
+
 int main()
 {
 }

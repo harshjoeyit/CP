@@ -61,15 +61,19 @@ int shortest_path(vector<vector<int>> grid, int k) {
                               continue;
                         }
 
-                        // may be we can try a shortcut from here 
-                        // means check if we can reach the end even 
-                        // if all the cells in the path are obstacles from here 
-                        int steps_to_target = (rows-x-1) + (cols-y-1);
-                        // even if all the cells are obstacles - the last must not be
-                        // max obstacles possible from here = steps_to_target-1
-                        if(steps_to_target-1 <= remK) {
-                              return steps + steps_to_target;
-                        }
+                        /* may be we can try a shortcut from here 
+                        means check if we can reach the end even 
+                        if all the cells in the path are obstacles from here 
+                        even if all the cells are obstacles - the last must not be
+                        max obstacles possible from here = steps_to_target-1 */
+
+                        // shortcut code causing problem in 
+                        // https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/submissions/
+
+                        // int steps_to_target = (rows-x-1) + (cols-y-1);
+                        // if(steps_to_target-1 <= remK) {
+                        //       return steps + steps_to_target;
+                        // }
 
                         q.push({x, y, remK});
                         vis[x][y] = remK;

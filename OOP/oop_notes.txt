@@ -1,4 +1,4 @@
-/*
+
 Public mode: If we derive a sub class from a public base class. 
 Then the public member of the base class will become public in the derived class and
 protected members of the base class will become protected in derived class.
@@ -18,7 +18,7 @@ Single Inheritance.
 Multiple Inheritance.
 Hierarchical Inheritance.
 Multilevel Inheritance.
-Hybrid Inheritance (also known as Virtual Inheritance)
+Hybrid Inheritance (also known as Virtual Inheritance) - combining single inheritence and multiple inheritence 
 
 
 << is insertion operator 
@@ -166,4 +166,3 @@ defalut specifier private                 here it is public
       instead of a pass by value (yet another reason why passing classes by reference instead 
       of value is a good idea).
 
-*/

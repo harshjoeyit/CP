@@ -7,59 +7,105 @@ IMP PIR
 using namespace std;
 #define int long long
 
-const int mxN = 256;
+
+// Using Binary Search (find only size)
+
+// check if all chars of pat are present in s
+bool search_window(int i, int j, string s, string pat) {
+    if(j - i + 1 < pat.length()) {
+        return false;
+    }
+    unordered_map<char, bool> present;
+    int cnt = 0;
+
+    for(int k = i; k <= j; k++ ) {
+        present[s[k]] = true;
+    }
+    for(int i = 0; i < pat.length(); i++ ) {
+        if(present[pat[i]])
+            ++cnt;
+    }
+    return cnt == pat.length();
+}
+
+// search all substrings of given wind_size 
+bool current_window(int wind_size, string s, string pat) {
+    int n1 = s.length();
+
+    for(int i = 0; i < n1-wind_size; i++ ) {
+        if(search_window(i, i + wind_size, s, pat)) {
+            return true;
+        } 
+    }
+    return false;
+}
+
+// bin-search on window size 
+int min_window_size(int l, int h, string s, string pat) {
+    int ans = -1;
+    while(l <= h) {
+        int mid = l + (h-l)/2;
+
+        if(current_window(mid, s, pat)) {
+            ans = mid;
+            h = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+
+    return ans+1;           
+    // returns 0 if the if substring is not found in the string 
+}
+
+void minWindowSize() {
+    string pat = "abcde";
+    string s = "alllllllelcdlballllllclldl";
+    cout << s.size() << endl; 
+    cout << min_window_size(0, s.length()-1, s, pat )<<endl;
+}
+
+
+
+// Using window sliding (find substring, window)
 
 // find smallest window in str that contains all the chars of pat
 // all chars means repitions too 
 string find_window(string s, string pat) {
-    int n = s.length();
-    int m = pat.length();
     
-    if(n < m) {
-        // return blank string
+    if(s.length() < pat.length()) {
         return "";
     }  
-    
-    // depends on the char present in the string 
-    const int mxN = 256;
-    int hashPat[mxN] = {0};
-    int hashStr[mxN] = {0};
 
-    for(int i=0; i<m; i++) {
-        ++hashPat[pat[i]];
+    const int mxN = 256;
+    vector<int> shash(256, 0), phash(256, 0);
+
+    for(int i=0; i<pat.length(); i++) {
+        ++phash[pat[i]];
     }
 
-    int l = 0, ansLeft = -1, minLen = INT_MAX;
-    int count = 0;
+    int count = 0, l = 0, ansLeft = -1, minLen = INT_MAX;
 
-    for(int j=0; j<n; j++) {
+    for(int j=0; j<s.length(); j++) {
     
-        hashStr[s[j]]++;
+        shash[s[j]]++;
 
-        // checking 
-        // if char is present in pat and has count hashPat[s[j]]
-        // so count of that char is hashStr[s[i]] is less than or equal to required
-        if (hashPat[s[j]] != 0 && hashStr[s[j]] <= hashPat[s[j]]) {
+        if (phash[s[j]] != 0 && shash[s[j]] <= phash[s[j]]) {
+            // if char is present in pat 
+            // if char present then do we have enough in our shash 
             count++;
         }   
 
-        // all chars are present in current window 
-        // whenever this runs it means that current string hash has more 
-        // or equal char required that are in pat
-        if(count == m) {
-            //minimize window from left
-            // either count of char is greater than required or the char is not present in pat
-            while ( hashStr[s[l]] > hashPat[s[l]] || hashPat[s[l]] == 0) {
-                
-                if (hashStr[s[l]] > hashPat[s[l]]) {
-                    hashStr[s[l]]--; 
-                    // delete this char from window, and the condition is still fulfilled
+        if(count == pat.length()) {
+            // s[l...i] has all chars of pat, 
+			// buts lets try to reduce the window from the right side 
+            while (shash[s[l]] > phash[s[l]] || phash[s[l]] == 0) {
+                if (shash[s[l]] > phash[s[l]]) {
+                    shash[s[l]]--; 
                 }
-                // move the left pointer to right 
                 l++; 
             }
-            // update window size 
-            // we can work even without right pointer, only left pointer and length does the job 
+            // optimal window
             int wind = j - l + 1; 
             if (minLen > wind) { 
                 minLen = wind; 
