@@ -21,8 +21,8 @@ destructors are called.
 class Base
 {
 public:
-    // virtual 
-    ~Base() // note: not virtual
+    virtual ~Base()
+    // ~Base() 
     {
         std::cout << "Calling ~Base()\n";
     }
@@ -39,8 +39,8 @@ public:
     {
     }
  
-    // virtual
-    ~Derived() // note: not virtual (your compiler may warn you about this)
+    virtual ~Derived() 
+    // ~Derived() 
     {
         std::cout << "Calling ~Derived()\n";
         delete[] m_array;

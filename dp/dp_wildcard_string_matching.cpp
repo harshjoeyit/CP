@@ -4,20 +4,25 @@ using namespace std;
 // recursive
 
 vector<vector<int>> dp;
+int n, m;
 
 int wildCard(string &s, string &pat, int i=0, int j=0) {
-      int n = (int)s.length(), m = (int)pat.length();
-      if(i >= n && j >= m) {
-            return true;
-      }
-      if(i < n && j >= m) {
-            return false;
-      } else if(i >= n && j < m) {
-            if(pat[j] != '*') {
-                  return false;
+      if(i >= n) {
+            // s finished, pat remaining 
+            if(j >= m) {
+                // pat also finished
+                return true;
+            }
+            // all chars in pat after this must be '*'
+            else if(pat[j] != '*') {
+                return false;
             }
             // skip extra *
             return wildCard(s, pat, i, j+1);
+      }
+      if(i < n && j >= m) {
+            // s remaining, pat finished
+            return false;
       }
 
       int &ans = dp[i][j];
@@ -81,6 +86,6 @@ bool wildcardPatternMatching(string s, string pat) {
 int main() {
     string s, pat;
     cin >> s >> pat;
-
+    n = s.length(), m = pat.length();
     cout << wildcardPatternMatching(s, pat) << "\n";
 }

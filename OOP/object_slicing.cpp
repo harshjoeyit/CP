@@ -30,13 +30,13 @@ public:
  
 
 // sliced
-void printName(const Base base) // note: base passed by value, not reference
+void printName(const Base base) // base passed by value, not reference
 {
     std::cout << "I am a " << base.getName() << '\n';
 }
 
 // not sliced 
-void displayName(const Base& base) // note: base passed by value, not reference
+void displayName(const Base& base) // base passed reference
 {
     std::cout << "I am a " << base.getName() << '\n';
 }

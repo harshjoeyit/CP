@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// write comparitor class
+// write comparitor classe
 
 struct job { 
     int id, deadline, profit;

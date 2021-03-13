@@ -1,3 +1,10 @@
+
+/*
+      Similar Problem   
+      Pair with a given sum in a sorted rotated array
+      https://www.geeksforgeeks.org/given-a-sorted-and-rotated-array-find-if-there-is-a-pair-with-a-given-sum/
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long int

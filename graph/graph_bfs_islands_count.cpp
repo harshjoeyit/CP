@@ -1,7 +1,12 @@
+/*
+      Count number of island problem using DFS
+      Similar Problem 
+      - https://www.geeksforgeeks.org/find-the-number-of-distinct-islands-in-a-2d-matrix/
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
-// number of island problem using DFS
 
 int dirx[4] = {-1, 1, 0, 0};
 int diry[4] = {0, 0, -1, 1};

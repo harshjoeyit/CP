@@ -62,7 +62,8 @@ public:
 
 
 // Only one cosntructor defined explicitly
-// it will raise error since default constructor is not defined 
+// it will raise error, if object is created like new Test(),
+//  since default constructor is not defined 
 class Test {
       int x;
 public:

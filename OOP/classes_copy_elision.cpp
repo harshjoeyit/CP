@@ -38,7 +38,6 @@ Test fun()  {
 int main()  { 
 
     B ob = "copy me"; 
-	return 0; 
 
     /*
     Constructor called
