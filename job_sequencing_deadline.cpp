@@ -16,6 +16,7 @@ int n;
 void jobSequencing(vector<job> &jobs) {
       vector<bool> slot(n, false);
       vector<int> result(n);
+      int profit = 0, cnt = 0;
 
       for (int i = 0; i < n; i++) {
             // find slot, closest to deadline, i.e greatest slot < deadline 
@@ -24,12 +25,14 @@ void jobSequencing(vector<job> &jobs) {
                         // found a slot, this job can be done in [j, j+1] slot
                         slot[j] = true;
                         result[j] = i;
+                        // if only profit or number of jobs is required, we can calculate it here.
+                        // cnt++, profit += jobs[i].prof;
                         break;
                   }
             }
       }
 
-      int profit = 0, cnt = 0;
+      // result array is only useful when the order of jobs is asked
       for (int i = 0; i < n; i++) {
             if(slot[i]) {
                   // filled slot
