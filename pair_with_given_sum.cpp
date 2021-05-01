@@ -10,7 +10,22 @@ using namespace std;
 #define int long long int
 
 // Using O(n) time and space 
-int pairsWithGivenSum(vector<int> &a, int target) {
+
+// Method 1:
+int getPairsCount(vector<int> &arr, int n, int k) {
+    int ans = 0;
+    for(int i=0; i<n; i++) {
+    unordered_map<int, int> ump;
+        if(ump.count(k - arr[i])) {
+            ans += ump[k - arr[i]];
+        }
+        ump[arr[i]]++;
+    }
+    return ans;
+}
+
+// Method 2:
+int getPairsCount(vector<int> &a, int target) {
       unordered_map<int, int> ump;
       for(auto &x: a) {
             ump[x] += 1;
@@ -35,7 +50,7 @@ int pairsWithGivenSum(vector<int> &a, int target) {
 // using two pointers 
 // but used for just finding the if pair exists 
 
-int pairWithGivenSum(vector<int> &a, int target) {
+int checkPairSumExists(vector<int> &a, int target) {
       sort(a.begin(), a.end());
       int st = 0, en = a.size() - 1;
       while(st < en) {
@@ -58,15 +73,5 @@ int pairWithGivenSum(vector<int> &a, int target) {
 // use two pointers and (i) % n to move the indexes forward and backward 
 
 signed main() {
-      ios_base::sync_with_stdio(0);
-      cin.tie(0);
-      int n, s;
-      cin >> n >> s;
-      vector<int> a(n);
-      for(auto &x: a) {
-            cin >> x;
-      } 
 
-      int pairs = pairsWithGivenSum(a, s);
-      cout << pairs << endl;
 }

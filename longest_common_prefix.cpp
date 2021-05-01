@@ -1,4 +1,4 @@
-
+long
 /*
 longest common prefix 
 

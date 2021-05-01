@@ -8,12 +8,24 @@ read all the methods
 IMPORTANT
 There is only one duplicate number in the array, 
 but it could be repeated MORE THAN ONCE.
-
-Solution uses - Floyd's Hare and Tortoise Algo (used for finding cycle int the linked list)
 */
+
+// METHOD 1.
+// After swapping, the repeated element will be at index 0
+int findDuplicate(vector<int>& a) {
+    int n = a.size();
+    for(int i=0; i<n; i++) {
+        while(a[i] != a[a[i]]) {
+            swap(a[i], a[a[i]]);
+        }
+    }
+    return a[0];
+}
+
+// METHOD 2.
+// Solution uses - Floyd's Hare and Tortoise Algo (used for finding cycle int the linked list)
 int findDuplicate(vector<int>& nums) {
-      // the cycle is here for sure 
-      // due to given conditions 
+      // We use the fact that the cycle is present(due to given conditions)
       int slow = 0, fast = 0;   
       do {
             slow = nums[slow];

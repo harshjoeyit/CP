@@ -10,18 +10,22 @@ using namespace std;
 
 // greedy 
 int jump(vector<int> &nums) {
-     int pos = 0, dest = 0, jump = 0;
+    int pos = 0, dest = 0, jump = 0;
 
-     for(int i=0; i<nums.size()-1; i++) {
-           // untill we reach the pos, find the farthest destination possible,
-           // well jump to it
-           dest = max(dest, i + nums[i]);
-           if(pos == i) {
-                 pos = dest;
-                 jump++;
-            }
-     }
-     return jump;
+    for(int i=0; i<nums.size()-1; i++) {
+       // untill we reach the pos, find the farthest destination possible,
+       // well jump to it
+       if(i == dest) {
+           // for the case when we have 0s in nums, Ex - [2,1,0,3]
+           return -1;
+       }
+       dest = max(dest, i + nums[i]);
+       if(pos == i) {
+           pos = dest;
+           jump++;
+       }
+    }
+    return jump;
 }
 
 

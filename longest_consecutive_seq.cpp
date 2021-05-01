@@ -6,6 +6,7 @@ https://leetcode.com/problems/longest-consecutive-sequence/
 #include<bits/stdc++.h>
 using namespace std;
 
+// O(n*log(n)), O(1) Space
 int longestConsecutive(vector<int>& nums) {
       if(nums.size() == 0) {
             return 0;
@@ -27,7 +28,37 @@ int longestConsecutive(vector<int>& nums) {
       return ans;
 }
 
-// O(n)
+// Method 1
+// O(n) time & space, 
+int findLongestConseqSubseq(int a[], int n) {
+    unordered_set<int> st;
+    for(int i=0; i<n; i++) {
+        st.insert(a[i]);
+    }
+
+    int ans = 0;
+    while(!st.empty()) {
+        int curr;
+        for(auto val: st) {
+            if(!st.count(val-1)) {
+                curr = val;
+                break;
+            }
+        }
+        // curr is the first element of a sequence, count & erase the seq
+        int cnt = 0;
+        while(st.count(curr)) {
+            st.erase(curr);
+            cnt++;
+            curr++;
+        }
+        ans = max(ans, cnt);
+    }
+    return ans;
+}
+
+// Method 2
+// O(n) time & space 
 int longestConsecutive(vector<int>& nums) {
       if(nums.size() == 0) {
             return 0;

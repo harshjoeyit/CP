@@ -15,7 +15,6 @@ int maxProduct(int a[], int n) {
                   maxp = max(minp * a[i], a[i]);
                   minp = min(temp * a[i], a[i]);
             }
-            ans = max(ans, maxp);
       }
       return ans;
 }

@@ -1,12 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// See 
-// Brute Froce
-// Stack Approach
-// Two Pointer Approach
+/*
+      Method 1:
+      Brute Force, for each tower, find the largest to its left and right and find the trapped water
+      O(n*n) time, O(1) space
+*/
 
-// best application O(n) - better running time
+
+/*
+      Method 2.01:
+      Pre compute leftmax and rightmax for each tower
+      O(n) time, O(n) space
+*/
 int trap(vector<int> &a) {
       if (a.size() == 0 or a.size() == 1) {
             return 0;
@@ -30,50 +36,72 @@ int trap(vector<int> &a) {
 }
 
 
-// my approach - O(n)
-int fixStart(int idx, vector<int> &height) {
-      int n = height.size();
-      while(idx < n - 1 && height[idx] < height[idx + 1]) {
-            idx += 1;
-      }
-      return idx;
+/*
+      Method 2.02
+      Using Stack 
+      O(n) time, O(n) Space
+*/
+int maxWater(int height[], int n) {
+    stack <int> st;
+    int ans = 0;
+
+    for(int i = 0; i < n; i++) {
+        while ((!st.empty()) && (height[st.top()] < height[i])) {
+            int pop_height = height[st.top()];
+            st.pop();
+
+            if (st.empty())     break;
+            // Get the distance between the
+            // left and right boundary of popped bar
+            int distance = i - st.top() - 1;
+
+            // Calculate the min. height
+            int min_height = min(height[st.top()], height[i]) - pop_height;
+
+            ans += distance * min_height;
+
+        }
+        st.push(i);
+    }
+    return ans;
 }
 
-int trap(vector<int>& height) {
-      if(height.size() <= 2) {
-            return 0;
-      }        
-      int ans = 0, n = height.size();
-      int st, en=0;      
-      while((st = fixStart(en, height)) < n-2) {
-            // cout << "st: " << st << " ";
-            en = st+1;
-            while(en < n-1 && height[en] <= height[st]) {
-                  en += 1;
-            }
-            // cout << " en: " << en << endl;
-            int mx = min(height[st], height[en]);
-            int contrib = 0;
 
-            if(en == n-1 && mx < height[st]) {
-                  int maxH = height[en];
-                  for(int k=en-1; k>st; k--) {
-                        maxH = max(maxH, height[k]);
-                        contrib += maxH - height[k];
-                  }
-                  ans += contrib;
-                  // cout << "contr: "<< contrib << endl;
-                  continue;
-            }
+/*
+      Method 3:
+      Space Optimization for Method 2
+      O(n) time, O(1) space
+*/
+int findWater(int arr[], int n) {
+    int ans = 0, lmax = 0, rmax = 0;
+    int lo = 0, hi = n - 1;
 
-            for(int i=st + 1; i<en; i++) {
-                  contrib += max(0, mx - height[i]);
+    // the lowest height pointer i.e. min(lmax, rmax) moves forward, 
+    // so we can be calculate water stored by lmax and rmax alone.
+    while (lo <= hi) {
+        if (arr[lo] < arr[hi]) {
+            if (arr[lo] > lmax) {
+                lmax = arr[lo];
             }
-            // cout << "cont: " << contrib << endl; 
-            ans += contrib;
-      }
-      return ans;
+            else {
+                ans += lmax - arr[lo];
+            }
+            lo++;
+        }
+        else {
+            if (arr[hi] > rmax) {
+                rmax = arr[hi];
+            }
+            else {
+                ans += rmax - arr[hi];
+            }
+            hi--;
+        }
+    }
+    return ans;
 }
+
+
 
 int main() {
 }

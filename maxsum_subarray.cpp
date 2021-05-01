@@ -11,13 +11,14 @@ Application
 */
 
 // find maxsum
-int maxSumSub(vector<int> a, int n) {
+int maxSumSub(vector<int> a) {
     int ans = a[0], s = 0;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < a.size(); i++) {
         s += a[i];
         ans = max(ans, s);
         s = max(s, 0);
     }
+    return ans;
 }
 
 // find subarray - length or indices
@@ -41,22 +42,12 @@ int maxSumSubarray(vector<int> a, int n) {
 	cout << ansL << " " << ansR << endl;
 }
 
-// min sum subarray kadanes approach
-int min_sum_subarray_kadane(vector<int> a) {
-    int sum = 0;
-    int ans = 0;
-    for (auto it = a.begin(); it != a.end(); it++) {
-        if (sum + *it < 0)
-            sum = sum + *it;
-        else
-            sum = 0;
-        if (sum < ans)
-            ans = sum;
-    }
-    return ans;
-}
+
+// min sum subarray 
+// Sol - reverse the sign of each element in array and find max sum subarray 
 
 
+// utility function for divide and conquer approach 
 int max_cross_sum_subarray(vector<int> a, int l, int mid, int h) {
     if (l == h)
         return a[l];
@@ -78,24 +69,40 @@ int max_cross_sum_subarray(vector<int> a, int l, int mid, int h) {
 }
 
 // divide and conquor approach
-int max_sum_subarray_div_con(vector<int> a, int l, int h)
-{
-    if (l == h)
+int max_sum_subarray_div_con(vector<int> a, int l, int h) {
+    if (l == h) {
         return a[l];
+    }
 
     int mid = (l + h) / 2;
     int left_sum = max_sum_subarray_div_con(a, l, mid);
     int right_sum = max_sum_subarray_div_con(a, mid + 1, h);
     int cross_sum = max_cross_sum_subarray(a, l, mid, h);
 
-    int ans = max(left_sum, right_sum);
-    ans = max(ans, cross_sum);
-
-    return ans;
+    return min({left_sum, right_sum, cross_sum});
 }
 
 
-// masum circular 
+// maxsum circular subarray
+// Method 1
+int maxSubarraySumCircular(vector<int>& a) {
+    int maxSum = maxSumSub(a);      // normal kadane
+    int ts = 0;                     // total sum
+    for(auto &val: a) {             // reverse sign
+        ts += val;
+        val = -val;
+    }
+    int minSum = maxSumSub(a);      // min sum subarray
+    int maxSum2 = ts + minSum;
+    if(maxSum2 == 0) {
+        // all elements are negetive 
+        maxSum2 = INT_MIN;
+    }
+    return max(maxSum, maxSum2);
+}
+
+// maxsum circular subarray
+// Method 2
 int maxSubarraySumCircular(vector<int>& v) {
         int max_so_far = v[0];
         int max_end_here = v[0];
@@ -126,6 +133,7 @@ int kConcatenationMaxSum(vector<int>& arr, int k) {
       int maxSubarraySum = 0, s = 0;
       // finding maxSum for 2 concatinated arrays
       // considereing it to be a complete array of size 2*n
+      // ex -{2, -5, 3, 1}
       for (int i = 0; i < 2 * n; i++) {
             s += arr[i % n];
             maxSubarraySum = max(maxSubarraySum, s);
@@ -144,7 +152,7 @@ int maximumSum(vector<int>& a) {
     }
     int n = a.size();
     
-    int ans = kadane(a);
+    int ans = maxSumSub(a);
     if(ans < 0) {
         return ans;
     }
@@ -180,9 +188,6 @@ int maximumSum(vector<int>& a) {
     return ans;
 }
 
-int main()
-{
+int main() {
     vector<int> a = {1, 1, -3, 3, -1, 2};
-    cout << "max sum : " << max_sum_subarray_kadane(a) << endl;
-    cout << "max sum : " << max_sum_subarray_div_con(a, 0, a.size() - 1) << endl;
 }
