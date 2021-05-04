@@ -53,7 +53,7 @@ int niceMaxRectangleArea(vector<int> &heights) {
 
 
 int main() {
-    vector<int> v = {1,2,3,4,5,3,3,2};
-    vector<int> v = {2, 4, 0, 2, 3, 2, 1};
+    // vector<int> v = {1,2,3,4,5,3,3,2};
+    vector<int> v = {6,2,5,4,5,1,6};
     maxRecArea(v);
 }    

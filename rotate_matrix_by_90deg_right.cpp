@@ -11,10 +11,21 @@ void transpose(vector<vector<int>> &mat) {
     }
 }
 
-void rotate(vector<vector<int>>& mat) {
+void rotateby90Clockwise(vector<vector<int>>& mat) {
     transpose(mat);
     for(auto &v: mat) {
         reverse(v.begin(), v.end());
+    }
+}
+
+void rotateby90Anticlockwise(vector<vector<int>>& mat) {
+    transpose(mat);
+    int n = mat.size(), m = mat[0].size();
+    // reverse each column
+    for(int j=0; j<m; j++) {
+        for(int i=0; i<n/2; i++) {
+            swap(a[i], a[n-i-1]);
+        }
     }
 }
 
