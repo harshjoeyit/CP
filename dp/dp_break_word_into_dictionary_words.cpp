@@ -68,6 +68,33 @@ bool wordBreak(string s, vector<string> &wordDict) {
       }
       return dp[0];
 }
+
+/*
+      Two pointer solution can be applied if it is sure that string 
+      cannot be segmented in more than one way
+      For Eg - It will fail on 
+      Input: s = "abaaba", wordDict = ["ab", "aba"]
+      Two pointer solution will break like: "ab" + "aaba" 
+*/
+
+
+/* Trie Approach */
+bool wordBreak(string str, TrieNode *root) {
+      int size = str.size();
+      // Base case
+      if (size == 0)  return true;
+      
+      // Try all prefixes of lengths from 1 to size
+      for (int i=1; i<=size; i++) {
+          if (searchInTrie(root, str.substr(0, i)) && wordBreak(str.substr(i, size-i), root)) {
+                return true;
+          }
+      }
+      
+      return false;
+}
+
+
 int main() {
       string s;
       cin >> s;

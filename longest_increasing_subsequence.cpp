@@ -83,23 +83,17 @@ int findNumberOfLIS(vector<int>& nums) {
 
 
 
+/*
+    > Similar Problem 
+    find largest bitonic sequence, (first increasing and then decreasing or only inc or only dec)
+    >  Solution 
+    find lis array from left 
+    find list array from right 
+    find max(left[i] + right[i] - 1)
+*/
 
-// > Similar Problem 
-// find largest bitonic sequence, (first increasing and then decreasing or only inc or only dec)
-// >  Solution 
-// find lis array from left 
-// find list array from right 
-// find max(left[i] + right[i] - 1)
-
-// printing the longest bitonic sequence 
-void printBitonic() {
-        int n;
-	cin >> n;
-	vector<int> a(n);
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
-    
+void printBitonic(vector<int> &a) {
+    int n = a.size();
     vector<int> inc(n, 1);
     vector<int> dec(n, 1);
     vector<int> incPath(n, 0);
@@ -107,6 +101,7 @@ void printBitonic() {
 
     for(int i=0; i<n; i++) {
         incPath[i] = i;
+        decPath[i] = i;
     }
 
     for (int i = 1; i < n; i++) {
@@ -137,19 +132,16 @@ void printBitonic() {
     }
 
     cout << ans << endl;
-    stack<int> temp;
+    vector<int> res;
 
     int st = j;
     while (incPath[st] != st) {
-        temp.push(a[st]);
+        res.push_back(a[st]);
         st = incPath[st];
     }
-    vector<int> res;
+    res.push_back(a[st]);
     
-    while(!temp.empty()) {
-        res.push_back(temp.top());
-        temp.pop();
-    }
+    reverse(res.begin(), res.end());
     res.pop_back();
 
     st = j;
@@ -157,6 +149,7 @@ void printBitonic() {
         res.push_back(a[st]);
         st = decPath[st];
     }
+    res.push_back(a[st]);
 
     for(auto val: res) {
         cout << val << " ";

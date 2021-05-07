@@ -7,8 +7,11 @@ const int mxN = 3005;
 int dp[mxN][mxN];
 
 /*
-Application 
-1. Bridges building problem  - https://www.geeksforgeeks.org/dynamic-programming-building-bridges/
+Application:
+1. Bridges building problem-
+https://www.geeksforgeeks.org/dynamic-programming-building-bridges/
+2. Longest Repeating Subsequence-
+https://practice.geeksforgeeks.org/problems/longest-repeating-subsequence2004/1
 */
 
 void print_LCS(string s, string t, int n, int m) {
@@ -82,6 +85,23 @@ int LCS(string &a, string &b, string &c, int i=0, int j=0, int k=0) {
       LCS(a, b, c, i, j, k + 1)});
 }
 
+// Longest Repeating Subsequence
+int LongestRepeatingSubsequence(string s){
+    int n = s.length();
+    vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+
+    for (int i=1; i<=n; i++) {
+        for (int j=1; j<=n; j++) {
+            if (s[i-1] == s[j-1] && i != j) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            }
+            else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[n][n];
+}
 
 void solve() {
     string s, t;

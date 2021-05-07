@@ -1,3 +1,13 @@
+
+/*
+    Applications: 
+    1. Check is a string is rotation of the other
+    https://www.geeksforgeeks.org/a-program-to-check-if-strings-are-rotations-of-each-other/
+
+    2. Minimum characters to be added at front to make string palindrome
+    https://www.geeksforgeeks.org/minimum-characters-added-front-make-string-palindrome/
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 

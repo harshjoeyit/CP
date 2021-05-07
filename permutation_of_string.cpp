@@ -8,7 +8,7 @@ Realted problems -
 Find the smallest number which has the same set of digits as n and larger than n
 https://practice.geeksforgeeks.org/problems/next-greater-number-set-digits/0
 
-son - print next permutation if exist else -1
+sol - print next permutation if exist else -1
 */
 
 #include <bits/stdc++.h>        
@@ -39,44 +39,20 @@ void permute(string a, int i) {
     }
 }
 
-void lexicographicalNext(string s) {
-    bool ret = next_permutation(s.begin(), s.end());
-    if(ret == false) {
-        cout << "No lexicographical next permutation possible\n";
-        // eg. cba, aaa
-    } else {
-        cout << s << "\n";
-    }
-} 
-
-void lexicographical_next(string s) {
-    int n = s.length();
-    int i = n-2;
-    // 1. from right to left find the pos where s[i] < s[i+1]
-    while(i >= 0 && s[i] >= s[i+1]) {
-        --i;
-    }
-    if(i < 0) {
-        cout << "No lexicographical next permutation possible\n";
+void nextPermutation(vector<int>& nums) {
+    int n = nums.size(), i = n-1;
+    while(i >= 1 && nums[i-1] >= nums[i])    i--;
+    if(i == 0) {
+        sort(nums.begin(), nums.end());
         return;
-    }
-    // pos found 
-    // from pos + 1 to n-1, find the smallest among the chars that are greater than s[pos]
-    char c = s[i+1];
-    int k = i+1;
-    for(int j=i+1; j<n; j++) {
-        if(s[j] > s[i] && s[j] < c) {
-            k = j;
-        }
-    }
-    // Note: since the string is sorted from pos+1, n-1, we can use binary search to find k
-    // swap char at i, k
-    swap(s[i], s[k]);
-    // reverse the string between i [...] k 
-    reverse(s.begin()+i+1, s.begin()+k);
-
-    cout << s << endl;
+    } 
+    // find the smallest number greater than nums[i-1], to its right
+    int j=i;
+    while(j < n && nums[j] > nums[i-1])     j++;
+    swap(nums[i-1], nums[j-1]);
+    sort(nums.begin()+i, nums.end());
 }
+
 
 int main() { 
     string s;
@@ -86,13 +62,9 @@ int main() {
     cout << ".................\n";
     
     set<string> st;
-    // permute(s, 0, st);
+    permute(s, 0, st);
     for(auto x: st)
         cout << x << " ";
     cout << "\n.................\n";
-    
-    lexicographicalNext(s);
-
-    lexicographical_next(s);
 } 
 

@@ -49,12 +49,14 @@ int mergeSort(vector<int> &a, vector<int> &temp, int st, int en) {
 }
 
 
-// using STL set
+/*
+      using STL set
 
-// Note that the worst case time complexity of above implementation 
-// is O(n2) as distance function in STL takes O(n) time worst case, 
-// but this implementation is much simpler than other implementations 
-// and would take much less time than Naive method on average.
+      Note that the worst case time complexity of above implementation 
+      is O(n2) as distance function in STL takes O(n) time worst case, 
+      but this implementation is much simpler than other implementations 
+      and would take much less time than Naive method on average.
+*/
 int STLSet(vector<int> &a) {
       int n = (int)a.size();
       int invCnt = 0;
@@ -71,6 +73,18 @@ int STLSet(vector<int> &a) {
       return invCnt;
 }
 
+
+/*
+      Using Self balancing BST (AVL Trees)
+
+      The idea is to use Self-Balancing Binary Search Tree like Red-Black Tree, AVL Tree, etc 
+      and augment it so that every node also keeps track of number of nodes in the right subtree. 
+      So every node will contain the count of nodes in its right subtree i.e. the number of nodes 
+      greater than that number. So it can be seen that the count increases when there is a pair (a,b), 
+      where a appears before b in the array and a > b, So as the array is traversed from start to the end, 
+      add the elements to the AVL tree and the count of the nodes in its right subtree of the newly 
+      inserted node will be the count increased or the number of pairs (a,b) where b is the present element
+*/
 
 int main() {
       int n;

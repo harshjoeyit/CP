@@ -3,6 +3,13 @@
 Edit distance is a way of quantifying how dissimilar two strings are, 
 i.e., how many operations (add, delete or replace character) 
 it would take to transform one string to the other. T
+
+similar problems : 
+Two strings you can delete chars in any of them, find
+minimum steps to make the strings equal
+
+- can be done simplys using LCS
+https://leetcode.com/problems/delete-operation-for-two-strings/submissions/
 */
 
 
@@ -49,13 +56,3 @@ signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 }
-
-/*
-similar problems : 
-Two strings you can delete chars in any of them, find
-minimum steps to make the strings equal
-
-
-- can be done simplys using LCS
-https://leetcode.com/problems/delete-operation-for-two-strings/submissions/
-*/
