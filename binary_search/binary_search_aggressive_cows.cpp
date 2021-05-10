@@ -1,57 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
  
- 
-int main()
-{
-	int t;
-	cin >> t;
- 
-	while(t--)
-	{
-		int n, c, l, h, min_sep, sep, prev, curr, cows;
-		cin >> n >> c;
-		vector<int> stalls(n);
- 
-		for(int i = 0; i < n; i++)
-			cin >> stalls[i];
- 
-		sort(stalls.begin(), stalls.end());
- 
-		l = 0, h = 1000000000;
-		while(l <= h)
-		{
-			sep = l + (h - l)/2;
-			prev = stalls[0];
-			cows = c - 1;
- 
-			for(int i = 1; (i < n) && (cows > 0); i++)
-			{
-				curr = stalls[i];
-				if(curr - prev >= sep)
-				{
-					--cows;
-					prev = curr;
-				}
-			}
- 
-			if(cows > 0)
-				h = sep - 1;
-				
-			else
-			{
-				l = sep + 1;
-				min_sep = sep;
-			}
-		}
-		cout << min_sep << endl;
-	}	
-} 
+// returns the number of cows (cnt) that can be placed, given the minimum seperation (sep)
+int placeCows(vector<int> &pos, int sep) {
+    int prev = pos[0], cnt = 1; // first cow placed at 1st pos
+    for(int i=1; i<pos.size(); i++) {
+        if(pos[i] - prev >= sep) {
+            cnt++;
+            prev = pos[i];
+        }
+    }
+    return cnt;
+}
 
-// similar problem 
-// there are houses on the x-axis (-1e9, 1e9)
-// place m poilice stations such that the max distance of any house to police station is minimized 
+// returns max seperation possible b/w cows
+void maxSepCows() {
+    int n, c;
+    cin >> n >> c;
+    vector<int> pos(n, 0);
+    for(auto &val: pos) {
+        cin >> val;
+    }
+    sort(pos.begin(), pos.end());
+    int low = 0, high = pos[n-1] - pos[0], ans = 0;
 
+    while(low <= high) {
+        int sep = low + (high - low)/2;
+        int cnt = placeCows(pos, sep);
+        if(cnt >= c) {
+            ans = max(ans, sep);
+            low = sep + 1;
+        } else {
+            high = sep - 1;
+        }
+    }
+    cout << ans << "\n";
+}
+
+/*
+	similar problem 
+	there are houses on the x-axis (-1e9, 1e9)
+	place m poilice stations such that the max distance of any house to police station is minimized 
+*/
 void solve() {
       int n, m;
       cin >> n >> m;

@@ -1,5 +1,9 @@
 #include<stdio.h>
 
+/*
+    Stable Sorting algorithm
+*/
+
 void bubble_sort( int a[] , int n)
 {
     int pass , i , temp ,swapped = 1;

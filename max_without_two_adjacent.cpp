@@ -7,7 +7,7 @@ using namespace std;
 // Otimized - Dp approach
 // Space -  O(n)
 vector<int> dp;
-int go(int i, vect(int i, vectoror<int> &a) {
+int go(int i, vector<int> &a) {
       int n = (int)a.size();
       if (i >= n) {
             return 0;
@@ -34,6 +34,17 @@ int goNice(vector<int> &a) {
 	}
 
       return max(inc, ex);
+}
+
+// another way to write above approach, but the one above is easier to understand
+int rob(vector<int>& a) {
+    int inc = a[0], ex = 0;
+    for(int i=1; i<a.size(); i++) {
+        int temp = inc;
+        inc = max(inc, ex + a[i]);
+        ex = temp;
+    }
+    return max(inc, ex);
 }
 
 

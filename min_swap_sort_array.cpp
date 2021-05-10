@@ -1,7 +1,6 @@
 
 /*
-
-CASE 1: 
+https://practice.geeksforgeeks.org/problems/minimum-swaps/1
 
 Given an array of first N numbers sort the elements using minimum swaps 
 example - 
@@ -23,7 +22,7 @@ using namespace std;
 
 
 // Case 1: No restriction of adjacent swaps 
-// when  0 <= a[i] <= n-1
+// when  0 <= a[i] <= n-1, O(n)
 int minSwaps1(vector<int> &a) {
       int n = (int)a.size();
       int swaps = 0;
@@ -44,28 +43,8 @@ int minSwaps1(vector<int> &a) {
       // array is sorted finally 
 }
 
-// for a binary array 
-int minAdjacentSwapBinary(vector<int> &a) {
-    int n = (int)a.size();
-    int zeroAfter = 0;
-    int swaps = 0;
-
-    for(int i = n-1; i >= 0; i--) {
-        if(a[i] == 0) {
-            zeroAfter += 1;
-        } else {
-            swaps += zeroAfter;
-        }
-    }
-
-    return swaps;
-    // bonus 
-    // if we want to sort the array too
-    // 1. count 0s, 1s 
-    // 2. two pointer 
-}
-
-
+// ADJACENT SWAPS, for general array, not restricted to 0 <= a[i] <= n-1
+// Using inversion counts O(N.log(N))
 int minAdjacentSwap(vector<int> &a) {
     // swaps = no of inversions in thw array 
     // The fact can be established using below observations:
@@ -74,8 +53,8 @@ int minAdjacentSwap(vector<int> &a) {
 }
 
 
-// min swaps  - array elements 
-// not restricted to 0 <= a[i] <= n-1
+// NON-ADJACENT SWAPS
+// for general array, not restricted to 0 <= a[i] <= n-1
 int minSwaps(int arr[], int n) { 
     
     pair<int, int> arrPos[n]; 
@@ -85,9 +64,8 @@ int minSwaps(int arr[], int n) {
     }   
     
     sort(arrPos, arrPos + n); 
-    // after the sorting the 
-    // correct index of arrPos[i].first (element) is i 
-    // and wrong index is arrPos[i].second
+    // after sorting, elements are placed on their correct index
+    // and wrong index (index in arr[]) is arrPos[i].second
     // so we make a cycle from correct index to wrong index and carray on untill 
     // we revisit any index
 
@@ -118,6 +96,27 @@ int minSwaps(int arr[], int n) {
     return ans; 
 } 
 
+
+// for a binary array 
+int minAdjacentSwapBinary(vector<int> &a) {
+    int n = (int)a.size();
+    int zeroAfter = 0;
+    int swaps = 0;
+
+    for(int i = n-1; i >= 0; i--) {
+        if(a[i] == 0) {
+            zeroAfter += 1;
+        } else {
+            swaps += zeroAfter;
+        }
+    }
+
+    return swaps;
+    // bonus 
+    // if we want to sort the array too
+    // 1. count 0s, 1s 
+    // 2. two pointer 
+}
 
 int main() {
       int n;

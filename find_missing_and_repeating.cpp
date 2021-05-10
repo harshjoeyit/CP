@@ -71,19 +71,52 @@ vector<int> singleNumber(vector<int>& nums) {
 }
 
 
-// values are in range [1, n] and 
-// one of them is missing and one is repeating 
-// find both numbers 
-void solve() {
-    int n;
-    cin >> n;
+/*
+    values are in range [1, n] and 
+    one of them is missing and one is repeating, find both 
 
-    int xr = 0;
-    vector<int> a(n);
+    https://www.geeksforgeeks.org/find-a-repeating-and-a-missing-number/
+*/
+
+/*
+    Other Method
+    1. Sort Array
+    2. Hash Table (count frequency)
+*/
+
+/*
+    Method 1: swap each element to its right index
+    Finally, the REPEATED element occupies index of MISSING element
+    O(1) space
+*/
+void findTwoElement(int *arr, int n) {
     for(int i=0; i<n; i++) {
-        cin >> a[i];
+        while(arr[i] != arr[arr[i] - 1])  {
+            swap(arr[i], arr[arr[i] - 1]);
+        }
+    }
+
+    int rep, mis;
+    for(int i=0; i<n; i++) {
+        if(i != arr[i]-1) {
+            rep = arr[i];        // repeating
+            mis = i + 1;         // missing
+            break;
+        }
     }
     
+    cout << rep << " " << mis << endl;
+}
+
+
+/*
+    Method 2: Mark each elements correct index once it is visited
+    If mark twice it is REPEATED element, if unmarked MISSING
+    O(n) space
+*/
+void solve(vector<int> &a) {
+    int n = a.size();
+
     int indices[n+1];
     for(int i=1; i<= n; i++)            // set all indices to 1
         indices[i] = 1;
@@ -107,11 +140,66 @@ void solve() {
     cout << rep << " " << mis << endl;
 }
 
+
+/*
+    Method 3: Using Xor 
+*/
+
+int *findTwoElement(int *a, int n) {
+    
+    int xr = 0;
+    for(int i=1; i<=n; i++) {
+        xr ^= i;
+    }
+    for(int i=0; i<n; i++) {
+        xr ^= a[i];
+    }
+
+    /* Get the rightmost set bit in set_bit_no */
+    int b = xr & ~(xr -1);
+    int x = 0;
+
+    for(int i=1; i<=n; i++) {
+        if(i & b) {
+            x ^= i;
+        }
+    }
+    for(int i=0; i<n; i++) {
+        if(a[i] & b) {
+            x ^= a[i];
+        }
+    }
+    // the two numbers are x, xr^x, but we don't know 
+    // which is REPEATING and which is MISSING
+    
+    int mis = x, rep = xr ^ x;
+    for(int i=0; i<n; i++) {
+        if(a[i] == x) {
+            mis = xr^x;
+            rep = x;
+            break;
+        }
+    }
+
+    cout << mis << " " << rep << endl;
+}
+
+/*
+    Method 4: (Make two equations using sum and sum of squares)
+    Let x be the missing and y be the repeating element.
+    Let N is the size of array.
+    Get the sum of all numbers using formula S = N(N+1)/2
+    Get the sum of square of all numbers using formula Sum_Sq = N(N+1)(2N+1)/6
+    Iterate through a loop from i=1….N
+    S -= A[i]
+    Sum_Sq -= (A[i]*A[i])
+    It will give two equations 
+    x-y = S – (1) 
+    x^2 – y^2 = Sum_sq 
+    x+ y = (Sum_sq/S) – (2) 
+*/
+
+
 signed main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    int t;
-    cin >> t;
-    while(t--)
-        solve();
+
 }

@@ -6,6 +6,14 @@ using namespace std;
 // and set our pivot to a[end] , continue
 // this reduces our probaility of finding the worst case time complexity of O(n^2)
 
+/*
+    Unstable sorting algorithm 
+    Ex      - 4 6 4 2 3
+    Sort    - 2 3 4 4 6
+    select 3 as pivot 
+    4 at index 0 is at index 3 in sorted array
+*/
+
 int Partition( int A[] , int start , int end )
 {
     int Pivot = A[end];

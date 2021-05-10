@@ -41,8 +41,15 @@ vector<int> productExceptSelf(vector<int> nums) {
       for (auto &val : nums) {
             p *= val;
       }
-      
       double lp = log10(p);
+      /*
+      We can also use log poperty to find lp
+      log(a*b*c...) = log(a) + log(b) + ......
+      
+      for (auto &val : nums) {
+            lp += log10(nums[i]);
+      }
+      */
       
       for (int i = 0; i < n; i++) {
             double lv = log10(nums[i]);

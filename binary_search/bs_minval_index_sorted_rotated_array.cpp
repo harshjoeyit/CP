@@ -25,7 +25,7 @@ int findMin(vector<int>& a) {
         
         } else {
             if (a[high - 1] > a[high]) {
-                // this is the min index for sure 
+                // this is the min indminex for sure 
                 low = high;
                 break;
             }

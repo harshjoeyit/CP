@@ -1,5 +1,9 @@
 #include<stdio.h>
 
+/*
+    Stable Sorting Algorithm
+*/
+
 void insertion_sort( int a[] , int n)
 {
     int i , j , temp , k;

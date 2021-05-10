@@ -1,3 +1,10 @@
+/*
+      Similar Questions 
+      K-th element of two sorted Arrays 
+      https://practice.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1#
+      Sol - below
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -155,3 +162,5 @@ int getMedian(int a[], int b[], int n) {
     }
     return getMedian(b + n/2, a, n-n/2);
 }
+
+

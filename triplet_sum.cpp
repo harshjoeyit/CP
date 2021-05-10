@@ -131,6 +131,29 @@ int maxTripletSum(vector<int> &a) {
 	return ans;
 }
 
+    
+/*
+    Triplet Sum less than target value
+    https://practice.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1
+*/
+long long countTriplets(long long a[], int n, long long sum) {
+    sort(a, a+n);
+    long long ans = 0;
+    
+    for(int i=0; i<=n-3; i++) {
+        long long remSum = sum - a[i];
+        long long j = i+1, k = n-1;
+        while(j < k) {
+            if(a[j] + a[k] >= remSum) {
+                j--;
+            } else {
+                // Valid triplets: (i, j, j+1), (i, j, j+2)......(i, j, k) => total (k-j)
+                ans += k-j;
+            }
+        }
+    }
+    return ans;
+}
 
 int main() {
 }

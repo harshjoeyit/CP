@@ -1,8 +1,11 @@
 #include<stdio.h>
 
+/*
+    Not a stable sorting algorithm 
+    Ex - 5, 6, 5, 3, 4
+*/
 
-void select_sort( int a[] , int n )
-{
+void select_sort( int a[] , int n ) {
     int i, j , temp , min;
     for( i = 0; i < n-1; i++ )
     {

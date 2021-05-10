@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+/*
+	Hep Sort - Unstable sorting algorithm
+*/
+
 void printArray(int arr[], int n) {
 	for (int i = 0; i < n; ++i)
 		cout << arr[i] << " ";
