@@ -54,47 +54,64 @@ string reorganizeString(string s) {
 }
 
 // returns most frequent char 
-char getMaxCountChar(vector<int>& count, int maxCount) {
-    for (int i = 0; i < 26; ++i)
-        if (count[i] == maxCount)
-        return 'a' + i;
-    throw;
+char getMaxCountChar(const vector<int>& count) {
+	int maxCnt = 0;
+	char ch;
+	for (int i = 0; i < 26; i++) {
+		if (count[i] > maxCnt) {
+			maxCnt = count[i];
+			ch = 'a' + i;
+		}
+	}
+	return ch;
 }
 
 
 // O(n*A) Approach
 string reorganizeString(string S) {
-    const int n = S.length();
-
-    vector<int> count(26);
-    for (const char c : S)
-      ++count[c - 'a'];
-
-    const int maxCount = *max_element(begin(count), end(count));
-    if (maxCount > (n + 1) / 2) return "";
-
-    string ans(n, ' ');
-    const bool shouldFillEvenIndices = maxCount == (n + 1) / 2;
-
-    // fill in 0, 2, 4, ... positions with the maxCount char
-    if (shouldFillEvenIndices) {
-      const int c = getMaxCountChar(count, maxCount);
-      for (int i = 0; i < n; i += 2)
-        ans[i] = c;
-      count[c - 'a'] = 0;
+    int n = S.size();
+	if (!n) {
+        return "";
     }
 
-    // start index of remaining chars should be 0 or 1
-    int i = shouldFillEvenIndices;
-    for (char c = 'a'; c <= 'z'; ++c)
-    while (count[c - 'a']-- > 0) {
-        ans[i] = c;
-        i += 2;
-        if (i >= n)  // out-of-bound, reset the index to 1
-            i = 1;
+	vector<int> count(26, 0);
+	for (auto ch : S) {
+        count[ch - 'a']++;
     }
 
-    return ans;
+	char chMax = getMaxCountChar(count);
+	int maxCount = count[chMax - 'a'];
+
+	// check if the result is possible or not
+	if (maxCount > (n + 1) / 2) {
+        return "";
+    }
+
+	string res(n, ' ');
+	int ind = 0;
+
+	// filling the most frequently occuring char in the even indices
+	while (maxCount) {
+		res[ind] = chMax;
+		ind = ind + 2;
+		maxCount--;
+	}
+	count[chMax - 'a'] = 0;
+
+	// now filling the other Chars, first filling the even (if remaining)
+	// positions and then the odd positions
+	for (int i = 0; i < 26; i++) {
+		while (count[i] > 0) {
+			if(ind > n) {
+                // all even pos are filled
+                ind = 1;
+            }
+			res[ind] = 'a' + i;
+			ind += 2;
+			count[i]--;
+		}
+	}
+	return res;
 }
 
 

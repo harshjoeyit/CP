@@ -80,9 +80,11 @@ public:
 };
 
 
-// can be implememtned using list in c++ 
-// list::erase function works in liner complexity of number of elements deleted 
-// that means we can delete a single element in constant time 
+/*
+      can be implememtned using list in c++ 
+      list::erase function works in liner complexity of number of elements deleted 
+      that means we can delete a single element in constant time 
+*/
 
 class LRUCache {
     unordered_map<int, list<pair<int,int>>::iterator> table;

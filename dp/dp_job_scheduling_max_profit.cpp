@@ -3,38 +3,6 @@
 using namespace std;
 
 /*
-    Simple job scheduling (Greedy)
-    aim is to maximize number of jobs done 
-*/
-
-int findLongestChain(vector<vector<int>>& pairs) {
-    int n = pairs.size();
-    
-    // sort based on end time 
-    auto comp = [](const vector<int> &a, const vector<int> &b) {
-        if(a[1] == b[1]) {
-            return a[0] < b[0];
-        }
-        return a[1] < b[1];
-    };  
-    
-    sort(pairs.begin(), pairs.end(), comp);
-    
-    int prev = 0;       // previous job done
-    int ans = 1;
-    
-    for(int i=1; i<n; i++) {
-        if(pairs[i][0] > pairs[prev][1]) {
-            prev = i;
-            ans += 1;
-        }
-    }
-    
-    return ans;
-}
-
-
-/*
     Weighted Job Scheduling
 */
 
