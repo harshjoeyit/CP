@@ -104,6 +104,25 @@ vector<string> topKFrequent(vector<string>& words, int k) {
       return ans;
 }
 
+// Similar Questions 
+// Kth largest sum continuous subarrays (https://www.geeksforgeeks.org/k-th-largest-sum-contiguous-subarray/)
+
+int kthLargetSubarraySum(vector<int> &a, int k) {
+    priority_queue<int, vector<int>, greater<int>> pq;
+
+    for(int i=0; i<a.size(); i++) {
+        int s = 0;
+        for(int j=i; j<a.size(); j++) {
+            s += a[j];
+            pq.push(s);
+            if(pq.size() > k) {
+                pq.pop();
+            }
+        }
+    }
+    return pq.top();
+}
+
 signed main() {
       ios_base::sync_with_stdio(0);
       cin.tie(0);

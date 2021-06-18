@@ -190,7 +190,9 @@ void printPath() {
 
 
 /*
-similar problem - maximum probability path
+similar problem 
+    - maximum probability path
+    - shortest edge on the shortest path
 
 Print - the paths to each vertex 
    --- simply use a parent array an the job 
