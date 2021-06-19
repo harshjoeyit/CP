@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// O(n * sum), time and space
+
 #define int long long 
 const int N = 1010;                 // max sum of the array can be N
 bool dp[N][N];                      // [index][sum]
@@ -8,10 +10,8 @@ set<int> res;
 vector<int> v;
 int n;
 
-void subset_sum(int pos=0,int sum=0)
-{
-    if(pos==v.size())
-    {
+void subset_sum(int pos=0,int sum=0) {
+    if(pos == v.size()) {
         res.insert(sum);
         return ;
     }
@@ -37,7 +37,8 @@ void solve() {
 }
 
 
-// Queries for sbset sum
+// For queries on subset sum
+// O(sum) time and space
 
 int n, q;
 bitset<8000005> can;
@@ -46,12 +47,12 @@ string ans = "";
 
 void solve() {
     cin >> n;
-    for(int i=0; i<n; i++) 
-        cin >> a[i];
-    
     can[0] = 1;
-    for(int i=0; i<n; i++) 
-        can = can | (can << a[i]);      // setting all the bits that are possible sum
+
+    for(int i=0; i<n; i++) {
+        cin >> a[i];
+        can |= (can << a[i]);      // setting all the bits that are possible sum
+    }
     
     cin >> q;
 
@@ -72,6 +73,5 @@ void solve() {
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-
     solve();
 }

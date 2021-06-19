@@ -1,25 +1,38 @@
  /*
 Bellman Ford's Algorithm:
 
-O(E.V) = complete graph - O(V^3)
-Bellman Ford's algorithm is used to find the shortest paths from the 
-source vertex to all other vertices in a weighted graph. 
-It depends on the following concept: Shortest path 
-contains at most n-1 edges, because the shortest path couldn't have a cycle.
+    O(E.V) = complete graph - O(V^3)
+    Bellman Ford's algorithm is used to find the shortest paths from the 
+    source vertex to all other vertices in a weighted graph. 
+    It depends on the following concept: Shortest path 
+    contains at most n-1 edges, because the shortest path couldn't have a cycle.
 
 Dijkstra Algo: 
 
-In the beginning all vertices have a distance of "Infinity", but only 
-the distance of the source vertex = 0, then update all the connected 
-vertices with the new distances (source vertex distance + edge weights), 
-then apply the same concept for the new vertices with new distances and so on
+    In the beginning all vertices have a distance of "Infinity", but only 
+    the distance of the source vertex = 0, then update all the connected 
+    vertices with the new distances (source vertex distance + edge weights), 
+    then apply the same concept for the new vertices with new distances and so on
 
 Optimized version is disjktra - O(V^2) , with min priority queue or multiset or set, O(V + Elog(V))
-*/
 
-/*
-O(V*V) with adjacency matrix representation
-O(ElogV) with adjacency list represtation
+
+Time Complexity: 
+
+    O(V*V) with adjacency matrix representation
+    O(ElogV) with adjacency list represtation
+
+
+Similar problem 
+    - maximum probability path
+    - Shortest Path in directed graph 
+    - Shortest Path in Directed Acyclic Graph - Topological Sort 
+
+To print the paths to each vertex 
+    -simply use a parent array an the job 
+
+NOTE: Dijkstra Cannot be used to find LONGEST PATH 
+https://cs.stackexchange.com/questions/17980/is-it-possible-to-modify-dijkstra-algorithm-in-order-to-get-the-longest-path
 */
 
 #include <bits/stdc++.h>
@@ -187,13 +200,3 @@ void printPath() {
         cout << endl;
     }
 }
-
-
-/*
-similar problem - maximum probability path
-
-Print - the paths to each vertex 
-   --- simply use a parent array an the job 
-Shortest Path in directed graph 
-Shortest Path in Directed Acyclic Graph - Topological Sort 
-*/
