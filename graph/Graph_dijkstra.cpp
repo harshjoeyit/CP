@@ -200,3 +200,15 @@ void printPath() {
         cout << endl;
     }
 }
+
+
+/*
+similar problem 
+    - maximum probability path
+    - shortest edge on the shortest path
+
+Print - the paths to each vertex 
+   --- simply use a parent array an the job 
+Shortest Path in directed graph 
+Shortest Path in Directed Acyclic Graph - Topological Sort 
+*/

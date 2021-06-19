@@ -2,19 +2,7 @@
 using namespace std;
 #define int long long int
 
-/*
-      original problem: 
-      Given a knapsack(W) and n weights , 
-      find if kanpsack can be filled completely 
-
-      or simly
-
-      find a subset with sum = W 
-*/
-
-// 1. top down DP
-
-// 2. bottom up DP
+// Check if knapsack can be filled completely (subset sum problem)
 
 void go() {
 	int dp[1000] = {};
@@ -31,7 +19,7 @@ void go() {
 }
 
 /*
-3. Using bitset
+Check if knapsack can be filled completely (Using bitset)
 
 after this operation all every ith bit is set 
 such that sum i is possible using the value up untill now  
@@ -57,9 +45,10 @@ void go() {
 
 
 
-// .......................................max value knapsacks ................................................
+// Find Max value of the knapsack
 
-// O(N * W)
+
+// O(N * W) time and space 
 // top-down
 
 int n, capc;
@@ -83,14 +72,38 @@ int go(int i, int capc, int val[], int wt[]) {
       return ans;
 }
 
+// O(N*W), time and space
+// bottom up
+
+void fill_knapsack(){
+    int dp[n+1][capc+1];
+
+    for(int i=0; i<=n; i++)
+        dp[i][0] = 0;
+    for(int i=0; i<=capc; i++)
+        dp[0][i] = 0;
+
+    for(int i=1; i<=n; i++) {
+        for(int j=; j<=capc; j++) {
+            if(j < wt[i-1])          // array index 0 for item 1 // item cannot contribute in knapsack
+                    dp[i][j] = dp[i-1][j];      // best can do without including the item
+
+            else
+                dp[i][j] = max(val[i-1] + dp[i-1][j-wt[i-1]], dp[i-1][j]);
+                
+        }
+    }
+
+    cout << dp[n][capc] << "\n";
+}
 
 
-
-
-// O(N * W)
+// O(N * W) time and space
 // space optimized
+
 const int mxW = 1e6; 
-int dp[mxW];            // dp[w] - max value possible for wieght w
+int dp[mxW];            
+// dp[w] = max value possible for wieght w
 
 int go(int val[], int wt[], int n, int w) {
     for(int i=0; i<n; i++) 
@@ -102,15 +115,14 @@ int go(int val[], int wt[], int n, int w) {
 
 
 
-
-// O(N * (N * maxVal))
+// O(N * (N * maxVal)) time and space
 // knapsack with larger weights 
 
 const int mxN = 100;                 
 const int mxW = 1000000005;
 const int mxV = 1000;          
-// dp[i][j] = minmum weights for including i objects for making up value = j  
 int dp[mxN+5][mxN*mxV + 5];                 
+// dp[i][j] = minimum weights for including i items for making up value = j  
 
 void solve() {
     int n, capc;
@@ -139,11 +151,12 @@ void solve() {
                 // skip or include this value
                 dp[i + 1][j] = min(dp[i][j], dp[i][j - val[i]] + wt[i]);
             } else { 
-                // we cannot include the ith object up untill now since its value > curr val j
+                // we cannot include the ith object, 
+				// since its value > curr item's val(j) 
                 dp[i + 1][j] = dp[i][j];
             }
 
-            // since dp[i][j] <= capacity of our knapsack, means 
+            // if dp[i][j] <= capacity of our knapsack, means 
             // this value (j) might maximize our ans
             if(dp[i+1][j] <= capc) {
                 ans = max(ans, j);
