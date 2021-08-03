@@ -6,13 +6,14 @@ using namespace std;
 const int mxN = 1e5+10;
 
 int id[mxN], n, e;
-pair <int, pii> edges[mxN];
+vector<int> edges[mxN];
 
 void initialize() {
     for(int i=0; i<mxN; ++i) {
         id[i] = i;
     }
 }
+
 int root(int x) {
     while(id[x] != x) {
         id[x] = id[id[x]];
@@ -20,42 +21,42 @@ int root(int x) {
     }
     return x;
 }
+
 void union1(int x, int y) {
     int p = root(x);
     int q = root(y);
     id[p] = id[q];
 }
+
 int kruskal() {
-    int x, y, cost, minCost = 0;
+    int mstWt = 0;
     
     for(int i = 0; i < e; ++i) {
-        x = edges[i].second.first;
-        y = edges[i].second.second;
-        cost = edges[i].first;
+        int x = edges[i][1], y = edges[i][2];
+        int cost = edges[i][0];
 
         if(root(x) != root(y)) {
-            minCost += cost;
+            mstWt += cost;
             union1(x, y);
             // mst.push_back({cost, x, y});  - if we want to see what edges are in MST 
         }    
     }
-    return minCost;
+    return mstWt;
 }
 
 
 signed main() {
-    int x, y, wt, cost, minCost;
+    int x, y, wt, cost;
     initialize();
     cin >> n >> e;
 
     for(int i = 0; i < e; ++i) {
         cin >> x >> y >> wt;
-        edges[i] = make_pair(wt, make_pair(x, y));
+        edges[i] = {wt, x, y};
     }
 
     // Sort the edges in the ascending order
     sort(edges, edges + e);
-    minCost = kruskal();
-    cout << minCost << endl;
+    cout << kruskal() << endl;
 
 }

@@ -5,6 +5,7 @@ using namespace std;
 int n; 
 vector<vector<int>> g; 
 
+// low[v] indicates earliest visited vertex reachable from subtree rooted with v.
 vector<bool> visited;
 vector<int> tin, low;
 int timer;

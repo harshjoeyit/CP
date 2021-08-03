@@ -58,17 +58,15 @@ bool relax(vector<int> &dis) {
       bool any = false;
       for(auto e: edges) {
             int u = e[0], v = e[1], w = e[2];
-            if(dis[u] != inf) {
-                  if(dis[v] > dis[u] + w) {
-                        dis[v] = dis[u] + w;
-                        any = true;
-                  }
+            if(dis[u] != inf && dis[v] > dis[u] + w) {
+                  dis[v] = dis[u] + w;
+                  any = true;
             }
       }
       return any;
 }
 
-void bellmanFord(int u) {
+bool bellmanFord(int u) {
       vector<int> dis(n, inf);
       dis[u] = 0;
 
@@ -77,17 +75,17 @@ void bellmanFord(int u) {
                   break;
             }
       }
-      // relax 1 more time to find neg weight cycle 
-      if(relax(dis)) {
-            cout << "neg weight cycle\n";
-            return;
-      }
-      for (int i = 0; i < n; i++) {
-            cout << u << " " << i << " : " << dis[i] << endl;
-      }
+      return relax(u);
 }
 
 int main() {
       graph_input();
-      bellmanFord(0);
+      // relax 1 more time to find neg weight cycle 
+      if(bellmanFord(0)) {
+            cout << "neg weight cycle\n";
+            return;
+      }
+      for (int i = 0; i < n; i++) {
+            cout << 0 << " " << i << " : " << dis[i] << endl;
+      }
 }

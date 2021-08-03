@@ -1,3 +1,13 @@
+/*
+Like Kruskal’s algorithm, Prim’s algorithm is also a Greedy algorithm. 
+It starts with an empty spanning tree. The idea is to maintain two sets 
+of vertices. The first set contains the vertices already included in the
+MST, the other set contains the vertices not yet included. At every step, 
+it considers all the edges that connect the two sets, and picks the 
+minimum weight edge from these edges. After picking the edge, it moves 
+the other endpoint of the edge to the set containing MST. 
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -17,7 +27,7 @@ int prim(int u) {
         auto p = pq.top();
         pq.pop();
         u = p.second;
-
+    
         // this method should be followed while marking the vertices 
         if(marked[u] == true) {
             continue;
